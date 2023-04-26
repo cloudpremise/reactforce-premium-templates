@@ -1,6 +1,5 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import useApexAdapter from "./hooks/useApexAdapter";
 import IconSettings from '@salesforce/design-system-react/components/icon-settings';
 import { MemoryRouter } from "react-router-dom";
 import { prepareInlineAdapter } from "./ApexAdapter";
@@ -11,7 +10,6 @@ prepareInlineAdapter();
 const history = createBrowserHistory();
 
 function App() {
-    const [loading, state] = useApexAdapter({});
     function getBaseUrl(){
         if(process.env.NODE_ENV === "test"){
             return "";

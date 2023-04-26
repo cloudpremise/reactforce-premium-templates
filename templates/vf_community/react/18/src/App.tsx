@@ -1,47 +1,62 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import useApexAdapter from "./hooks/useApexAdapter";
+import IconSettings from '@salesforce/design-system-react/components/icon-settings';
+import { MemoryRouter } from "react-router-dom";
 import { prepareInlineAdapter } from "./ApexAdapter";
+import RouterComponent from './components/Router';
+import { createBrowserHistory } from "history";
 prepareInlineAdapter();
 
 declare const window: Window & typeof globalThis & {
     inlineApexAdaptor: any
 }
 
+const history = createBrowserHistory();
+
 function App() {
-    const [loading, data] = useApexAdapter({});
     function getBaseUrl(){
-        if(process.env.NODE_ENV === "development"){
+        if(process.env.NODE_ENV === "test"){
             return "";
         }
-        return (window.hasOwnProperty('inlineApexAdaptor') ? window.inlineApexAdaptor.landingResources+'/': '');
+        if(typeof(window.inlineApexAdaptor.baseUrl) === 'string' && window.inlineApexAdaptor.baseUrl !== "null"){
+            return window.inlineApexAdaptor.baseUrl;
+        }
+        return "";
     }
+    function getSFResourcesPath(){
+        if(typeof(window.inlineApexAdaptor) === "undefined" || typeof(window.inlineApexAdaptor.resources) === "undefined"){
+            return null;
+        }
+        return window.inlineApexAdaptor.resources;
+    }
+    function getCurrentPage(){
+        let page = window.location.pathname;
+        if(typeof(window.inlineApexAdaptor.page) === 'string' && window.inlineApexAdaptor.page !== "null"){
+            page = getBaseUrl()+"/"+window.inlineApexAdaptor.page;
+        }
+        if(window.inlineApexAdaptor.hasOwnProperty("rte")){
+            let returnUrl = window.inlineApexAdaptor.rte;
+            returnUrl = returnUrl.replace("System.PageReference[", "");
+            returnUrl = returnUrl.replace("]", "");
+            returnUrl = returnUrl.split("?")[0];
+            returnUrl = returnUrl.replace(/^\/+/g, ''); //Remove leading slash
+            if(returnUrl.length > 0){
+                page = getBaseUrl()+"/"+returnUrl;
+            }
+        }
+        return page;
+    }
+    const page = getCurrentPage();
     return (
-        <div className="App">
-            <header className="App-header" style={{paddingTop: "100px"}}>
-                <img style={{maxWidth: "400px"}} src={getBaseUrl()+logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-                <p>
-                    {
-                        loading === false && data.response !== null ?
-                            data.response
-                        :
-                            null
-                    }
-                </p>
-            </header>
-        </div>
+        <IconSettings iconPath={getSFResourcesPath()+"/assets/icons"} >
+            <MemoryRouter initialEntries={[page]} basename={getBaseUrl()}>
+                <div className="slds-scope slds-is-relative App" >
+                    <div className="main-container" id="global_wrapper">
+                        <RouterComponent history={history} basename={getBaseUrl()} page={page} />
+                    </div>
+                </div>
+            </MemoryRouter>
+        </IconSettings>
     );
 }
 
