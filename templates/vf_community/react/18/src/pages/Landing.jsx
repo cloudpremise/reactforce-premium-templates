@@ -3,13 +3,15 @@ import { getSessionId } from "../ApexAdapter";
 import { useNavigate } from "react-router-dom";
 
 const Landing = (props) => {
-    const sessionId = getSessionId();
     const navigate = useNavigate();
-    if(typeof(sessionId) === "string" && sessionId.length > 0){
-        return navigate("/home", { replace: true });
-    }
+    React.useEffect(() => {
+        const sessionId = getSessionId();
+        if(typeof(sessionId) === "string" && sessionId.length > 0){
+            return navigate("/home", { replace: true });
+        }
+    });
     return (
-        <div>
+        <div className="slds-p-left_medium slds-text-heading_small">
             Landing page for unauthenticated users.
         </div>
     )
