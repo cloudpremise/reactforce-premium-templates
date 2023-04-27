@@ -13,3 +13,7 @@ div .slds-scope .slds-context-bar {
     padding-left: 0px;
     height: 50px;    
 }
+div .non-logged-in .slds-global-header__item.slds-global-header__item_logo {
+    width: 100%;
+    justify-content: space-between;    
+}

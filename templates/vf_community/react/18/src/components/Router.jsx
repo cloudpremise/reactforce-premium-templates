@@ -40,6 +40,7 @@ const Header = (props) => {
         cdn = window.inlineApexAdaptor.landingResources;
     }
     const logoUrl = cdn+"/assets/img/logo.png";
+    const sessionId = getSessionId();
     return (
         <GlobalHeader
             logoSrc={logoUrl}
@@ -51,16 +52,20 @@ const Header = (props) => {
             }}
             navigation={<NavigationBar basename={basename} page={page} />}
         >
-                        
-            <GlobalHeaderProfile
-                popover={
-                    <Popover
-                        body={<HeaderProfileCustomContent basename={basename} />}
-                        id="header-profile-popover-id"
+            {
+                sessionId.length > 0 ?
+                    <GlobalHeaderProfile
+                        popover={
+                            <Popover
+                                body={<HeaderProfileCustomContent basename={basename} />}
+                                id="header-profile-popover-id"
+                            />
+                        }
+                        // userName="Art Vandelay"
                     />
-                }
-                // userName="Art Vandelay"
-            />
+                :
+                null
+            }
         </GlobalHeader>
     )
 };
@@ -70,6 +75,7 @@ const NavigationBar = (props) => {
     const [state, setState] = React.useState({
         activeUrl: url
     });
+    const sessionId = getSessionId();
     const navigate = useNavigate();
     function onUrlChange(event){
         let url = event.currentTarget.getAttribute("url");
@@ -80,23 +86,40 @@ const NavigationBar = (props) => {
     }
     return (
         <GlobalNavigationBar>
-            <GlobalNavigationBarRegion region="secondary" navigation>
-                <li className={'slds-context-bar__item '+(state.activeUrl === "/home" ? "slds-is-active" : "")}>
-                    <span url="/home" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
-                        <span className='slds-truncate' title='Home'>Home</span>
-                    </span>
-                </li>
-                <li className={'slds-context-bar__item '+(state.activeUrl === "/route2" ? "slds-is-active" : "")}>
-                    <span url="/route2" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
-                        <span className='slds-truncate' title='Route2'>Route2</span>
-                    </span>
-                </li>
-                <li className={'slds-context-bar__item '+(state.activeUrl === "/route3" ? "slds-is-active" : "")}>
-                    <span url="/route3" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
-                        <span className='slds-truncate' title='Route3'>Route3</span>
-                    </span>
-                </li>
-            </GlobalNavigationBarRegion>
+            {
+                sessionId.length > 0 ?
+                    <GlobalNavigationBarRegion region="secondary" navigation>
+                        <li className={'slds-context-bar__item '+(state.activeUrl === "/home" ? "slds-is-active" : "")}>
+                            <span url="/home" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Home'>Home</span>
+                            </span>
+                        </li>
+                        <li className={'slds-context-bar__item '+(state.activeUrl === "/route2" ? "slds-is-active" : "")}>
+                            <span url="/route2" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Route2'>Route2</span>
+                            </span>
+                        </li>
+                        <li className={'slds-context-bar__item '+(state.activeUrl === "/route3" ? "slds-is-active" : "")}>
+                            <span url="/route3" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Route3'>Route3</span>
+                            </span>
+                        </li>
+                    </GlobalNavigationBarRegion>
+                :
+                    <GlobalNavigationBarRegion region="secondary" navigation>
+                        <li className={'slds-context-bar__item'}>
+                            <a href={props.basename+"/secur/login.jsp"} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Login'>Login</span>
+                            </a>
+                        </li>
+                        <li className={'slds-context-bar__item'}>
+                            <a href={props.basename+"/secur/register.jsp"} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Signup'>Signup</span>
+                            </a>
+                        </li>
+                    </GlobalNavigationBarRegion>
+            }
+            
         </GlobalNavigationBar>
     )
 };
@@ -107,14 +130,11 @@ const RouterComponent = class extends React.Component {
         const { history, basename, page } = this.props;
         const sessionId = getSessionId();
         return (
-            <>            
-                {
-                    sessionId.length > 0 ?
-                        <Header basename={basename} page={page} />
-                    :
-                    null
-                }
-                <NavigationBar basename={basename} page={page} />
+            <>
+                <div className={sessionId.length === 0 ? 'non-logged-in' : ''}>
+                    <Header basename={basename} page={page} />
+                    <NavigationBar basename={basename} page={page} />
+                </div>
                 <div id="global_wrapper">
                     <div id="global_content" style={{paddingTop: "15px", paddingBottom: "15px"}} data-testid="content">
                         <Routes>
