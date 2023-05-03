@@ -8,7 +8,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>page</name>
-                    <value>contacts</value>
+                    <value>home</value>
                 </componentInstanceProperties>
                 <componentName>rfPrototypeLtg</componentName>
                 <identifier>c_rfPrototypeLtg</identifier>
