@@ -28,6 +28,9 @@ function App() {
             }
         }
         baseUrl = baseUrl.replace(/^\/+/g, ''); //Remove leading slash
+        if(baseUrl.length > 0 && baseUrl.charAt(0) !== "/"){
+            baseUrl = "/"+baseUrl;
+        }
         return baseUrl;
     }
     function getSFResourcesPath(){
