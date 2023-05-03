@@ -26,8 +26,8 @@ function App() {
             if(returnUrl.length > 0){
                 baseUrl = baseUrl.replace(returnUrl, "");
             }
-            returnUrl = returnUrl.replace(/^\/+/g, ''); //Remove leading slash
         }
+        baseUrl = baseUrl.replace(/^\/+/g, ''); //Remove leading slash
         return baseUrl;
     }
     function getSFResourcesPath(){
