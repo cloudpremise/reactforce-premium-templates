@@ -59,11 +59,8 @@ const prepareInlineAdapter = () => {
         'resources': decodeURIComponent(getParam("resources")), //For app icons hosted in static resources.
         'landingResources': decodeURIComponent(getParam("landingResources")), //For app assets other than icons.
         'page': getParam("page"), //Page received through lightning container url.
-        'recordId': getParam("recordId"), //Record id received through lightning container url.
         'sessionId': sessionId,
         'bundleDomain': getParam("bundleDomain"),
-        'hidePageHeader': getParam("hidePageHeader"),
-        'hideNavigationTabs': getParam("hideNavigationTabs")
     };
 
     console.log("Inline Apex Adapter", window.inlineApexAdaptor);

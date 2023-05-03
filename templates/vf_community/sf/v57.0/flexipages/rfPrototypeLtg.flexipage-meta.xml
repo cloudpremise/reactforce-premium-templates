@@ -7,18 +7,6 @@
                     <name>bundleDomain</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>hideComponentHeader</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideNavigationTabs</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hidePageHeader</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>page</name>
                     <value>contacts</value>
                 </componentInstanceProperties>

@@ -14,10 +14,21 @@ function App() {
         if(process.env.NODE_ENV === "test"){
             return "";
         }
+        let baseUrl = "";
         if(typeof(window.inlineApexAdaptor.baseUrl) === 'string' && window.inlineApexAdaptor.baseUrl !== "null"){
-            return window.inlineApexAdaptor.baseUrl;
+            baseUrl = window.inlineApexAdaptor.baseUrl;
         }
-        return "";
+        if(window.inlineApexAdaptor.hasOwnProperty("rte")){
+            let returnUrl = window.inlineApexAdaptor.rte;
+            returnUrl = returnUrl.replace("System.PageReference[", "");
+            returnUrl = returnUrl.replace("]", "");
+            returnUrl = returnUrl.split("?")[0];
+            if(returnUrl.length > 0){
+                baseUrl = baseUrl.replace(returnUrl, "");
+            }
+            returnUrl = returnUrl.replace(/^\/+/g, ''); //Remove leading slash
+        }
+        return baseUrl;
     }
     function getSFResourcesPath(){
         if(typeof(window.inlineApexAdaptor) === "undefined" || typeof(window.inlineApexAdaptor.resources) === "undefined"){
