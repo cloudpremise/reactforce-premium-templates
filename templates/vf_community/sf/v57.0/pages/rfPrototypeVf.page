@@ -9,8 +9,6 @@
         </apex:outputPanel>
     </head>
     <body class="slds-scope">
-        <div id="rte" style="display:none;">{!$CurrentPage.parameters.rte}</div>
-        <div id="sitebaseurl" style="display:none;">{!$Site.BaseUrl}</div>
         <apex:slds />
         <script type="text/javascript">
             Visualforce.remoting.timeout = 120000;
@@ -22,15 +20,9 @@
                 'resources': '{!$Resource.ReactforceAssets}',
                 'landingResources': '{!$Resource.CustomerPortal}',
                 'bundleDomain': '{!bundleDomain}',
-                'advancedConfiguration': '{!advancedConfiguration}',
-                'userInterfacePreview': '{!userInterfacePreview}',
-                'recordId': '',
                 'page': 'home',
-                'theme': '{!$User.UITheme}',
-                'hidePageHeader': 'false',
-                'hideNavigationTabs': 'false',
                 'rte': '{!$CurrentPage.parameters.rte}',
-                'baseUrl' : '/apex/rfPrototypeVf'
+                'baseUrl': window.location.pathname
             };
 
         </script>

@@ -108,13 +108,8 @@ const NavigationBar = (props) => {
                 :
                     <GlobalNavigationBarRegion region="secondary" navigation>
                         <li className={'slds-context-bar__item'}>
-                            <a href={props.basename+"/secur/login.jsp"} className="slds-context-bar__label-action">
+                            <a href={props.basename+"/login"} className="slds-context-bar__label-action">
                                 <span className='slds-truncate' title='Login'>Login</span>
-                            </a>
-                        </li>
-                        <li className={'slds-context-bar__item'}>
-                            <a href={props.basename+"/secur/register.jsp"} className="slds-context-bar__label-action">
-                                <span className='slds-truncate' title='Signup'>Signup</span>
                             </a>
                         </li>
                     </GlobalNavigationBarRegion>
@@ -138,6 +133,7 @@ const RouterComponent = class extends React.Component {
                 <div id="global_wrapper">
                     <div id="global_content" style={{paddingTop: "15px", paddingBottom: "15px"}} data-testid="content">
                         <Routes>
+                            <Route path="/" element={<Landing history={history} />} />
                             <Route path="/landing" element={<Landing history={history} />} />
                             <Route path="/home" element={<Home history={history} />} />
                             <Route path="/route2" element={<Route2 history={history} />} />

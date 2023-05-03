@@ -1,8 +1,10 @@
 import React from "react";
 import { getSessionId } from "../ApexAdapter";
 import { useNavigate } from "react-router-dom";
+import useApexAdapter from "../hooks/useApexAdapter";
 
 const Home = (props) => {
+    const [loading, state] = useApexAdapter({});
     const navigate = useNavigate();
     React.useEffect(() => {
         const sessionId = getSessionId();
@@ -12,8 +14,18 @@ const Home = (props) => {
     });
     
     return (
-        <div className="slds-p-left_medium slds-text-heading_small">
-            Home page for authenticated users.
+        <div className="slds-p-horizontal_medium">
+            <div className="slds-text-heading_small">
+                Home page for authenticated users.
+            </div>
+            <p className="slds-m-top_medium slds-text-heading_small slds-text-color_destructive">
+                {
+                    loading === false && state.response !== null ?
+                        state.response
+                    :
+                        null
+                }
+            </p>
         </div>
     )
 }

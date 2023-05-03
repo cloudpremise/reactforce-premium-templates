@@ -5,12 +5,7 @@
             'resources': $A.get('$Resource.ReactforceAssets'),
             'landingResources': $A.get('$Resource.rfPrototypeLtg'),
             'bundleDomain': component.get("v.bundleDomain"),
-            'advancedConfiguration': component.get("v.advancedConfiguration"),
-            'userInterfacePreview': component.get("v.userInterfacePreview"),
-            'recordId': component.get("v.recordId"),
             'page': component.get("v.page"),
-            'hidePageHeader': component.get("v.hidePageHeader"),
-            'hideNavigationTabs': component.get("v.hideNavigationTabs"),
         };
         var str = [];
         for (var p in data){
