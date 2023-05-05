@@ -31,6 +31,7 @@ function App() {
         if(baseUrl.length > 0 && baseUrl.charAt(0) !== "/"){
             baseUrl = "/"+baseUrl;
         }
+        baseUrl = baseUrl.replace(/\/$/, '');
         return baseUrl;
     }
     function getSFResourcesPath(){
