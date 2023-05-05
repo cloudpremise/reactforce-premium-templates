@@ -22,7 +22,8 @@
                 'bundleDomain': '{!bundleDomain}',
                 'page': 'home',
                 'rte': '{!$CurrentPage.parameters.rte}',
-                'baseUrl': window.location.pathname
+                'baseUrl': window.location.pathname,
+                'bundleId': '{!bundleId}',
             };
 
         </script>
