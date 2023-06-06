@@ -108,9 +108,14 @@ const NavigationBar = (props) => {
                 :
                     <GlobalNavigationBarRegion region="secondary" navigation>
                         <li className={'slds-context-bar__item'}>
-                            <a href={props.basename+"/login"} className="slds-context-bar__label-action">
+                            <span url={props.basename+"/login"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
                                 <span className='slds-truncate' title='Login'>Login</span>
-                            </a>
+                            </span>
+                        </li>
+                        <li className={'slds-context-bar__item'}>
+                            <span url={props.basename+"/signup"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Signup'>Signup</span>
+                            </span>
                         </li>
                     </GlobalNavigationBarRegion>
             }
@@ -138,6 +143,8 @@ const RouterComponent = class extends React.Component {
                             <Route path="/home" element={<Home history={history} />} />
                             <Route path="/route2" element={<Route2 history={history} />} />
                             <Route path="/route3" element={<Route3 history={history} />} />
+                            <Route path="/login" element={<Login history={history} basename={basename} page={page} />} />
+                            <Route path="/signup" element={<Signup history={history} basename={basename} page={page} />} />
                         </Routes>
                     </div>
                 </div>

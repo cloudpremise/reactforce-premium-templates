@@ -81,6 +81,53 @@ const getSessionId = () => {
     return sessionId;
 };
 
-export { ApexAdapter, prepareInlineAdapter, getSessionId };
+const loginAdapter = (requestData, callback) => {
+    // mountApexAdapter();
+    let config = { 
+        buffer: true, 
+        escape: false, 
+        timeout: 30000
+    }
+    try{
+
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.loginApi,
+                                                                    JSON.stringify(requestData),
+                                                                    (result, event) =>{
+                                                                        callback(result, event);
+                                                                    },
+                                                                    config);        
+    } catch (e) {
+        console.log('e:',e);
+        //alert(e.message);
+    }
+};
+
+const registerAdapter = (firstName, lastName, email, password, confirmPassword, communityNickname, callback) => {
+    // mountApexAdapter();
+    let config = { 
+        buffer: true, 
+        escape: false, 
+        timeout: 30000
+    }
+    try{
+
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.registerApi,
+                                                                    firstName,
+                                                                    lastName,
+                                                                    email,
+                                                                    password,
+                                                                    confirmPassword,
+                                                                    communityNickname,
+                                                                    (result, event) =>{
+                                                                        callback(result, event);
+                                                                    },
+                                                                    config);        
+    } catch (e) {
+        console.log('e:',e);
+        //alert(e.message);
+    }
+};
+
+export { ApexAdapter, prepareInlineAdapter, getSessionId, loginAdapter, registerAdapter };
 
 export default ApexAdapter;

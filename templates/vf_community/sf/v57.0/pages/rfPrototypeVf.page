@@ -10,12 +10,30 @@
     </head>
     <body class="slds-scope">
         <apex:slds />
+        <apex:form>
+            <apex:actionFunction name="loginAF" action="{!login}" reRender="false">
+                <apex:param name="usernameJS" value="" />
+                <apex:param name="passwordJS" value="" />
+            </apex:actionFunction>
+        </apex:form>
+        <apex:form>
+            <apex:actionFunction name="registerAF" action="{!registerUser}" reRender="false">
+                <apex:param name="firstNameJS" value="" />
+                <apex:param name="lastNameJS" value="" />
+                <apex:param name="emailJS" value="" />
+                <apex:param name="passwordJS" value="" />
+                <apex:param name="confirmPasswordJS" value="" />
+                <apex:param name="communityNicknameJS" value="" />
+            </apex:actionFunction>
+        </apex:form>
         <script type="text/javascript">
             Visualforce.remoting.timeout = 120000;
             //This object will be available from within the reactforce apps via the global.inlineApexAdaptor object
             var inlineApexAdaptor = {
                 'Visualforce': Visualforce,
                 'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
+                'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',
+                'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
                 'sessionId': '{!sessionId}',
                 'resources': '{!$Resource.ReactforceAssets}',
                 'landingResources': '{!$Resource.CustomerPortal}',
