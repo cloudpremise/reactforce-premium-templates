@@ -1,4 +1,4 @@
-public with sharing class rfPrototypeCtrl {
+global with sharing class rfPrototypeCtrl {
     public SObject sObj {get;set;}
     public Id sObjId {get;set;}
 
