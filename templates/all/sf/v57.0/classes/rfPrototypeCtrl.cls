@@ -230,4 +230,91 @@ global with sharing class rfPrototypeCtrl {
         global string startURL {get;set;}
         // global PageReference pageReference {get;set;}
     }
+
+
+    //Attachments and content version related code
+    @RemoteAction
+    public static Id saveAttachment(Id parentId, String fileName, String base64Data, String contentType, String fileId) {
+        // check if fileId id ''(Always blank in first chunk), then call the saveTheFile method,
+        //  which is save the check data and return the attachemnt Id after insert,
+        //  next time (in else) we are call the appentTOFile() method
+        //   for update the attachment with remains chunks
+        if (fileId == '') {
+            fileId = saveTheAttachment(parentId, fileName, base64Data, contentType);
+        } else {
+            appendToAttachment(fileId, base64Data);
+        }
+        
+        return Id.valueOf(fileId);
+    }
+    
+    public static Id saveTheAttachment(Id parentId, String fileName, String base64Data, String contentType) {
+        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
+        
+        Attachment oAttachment = new Attachment();
+        oAttachment.parentId = parentId;
+        
+        oAttachment.Body = EncodingUtil.base64Decode(base64Data);
+        oAttachment.Name = fileName;
+        oAttachment.ContentType = contentType;
+        
+        insert oAttachment;        
+        return oAttachment.Id;
+    }
+    
+    private static void appendToAttachment(Id fileId, String base64Data) {
+        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');        
+        Attachment a = [
+            SELECT Id, Body
+            FROM Attachment
+            WHERE Id = : fileId
+        ];
+        
+        String existingBody = EncodingUtil.base64Encode(a.Body);        
+        a.Body = EncodingUtil.base64Decode(existingBody + base64Data);        
+        update a;
+    }
+
+
+    @RemoteAction
+    public static Id saveContentVersion(String fileName, String base64Data, String fileId) {
+        // check if fileId id ''(Always blank in first chunk), then call the saveTheFile method,
+        //  which is save the check data and return the attachemnt Id after insert,
+        //  next time (in else) we are call the appentTOFile() method
+        //   for update the attachment with remains chunks
+        if (fileId == '') {
+            fileId = saveTheContentVersion(fileName, base64Data);
+        } else {
+            appendToContentVersion(fileId, base64Data);
+        }
+        
+        return Id.valueOf(fileId);
+    }
+    
+    public static Id saveTheContentVersion(String fileName, String base64Data) {
+        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
+        
+        ContentVersion cv = new ContentVersion();
+        cv.Title = fileName;
+        cv.PathOnClient = fileName;
+        cv.VersionData =  EncodingUtil.base64Decode(base64Data);        
+        cv.IsMajorVersion = true; 
+        cv.origin = 'C';
+        
+        insert cv;        
+        return cv.Id;
+    }
+    
+    private static void appendToContentVersion(Id fileId, String base64Data) {
+        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');        
+        ContentVersion cv = [
+            SELECT Id, VersionData
+            FROM ContentVersion
+            WHERE Id = : fileId
+        ];
+        
+        String existingBody = EncodingUtil.base64Encode(cv.VersionData);        
+        cv.VersionData = EncodingUtil.base64Decode(existingBody + base64Data);        
+        update cv;
+    }
 }
