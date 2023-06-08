@@ -128,6 +128,54 @@ const registerAdapter = (firstName, lastName, email, password, confirmPassword, 
     }
 };
 
-export { ApexAdapter, prepareInlineAdapter, getSessionId, loginAdapter, registerAdapter };
+const saveAttachment = (parentId, fileName, base64Data, contentType, fileId, callback) => {
+    // mountApexAdapter();
+    let config = { 
+        buffer: true, 
+        escape: false, 
+        timeout: 30000
+    }
+    try{
+
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.saveAttachment,
+                                                                    parentId,
+                                                                    fileName,
+                                                                    base64Data,
+                                                                    contentType,
+                                                                    fileId,
+                                                                    (result, event) =>{
+                                                                        callback(result, event);
+                                                                    },
+                                                                    config);        
+    } catch (e) {
+        console.log('e:',e);
+        //alert(e.message);
+    }
+};
+
+const saveContentVersion = (fileName, base64Data, fileId, callback) => {
+    // mountApexAdapter();
+    let config = { 
+        buffer: true, 
+        escape: false, 
+        timeout: 30000
+    }
+    try{
+
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.saveContentVersion,
+                                                                    fileName,
+                                                                    base64Data,
+                                                                    fileId,
+                                                                    (result, event) =>{
+                                                                        callback(result, event);
+                                                                    },
+                                                                    config);        
+    } catch (e) {
+        console.log('e:',e);
+        //alert(e.message);
+    }
+};
+
+export { ApexAdapter, prepareInlineAdapter, getSessionId, saveAttachment, saveContentVersion, loginAdapter, registerAdapter };
 
 export default ApexAdapter;
