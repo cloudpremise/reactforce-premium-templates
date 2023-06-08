@@ -4,7 +4,6 @@ import Button from '@salesforce/design-system-react/components/button';
 import apexAdapter from "../ApexAdapter";
 import { getSessionId } from "../ApexAdapter";
 import  { Navigate } from 'react-router-dom';
-import "../streamapi.css";
 
 let sessionId = getSessionId();
 const cometdUrl = window.location.protocol + "//" + window.location.hostname + "/cometd/52.0/";
