@@ -1,30 +1,13 @@
-/***************************************************************************** 
-Copyright 2022 CloudPremise LLC
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
-
-global with sharing class rfPrototypeLtgCtrl {
+global with sharing class rfPrototypeCtrl {
     public SObject sObj {get;set;}
     public Id sObjId {get;set;}
 
     public Boolean developmentMode {get;set;}
     public String bundleDomain {get;set;}
+    public String bundleId {get;set;}
     public String sessionId {get;set;}
     public Boolean userInterfacePreview {get;set;}
     public Boolean advancedConfiguration {get;set;}
-
 
     //Login related code
     global String username {get; set;}
@@ -43,41 +26,41 @@ global with sharing class rfPrototypeLtgCtrl {
         return UserInfo.getSessionId();
     }
 
-    public rfPrototypeLtgCtrl(ApexPages.StandardController stdController){
-        System.debug('rfPrototypeLtgCtrl(ApexPages.StandardController)');
+    public rfPrototypeCtrl(ApexPages.StandardController stdController){
+        System.debug('rfPrototypeCtrl(ApexPages.StandardController)');
         this.sobj = stdController.getRecord();
         this.sObjId = stdController.getId();
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
-
-            
-        System.debug('bundleDomain:'+bundleDomain);
-        sessionId = rfPrototypeLtgCtrl.getSessionId();
-
+        this.checkBundleId();
     }
-    public rfPrototypeLtgCtrl(){
-        System.debug('rfPrototypeLtgCtrl()');
+    public rfPrototypeCtrl(){
+        System.debug('rfPrototypeCtrl()');
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
+        sessionId = rfPrototypeCtrl.getSessionId();
+        this.checkBundleId();
+    }
 
+    private void checkBundleId(){
+        bundleId = '.reactforce1';
+        bundleId = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleId')) ? ApexPages.currentPage().getParameters().get('bundleId') : bundleId;
+        System.debug('bundleId:'+bundleId);
     }
 
     public PageReference rerenderPage() {
-
         System.debug('hello from controllerMethod');
         System.debug('ApexPages.currentPage():'+Apexpages.currentPage());
 
-        Pagereference newLink = new PageReference('/apex/rfPrototypeLtg');
+        Pagereference newLink = new PageReference('/apex/rfPrototypeVf');
         newLink.setRedirect(true);
         return newLink;
     }
 
     public static void logControllerInfo(){
-        System.debug('rfPrototypeLtgCtrl()');
         System.debug('UserInfo.getUserId:'+UserInfo.getUserId());
         System.debug('UserInfo.getProfileId:'+UserInfo.getProfileId());
     }
 
     @RemoteAction
-    @AuraEnabled
     public static String callInternalApi(String method, String requestURI, String requestEntityStr, String params, String headers) {
         System.debug('rfPrototypeCtrl.callInternalApi()');
         System.debug('method:'+method);
@@ -245,92 +228,6 @@ global with sharing class rfPrototypeLtgCtrl {
     	global String result {get;set;}
         global string email {get;set;}
         global string startURL {get;set;}
-    }
-
-
-    //Attachments and content version related code
-    @RemoteAction
-    public static Id saveAttachment(Id parentId, String fileName, String base64Data, String contentType, String fileId) {
-        // check if fileId id ''(Always blank in first chunk), then call the saveTheFile method,
-        //  which is save the check data and return the attachemnt Id after insert,
-        //  next time (in else) we are call the appentTOFile() method
-        //   for update the attachment with remains chunks
-        if (fileId == '') {
-            fileId = saveTheAttachment(parentId, fileName, base64Data, contentType);
-        } else {
-            appendToAttachment(fileId, base64Data);
-        }
-        
-        return Id.valueOf(fileId);
-    }
-    
-    public static Id saveTheAttachment(Id parentId, String fileName, String base64Data, String contentType) {
-        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
-        
-        Attachment oAttachment = new Attachment();
-        oAttachment.parentId = parentId;
-        
-        oAttachment.Body = EncodingUtil.base64Decode(base64Data);
-        oAttachment.Name = fileName;
-        oAttachment.ContentType = contentType;
-        
-        insert oAttachment;        
-        return oAttachment.Id;
-    }
-    
-    private static void appendToAttachment(Id fileId, String base64Data) {
-        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');        
-        Attachment a = [
-            SELECT Id, Body
-            FROM Attachment
-            WHERE Id = : fileId
-        ];
-        
-        String existingBody = EncodingUtil.base64Encode(a.Body);        
-        a.Body = EncodingUtil.base64Decode(existingBody + base64Data);        
-        update a;
-    }
-
-
-    @RemoteAction
-    public static Id saveContentVersion(String fileName, String base64Data, String fileId) {
-        // check if fileId id ''(Always blank in first chunk), then call the saveTheFile method,
-        //  which is save the check data and return the attachemnt Id after insert,
-        //  next time (in else) we are call the appentTOFile() method
-        //   for update the attachment with remains chunks
-        if (fileId == '') {
-            fileId = saveTheContentVersion(fileName, base64Data);
-        } else {
-            appendToContentVersion(fileId, base64Data);
-        }
-        
-        return Id.valueOf(fileId);
-    }
-    
-    public static Id saveTheContentVersion(String fileName, String base64Data) {
-        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
-        
-        ContentVersion cv = new ContentVersion();
-        cv.Title = fileName;
-        cv.PathOnClient = fileName;
-        cv.VersionData =  EncodingUtil.base64Decode(base64Data);        
-        cv.IsMajorVersion = true; 
-        cv.origin = 'C';
-        
-        insert cv;        
-        return cv.Id;
-    }
-    
-    private static void appendToContentVersion(Id fileId, String base64Data) {
-        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');        
-        ContentVersion cv = [
-            SELECT Id, VersionData
-            FROM ContentVersion
-            WHERE Id = : fileId
-        ];
-        
-        String existingBody = EncodingUtil.base64Encode(cv.VersionData);        
-        cv.VersionData = EncodingUtil.base64Decode(existingBody + base64Data);        
-        update cv;
+        // global PageReference pageReference {get;set;}
     }
 }

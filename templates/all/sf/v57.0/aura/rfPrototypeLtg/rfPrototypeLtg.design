@@ -1,0 +1,4 @@
+<design:component label="rfPrototypeLtg (Aura)" >
+    <design:attribute name="page" label="Page Name" />
+    <design:attribute name="bundleDomain" label="Bundle Domain" />
+</design:component>
