@@ -333,4 +333,22 @@ global with sharing class rfPrototypeLtgCtrl {
         cv.VersionData = EncodingUtil.base64Decode(existingBody + base64Data);        
         update cv;
     }
+
+    @RemoteAction
+    public static String getContentVersion(Id fileId) {
+        ContentVersion cv = [
+            SELECT Id, VersionData, Title, FileType
+            FROM ContentVersion
+            WHERE Id = : fileId
+        ];
+        
+        String body = EncodingUtil.base64Encode(cv.VersionData);
+        Map<String, String> response = new Map<String, String>();
+        response.put('VersionData', body);
+        response.put('Id', cv.Id);
+        response.put('Title', cv.Title);
+        response.put('FileType', cv.FileType);
+
+        return JSON.serialize(response);
+    }
 }
