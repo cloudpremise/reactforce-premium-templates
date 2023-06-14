@@ -1,9 +1,8 @@
 import React from "react";
 import Input from '@salesforce/design-system-react/components/input';
-import stateReducer from "../hooks/stateReducer";
-import Api from "../Api";
+import stateReducer from "../../../store/reducers/stateReducer";
 import axios from "axios";
-import { saveContentVersion } from "../ApexAdapter";
+import { saveContentVersion, getContentVersion } from "../../hoc/ApexAdapter";
 import Spinner from '@salesforce/design-system-react/components/spinner';
 
 const ContentVersion = (props) => {
@@ -59,16 +58,7 @@ const ContentVersion = (props) => {
         }});
         var base64 = 'base64,';
         var dataStart = fileContents.indexOf(base64) + base64.length;
-        fileContents = fileContents.substring(dataStart);
-        const requestData = {
-            VersionData: encodeURIComponent(fileContents),
-            PathOnClient: file.name,
-            Title: file.name,
-            IsMajorVersion: true,
-            origin: 'C'
-        };
-        console.log(requestData);
-        
+        fileContents = fileContents.substring(dataStart);        
         uploadProcess(file, fileContents);
     }
 
@@ -88,45 +78,43 @@ const ContentVersion = (props) => {
     function uploadInChunk(file, fileContents, startPosition, endPosition, attachId = '') {
         var getchunk = fileContents.substring(startPosition, endPosition);
         saveContentVersion(file.name, encodeURIComponent(getchunk), attachId, (result) => {
-            console.log(result);
             attachId = result;
             startPosition = endPosition;
             endPosition = Math.min(fileContents.length, startPosition + CHUNK_SIZE);
             if (startPosition < endPosition) {
                 uploadInChunk(file, fileContents, startPosition, endPosition, attachId);
             }else{
-                const cancelToken = axios.CancelToken.source();
-                Api.standardApi("/sobjects/ContentVersion/"+attachId, cancelToken).then(async function(data){
-                    setState({type: "update", state: {
-                        loading: false,
-                        cancelToken: null,
-                        contentVersion: data,
-                        contentVersionId: data.Id
-                    }});
-                }).catch(err => {
-                    console.log(err);
-                });
+                setState({type: "update", state: {
+                    loading: false,
+                    cancelToken: null,
+                    contentVersion: null,
+                    contentVersionId: attachId
+                }});
             }
         });        
     }
 
     async function handleGetContentVersion(){
-        const { contentVersionId, contentVersion } = state;
+        const { contentVersionId, files } = state;
         if(contentVersionId === null || contentVersionId.length <= 0){
             return;
         }
-        const cancelToken = axios.CancelToken.source();
-        let url = contentVersion.VersionData;
-        url = url.replace("/services/data/v57.0", "");
-        Api.getFileBlob(url, cancelToken).then(async function(blob){
-            console.log(blob);
+        getContentVersion(contentVersionId, async (data) => {
+            const result = JSON.parse(data);
+            const byteCharacters = atob(result.VersionData);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const file = files[0];
+            const byteArray = new Uint8Array(byteNumbers);
+            var blob = new Blob([byteArray], {type: file.type});
             const fileContents = await toBase64(blob);
-
             var a = document.createElement("a");
             document.body.appendChild(a);
             a.href = fileContents;
             a.target = "_blank";
-            a.download = contentVersion.Title;
+            a.download = result.Title;
             a.click();
 
             setState({type: "update", state: {
@@ -134,22 +122,21 @@ const ContentVersion = (props) => {
                 cancelToken: null,
                 contentVersionBody: fileContents
             }});
-        }).catch(err => {
-            console.log(err);
-            setState({type: "update", state: {
-                loading: false,
-                error: true,
-                errorMessage: err.message,
-                cancelToken: null
-            }});
-        });
-
+        }); 
+        const cancelToken = axios.CancelToken.source();
         setState({type: "update", state: {
             loading: true,
             cancelToken: cancelToken
         }});
     }
-    console.log(state);
+    function isImage(){
+        const { files } = state;
+        if(files === null){
+            return false;
+        }
+        const file = files[0];
+        return (file.type.indexOf("image") !== -1);
+    }
     return (
         <div className="slds-p-around_medium">
             <div className="slds-grid slds-grid_vertical-stretch slds-wrap slds-gutters">
@@ -205,7 +192,7 @@ const ContentVersion = (props) => {
                 null
             }
             {
-                state.contentVersionBody !== null ?
+                state.contentVersionBody !== null && isImage() ?
                     <img src={state.contentVersionBody} alt="contentVersion" />
                 :
                 null
