@@ -2,7 +2,7 @@ import React from "react";
 import Input from '@salesforce/design-system-react/components/input';
 import stateReducer from "../hooks/stateReducer";
 import axios from "axios";
-import { saveContentVersion } from "../ApexAdapter";
+import { saveContentVersion, getContentVersion } from "../ApexAdapter";
 import Spinner from '@salesforce/design-system-react/components/spinner';
 
 const ContentVersion = (props) => {
