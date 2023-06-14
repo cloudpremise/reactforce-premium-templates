@@ -34,7 +34,7 @@
                 'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
                 'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
                 'saveContentVersion': '{!$RemoteAction.rfPrototypeCtrl.saveContentVersion}',
-                'getContentVersion': '{!$RemoteAction.VfReactPortalLandingCtrl.getContentVersion}',
+                'getContentVersion': '{!$RemoteAction.rfPrototypeCtrl.getContentVersion}',
                 'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',
                 'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
                 'sessionId': '{!sessionId}',
