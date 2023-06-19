@@ -194,7 +194,7 @@ global with sharing class rfPrototypeCtrl {
                 return Site.login(userName, password, startUrl);
             }
             else {
-                PageReference page = System.Page.CommunitiesSelfRegConfirm;
+                PageReference page = System.Page.rfPrototypeSelfRegConfirm;
                 page.setRedirect(true);
                 return page;
             }
