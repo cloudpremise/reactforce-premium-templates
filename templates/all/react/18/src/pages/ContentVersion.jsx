@@ -27,11 +27,14 @@ const ContentVersion = (props) => {
         });
 	}
 
-    function handleFileChange(event, name){
+    async function handleFileChange(event, name){
+        const file = event.target.files[0];
+        let fileContents = await toBase64(file);
         setState({
             type: "update",
             state: {
                 [name]: event.target.files,
+                contentVersionBody: fileContents
             }
         });
 	}
@@ -85,13 +88,11 @@ const ContentVersion = (props) => {
             if (startPosition < endPosition) {
                 uploadInChunk(file, fileContents, startPosition, endPosition, attachId);
             }else{
-                const fileContents = await toBase64(file);
                 setState({type: "update", state: {
                     loading: false,
                     cancelToken: null,
                     contentVersion: null,
                     contentVersionId: attachId,
-                    contentVersionBody: fileContents
                 }});
                 await handleGetContentVersion(attachId);
             }
@@ -114,12 +115,6 @@ const ContentVersion = (props) => {
             const byteArray = new Uint8Array(byteNumbers);
             var blob = new Blob([byteArray], {type: file.type});
             const fileContents = await toBase64(blob);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.href = fileContents;
-            a.target = "_blank";
-            a.download = result.Title;
-            a.click();
 
             setState({type: "update", state: {
                 loading: false,
@@ -181,10 +176,12 @@ const ContentVersion = (props) => {
                     >
                         Upload
                     </button>
-                    <h3 className="slds-m-top_medium slds-m-bottom_medium">Loaded from State</h3>
                     {
                         state.contentVersionBody !== null && isImage() ?
-                            <img src={state.contentVersionBody} alt="contentVersion" />
+                            <div>
+                                <h3 className="slds-m-top_medium slds-m-bottom_medium">Loaded from State</h3>
+                                <img src={state.contentVersionBody} alt="contentVersion" />
+                            </div>
                         :
                         null
                     }
@@ -203,10 +200,12 @@ const ContentVersion = (props) => {
                     >
                         Download
                     </button>
-                    <h3 className="slds-m-top_medium slds-m-bottom_medium">Loaded from Controller</h3>
                     {
                         state.contentVersionLiveBody !== null && isImage() ?
-                            <img src={state.contentVersionLiveBody} alt="contentVersion" />
+                            <div>
+                                <h3 className="slds-m-top_medium slds-m-bottom_medium">Loaded from Controller</h3>
+                                <img src={state.contentVersionLiveBody} alt="contentVersion" />
+                            </div>
                         :
                         null
                     }
