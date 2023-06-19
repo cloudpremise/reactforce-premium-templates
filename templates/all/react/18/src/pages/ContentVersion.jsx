@@ -14,7 +14,8 @@ const ContentVersion = (props) => {
         cancelToken: null,
         contentVersion: null,
         contentVersionId: "",
-        contentVersionBody: null
+        contentVersionBody: null,
+        contentVersionLiveBody: null
     });
 
     function handleChange(event, name){
@@ -77,25 +78,28 @@ const ContentVersion = (props) => {
 
     function uploadInChunk(file, fileContents, startPosition, endPosition, attachId = '') {
         var getchunk = fileContents.substring(startPosition, endPosition);
-        saveContentVersion(file.name, encodeURIComponent(getchunk), attachId, (result) => {
+        saveContentVersion(file.name, encodeURIComponent(getchunk), attachId, async (result) => {
             attachId = result;
             startPosition = endPosition;
             endPosition = Math.min(fileContents.length, startPosition + CHUNK_SIZE);
             if (startPosition < endPosition) {
                 uploadInChunk(file, fileContents, startPosition, endPosition, attachId);
             }else{
+                const fileContents = await toBase64(file);
                 setState({type: "update", state: {
                     loading: false,
                     cancelToken: null,
                     contentVersion: null,
-                    contentVersionId: attachId
+                    contentVersionId: attachId,
+                    contentVersionBody: fileContents
                 }});
+                await handleGetContentVersion(attachId);
             }
         });        
     }
 
-    async function handleGetContentVersion(){
-        const { contentVersionId, files } = state;
+    async function handleGetContentVersion(contentVersionId){
+        const { files } = state;
         if(contentVersionId === null || contentVersionId.length <= 0){
             return;
         }
@@ -120,7 +124,7 @@ const ContentVersion = (props) => {
             setState({type: "update", state: {
                 loading: false,
                 cancelToken: null,
-                contentVersionBody: fileContents
+                contentVersionLiveBody: fileContents
             }});
         }); 
         const cancelToken = axios.CancelToken.source();
@@ -128,6 +132,19 @@ const ContentVersion = (props) => {
             loading: true,
             cancelToken: cancelToken
         }});
+    }
+    function download(){
+        const { contentVersionLiveBody, files } = state;
+        if(files === null || contentVersionLiveBody === null){
+            return false;
+        }
+        const file = files[0];
+        var a = document.createElement("a");
+        document.body.appendChild(a);
+        a.href = contentVersionLiveBody;
+        a.target = "_blank";
+        a.download = file.name;
+        a.click();
     }
     function isImage(){
         const { files } = state;
@@ -164,6 +181,13 @@ const ContentVersion = (props) => {
                     >
                         Upload
                     </button>
+                    <h3 className="slds-m-top_medium slds-m-bottom_medium">Loaded from State</h3>
+                    {
+                        state.contentVersionBody !== null && isImage() ?
+                            <img src={state.contentVersionBody} alt="contentVersion" />
+                        :
+                        null
+                    }
                 </div>
                 <div className="slds-p-bottom_small slds-order_1 slds-medium-order_2 slds-col slds-size_12-of-12 slds-medium-size_6-of-12">
                     <Input
@@ -174,10 +198,18 @@ const ContentVersion = (props) => {
                     />
                     <button
                         className="slds-button slds-button_brand"
-                        onClick={() => handleGetContentVersion()}
+                        onClick={() => download()}
+                        disabled={state.contentVersionLiveBody === null}
                     >
-                        Get Content Version
+                        Download
                     </button>
+                    <h3 className="slds-m-top_medium slds-m-bottom_medium">Loaded from Controller</h3>
+                    {
+                        state.contentVersionLiveBody !== null && isImage() ?
+                            <img src={state.contentVersionLiveBody} alt="contentVersion" />
+                        :
+                        null
+                    }
                 </div>
             </div>
             {
@@ -188,12 +220,6 @@ const ContentVersion = (props) => {
                         size="large"
                         variant="brand"
                     />
-                :
-                null
-            }
-            {
-                state.contentVersionBody !== null && isImage() ?
-                    <img src={state.contentVersionBody} alt="contentVersion" />
                 :
                 null
             }
