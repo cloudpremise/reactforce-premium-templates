@@ -8,7 +8,8 @@ const useApi = (url, params, justData = false, callBack = null, callApi = true) 
         callApi: callApi,
         RF_LIMIT: 10,
         RF_OFFSET: 0,
-        hasMore: false
+        hasMore: false,
+        errors: null
     });
     let [data, setData] = React.useState(null);
     function getData(){
@@ -20,7 +21,8 @@ const useApi = (url, params, justData = false, callBack = null, callApi = true) 
         let route = '/services/data/v36.0'+url;
         setAdapterState({
             loading: true,
-            callApi: false
+            callApi: false,
+            errors: null
         });
         params['RF_OFFSET'] = state.RF_OFFSET;
         if(!params.hasOwnProperty("RF_LIMIT")){
@@ -37,7 +39,8 @@ const useApi = (url, params, justData = false, callBack = null, callApi = true) 
                 loading: false,
                 callApi: false,
                 RF_OFFSET: state.RF_OFFSET,
-                hasMore: false
+                hasMore: false,
+                errors: null
             };
             setAdapterState(newState);
             setData(data);
@@ -45,7 +48,13 @@ const useApi = (url, params, justData = false, callBack = null, callApi = true) 
                 callBack(data);
             }
         }).catch(err => {
-            console.log(err);
+            setAdapterState({
+                loading: false,
+                callApi: false,
+                RF_OFFSET: state.RF_OFFSET,
+                hasMore: false,
+                errors: err.response.data
+            });
         });
     }
 

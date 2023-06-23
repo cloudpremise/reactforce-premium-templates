@@ -19,6 +19,7 @@ import Attachments from "../pages/Attachments";
 import ContentVersion from "../pages/ContentVersion";
 import StandardApi from "../pages/StandardApi";
 import InternalApi from "../pages/InternalApi";
+import Lds from "../pages/Lds";
 
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
@@ -137,6 +138,11 @@ const NavigationBar = (props) => {
                                 <span className='slds-truncate' title='Content Version'>Content Version</span>
                             </span>
                         </li>
+                        <li className={'slds-context-bar__item '+(state.activeUrl === "/lds" ? "slds-is-active" : "")}>
+                            <span url="/lds" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Lds'>
+                                <span className='slds-truncate' title='Lds'>Lds</span>
+                            </span>
+                        </li>
                     </GlobalNavigationBarRegion>
                 :
                     <GlobalNavigationBarRegion region="secondary" navigation>
@@ -185,6 +191,7 @@ const RouterComponent = class extends React.Component {
                             <Route path="/content-version" element={<ContentVersion history={history} />} />
                             <Route path="/standard-api" element={<StandardApi history={history} />} />
                             <Route path="/internal-api" element={<InternalApi history={history} />} />
+                            <Route path="/lds" element={<Lds history={history} />} />
                         </Routes>
                     </div>
                 </div>
