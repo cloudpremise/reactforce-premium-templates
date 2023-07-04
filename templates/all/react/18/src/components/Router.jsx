@@ -21,6 +21,7 @@ import StandardApi from "../pages/StandardApi";
 import InternalApi from "../pages/InternalApi";
 import Lds from "../pages/Lds";
 import SObjectApi from "../pages/SObjectApi";
+import Settings from "../pages/Settings";
 
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
@@ -94,59 +95,135 @@ const NavigationBar = (props) => {
         navigate(url);
         window.history.replaceState(null, document.title, props.basename+url+window.location.search);
     }
+
+    let savedTabs = localStorage.getItem("reactforce_settings");
+    let tabs = {
+        home: true,
+        contacts: false,
+        users: false,
+        standardapi: true,
+        internalapi: false,
+        streamingapi: true,
+        attachments: true,
+        contentversion: true,
+        lds: true,
+        sobjectapi: false
+    }
+    if(savedTabs !== null){
+        try{
+            savedTabs = JSON.parse(savedTabs);
+            tabs = savedTabs.tabs;
+        }catch(e){ }
+    }
+
     return (
         <GlobalNavigationBar>
             {
                 sessionId.length > 0 ?
                     <GlobalNavigationBarRegion region="secondary" navigation>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/home" ? "slds-is-active" : "")}>
-                            <span url="/home" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
-                                <span className='slds-truncate' title='Home'>Home</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/contacts" ? "slds-is-active" : "")}>
-                            <span url="/contacts" className="slds-context-bar__label-action" title='Streaming Api'>
-                                <span className='slds-truncate' title='Contacts'>Contacts</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/users" ? "slds-is-active" : "")}>
-                            <span url="/users" className="slds-context-bar__label-action" title='Users'>
-                                <span className='slds-truncate' title='Users'>Users</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/standard-api" ? "slds-is-active" : "")}>
-                            <span url="/standard-api" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Standard Api'>
-                                <span className='slds-truncate' title='Standard Api'>Standard Api</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/internal-api" ? "slds-is-active" : "")}>
-                            <span url="/internal-api" className="slds-context-bar__label-action" title='Internal Api'>
-                                <span className='slds-truncate' title='Internal Api'>Internal Api</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/streaming" ? "slds-is-active" : "")}>
-                            <span url="/streaming" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Streaming Api'>
-                                <span className='slds-truncate' title='Streaming'>Streaming</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/attachments" ? "slds-is-active" : "")}>
-                            <span url="/attachments" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Attachments'>
-                                <span className='slds-truncate' title='Attachments'>Attachments</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/content-version" ? "slds-is-active" : "")}>
-                            <span url="/content-version" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Content Version'>
-                                <span className='slds-truncate' title='Content Version'>Content Version</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/lds" ? "slds-is-active" : "")}>
-                            <span url="/lds" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Lds'>
-                                <span className='slds-truncate' title='Lds'>Lds</span>
-                            </span>
-                        </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/sobject-api" ? "slds-is-active" : "")}>
-                            <span url="/sobject-api" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Sobject Api'>
-                                <span className='slds-truncate' title='Sobject Api'>Sobject Api</span>
+                        {
+                            tabs.home ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/home" ? "slds-is-active" : "")}>
+                                    <span url="/home" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                        <span className='slds-truncate' title='Home'>Home</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.contacts ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/contacts" ? "slds-is-active" : "")}>
+                                    <span url="/contacts" className="slds-context-bar__label-action" title='Streaming Api'>
+                                        <span className='slds-truncate' title='Contacts'>Contacts</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.users ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/users" ? "slds-is-active" : "")}>
+                                    <span url="/users" className="slds-context-bar__label-action" title='Users'>
+                                        <span className='slds-truncate' title='Users'>Users</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.standardapi ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/standard-api" ? "slds-is-active" : "")}>
+                                    <span url="/standard-api" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Standard Api'>
+                                        <span className='slds-truncate' title='Standard Api'>Standard Api</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.internalapi ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/internal-api" ? "slds-is-active" : "")}>
+                                    <span url="/internal-api" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Internal Api'>
+                                        <span className='slds-truncate' title='Internal Api'>Internal Api</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.streamingapi ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/streaming" ? "slds-is-active" : "")}>
+                                    <span url="/streaming" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Streaming Api'>
+                                        <span className='slds-truncate' title='Streaming'>Streaming</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.attachments ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/attachments" ? "slds-is-active" : "")}>
+                                    <span url="/attachments" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Attachments'>
+                                        <span className='slds-truncate' title='Attachments'>Attachments</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.contentversion ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/content-version" ? "slds-is-active" : "")}>
+                                    <span url="/content-version" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Content Version'>
+                                        <span className='slds-truncate' title='Content Version'>Content Version</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.lds ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/lds" ? "slds-is-active" : "")}>
+                                    <span url="/lds" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Lds'>
+                                        <span className='slds-truncate' title='Lds'>Lds</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        {
+                            tabs.sobjectapi ?
+                                <li className={'slds-context-bar__item '+(state.activeUrl === "/sobject-api" ? "slds-is-active" : "")}>
+                                    <span url="/sobject-api" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Sobject Api'>
+                                        <span className='slds-truncate' title='Sobject Api'>Sobject Api</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
+                        <li className={'slds-context-bar__item '+(state.activeUrl === "/settings" ? "slds-is-active" : "")}>
+                            <span url="/settings" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Settings'>
+                                <span className='slds-truncate' title='Settings'>Settings</span>
                             </span>
                         </li>
                     </GlobalNavigationBarRegion>
@@ -164,7 +241,6 @@ const NavigationBar = (props) => {
                         </li>
                     </GlobalNavigationBarRegion>
             }
-            
         </GlobalNavigationBar>
     )
 };
@@ -183,22 +259,23 @@ const RouterComponent = class extends React.Component {
                 <div id="global_wrapper">
                     <div id="global_content" style={{paddingTop: "15px", paddingBottom: "15px"}} data-testid="content">
                         <Routes>
-                            <Route path="/" element={<Landing history={history} />} />
-                            <Route path="/landing" element={<Landing history={history} />} />
-                            <Route path="/home" element={<Home history={history} />} />
+                            <Route path="/" element={<Landing history={history} basename={basename} page={page} />} />
+                            <Route path="/landing" element={<Landing history={history} basename={basename} page={page} />} />
+                            <Route path="/home" element={<Home history={history} basename={basename} page={page} />} />
                             <Route path="/login" element={<Login history={history} basename={basename} page={page} />} />
                             <Route path="/signup" element={<Signup history={history} basename={basename} page={page} />} />
 
 
-                            <Route path="/users" element={<Users history={this.history} />} />
-                            <Route path="/contacts" element={<Contacts history={this.history} />} />
-                            <Route path="/streaming" element={<StreamingApi history={history} />} />
-                            <Route path="/attachments" element={<Attachments history={history} />} />
-                            <Route path="/content-version" element={<ContentVersion history={history} />} />
-                            <Route path="/standard-api" element={<StandardApi history={history} />} />
-                            <Route path="/internal-api" element={<InternalApi history={history} />} />
-                            <Route path="/lds" element={<Lds history={history} />} />
-                            <Route path="/sobject-api" element={<SObjectApi history={history} />} />
+                            <Route path="/users" element={<Users history={this.history} basename={basename} page={page} />} />
+                            <Route path="/contacts" element={<Contacts history={this.history} basename={basename} page={page} />} />
+                            <Route path="/streaming" element={<StreamingApi history={history} basename={basename} page={page} />} />
+                            <Route path="/attachments" element={<Attachments history={history} basename={basename} page={page} />} />
+                            <Route path="/content-version" element={<ContentVersion history={history} basename={basename} page={page} />} />
+                            <Route path="/standard-api" element={<StandardApi history={history} basename={basename} page={page} />} />
+                            <Route path="/internal-api" element={<InternalApi history={history} basename={basename} page={page} />} />
+                            <Route path="/lds" element={<Lds history={history} basename={basename} page={page} />} />
+                            <Route path="/sobject-api" element={<SObjectApi history={history} basename={basename} page={page} />} />
+                            <Route path="/settings" element={<Settings history={history} basename={basename} page={page} />} />
                         </Routes>
                     </div>
                 </div>

@@ -1018,3 +1018,6 @@ div .non-logged-in .slds-global-header__item.slds-global-header__item_logo {
     width: 36px;
     height: 33px;
 }
+.slds-checkbox_toggle .slds-form-element__label {
+    width: 200px;
+}
