@@ -117,7 +117,7 @@ const ContentVersion = (props) => {
                 loading: false,
                 cancelToken: null,
                 contentVersion: result,
-                contentVersionLiveBody: fileContents
+                contentVersionLiveBody: (downloadFile ? state.contentVersionLiveBody : fileContents)
             }});
 
             if(downloadFile){
