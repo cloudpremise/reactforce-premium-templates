@@ -99,8 +99,7 @@ const ContentVersion = (props) => {
         });        
     }
 
-    async function handleGetContentVersion(contentVersionId){
-        const { files } = state;
+    async function handleGetContentVersion(contentVersionId, downloadFile = false){
         if(contentVersionId === null || contentVersionId.length <= 0){
             return;
         }
@@ -111,16 +110,20 @@ const ContentVersion = (props) => {
             for (let i = 0; i < byteCharacters.length; i++) {
                 byteNumbers[i] = byteCharacters.charCodeAt(i);
             }
-            const file = files[0];
             const byteArray = new Uint8Array(byteNumbers);
-            var blob = new Blob([byteArray], {type: file.type});
+            var blob = new Blob([byteArray]);
             const fileContents = await toBase64(blob);
 
             setState({type: "update", state: {
                 loading: false,
                 cancelToken: null,
+                contentVersion: result,
                 contentVersionLiveBody: fileContents
             }});
+
+            if(downloadFile){
+                download(fileContents, result);
+            }
         }); 
         const cancelToken = axios.CancelToken.source();
         setState({type: "update", state: {
@@ -128,26 +131,33 @@ const ContentVersion = (props) => {
             cancelToken: cancelToken
         }});
     }
-    function download(){
-        const { contentVersionLiveBody, files } = state;
-        if(files === null || contentVersionLiveBody === null){
-            return false;
+    function download(contentVersionLiveBody = null, contentVersion = null){
+        if(contentVersionLiveBody === null){
+            contentVersionLiveBody = state.contentVersionLiveBody;
         }
-        const file = files[0];
+        if(contentVersion === null){
+            contentVersionLiveBody = state.contentVersion;
+        }
+        if(contentVersion === null || contentVersionLiveBody === null){
+            return handleGetContentVersion(state.contentVersionId, true);
+        }
         var a = document.createElement("a");
         document.body.appendChild(a);
         a.href = contentVersionLiveBody;
         a.target = "_blank";
-        a.download = file.name;
+        a.download = contentVersion.Title;
         a.click();
     }
     function isImage(){
-        const { files } = state;
-        if(files === null){
+        const { contentVersion } = state;
+        if(contentVersion === null){
             return false;
         }
-        const file = files[0];
-        return (file.type.indexOf("image") !== -1);
+        const extension = contentVersion.FileType.toLowerCase();
+        if(['jpg', 'jpeg', 'png', 'gif'].indexOf(extension) !== -1){
+            return true;
+        }
+        return false;
     }
     return (
         <div className="slds-p-around_medium">
@@ -196,9 +206,16 @@ const ContentVersion = (props) => {
                     <button
                         className="slds-button slds-button_brand"
                         onClick={() => download()}
-                        disabled={state.contentVersionLiveBody === null}
+                        disabled={state.contentVersionId.length === 0 && state.contentVersionLiveBody === null}
                     >
                         Download
+                    </button>
+                    <button
+                        className="slds-button slds-button_brand"
+                        onClick={() => handleGetContentVersion(state.contentVersionId)}
+                        disabled={state.contentVersionId.length === 0}
+                    >
+                        Render
                     </button>
                     {
                         state.contentVersionLiveBody !== null && isImage() ?
