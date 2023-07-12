@@ -9,7 +9,6 @@ const ContentVersion = (props) => {
     const MAX_FILE_SIZE = 4500000; //Max file size 4.5 MB 
     const CHUNK_SIZE = 750000; //Chunk Max size 750Kb 
     const [state, setState] = React.useReducer(stateReducer, {
-        parentId: "00Q0p000003PlmT",
         files: null,
         cancelToken: null,
         contentVersion: null,
