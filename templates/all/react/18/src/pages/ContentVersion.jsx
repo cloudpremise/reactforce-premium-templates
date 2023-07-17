@@ -98,7 +98,7 @@ const ContentVersion = (props) => {
         });        
     }
 
-    async function handleGetContentVersion(contentVersionId, downloadFile = false){
+    async function handleGetContentVersion(contentVersionId, downloadFile = false, render = false){
         if(contentVersionId === null || contentVersionId.length <= 0){
             return;
         }
@@ -117,7 +117,7 @@ const ContentVersion = (props) => {
                 loading: false,
                 cancelToken: null,
                 contentVersion: result,
-                contentVersionLiveBody: (downloadFile ? state.contentVersionLiveBody : fileContents)
+                contentVersionLiveBody: (render ? fileContents : state.contentVersionLiveBody)
             }});
 
             if(downloadFile){
@@ -211,7 +211,7 @@ const ContentVersion = (props) => {
                     </button>
                     <button
                         className="slds-button slds-button_brand"
-                        onClick={() => handleGetContentVersion(state.contentVersionId)}
+                        onClick={() => handleGetContentVersion(state.contentVersionId, false, true)}
                         disabled={state.contentVersionId.length === 0}
                     >
                         Render
