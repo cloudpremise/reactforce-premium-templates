@@ -134,7 +134,7 @@ const NavigationBar = (props) => {
                         {
                             tabs.contacts ?
                                 <li className={'slds-context-bar__item '+(state.activeUrl === "/contacts" ? "slds-is-active" : "")}>
-                                    <span url="/contacts" className="slds-context-bar__label-action" title='Streaming Api'>
+                                    <span url="/contacts" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Streaming Api'>
                                         <span className='slds-truncate' title='Contacts'>Contacts</span>
                                     </span>
                                 </li>
@@ -144,7 +144,7 @@ const NavigationBar = (props) => {
                         {
                             tabs.users ?
                                 <li className={'slds-context-bar__item '+(state.activeUrl === "/users" ? "slds-is-active" : "")}>
-                                    <span url="/users" className="slds-context-bar__label-action" title='Users'>
+                                    <span url="/users" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action" title='Users'>
                                         <span className='slds-truncate' title='Users'>Users</span>
                                     </span>
                                 </li>
