@@ -148,9 +148,13 @@ const ContentVersion = (props) => {
         a.click();
     }
     function isImage(){
-        const { contentVersion } = state;
+        const { contentVersion, files } = state;
         if(contentVersion === null){
-            return false;
+            if(files === null){
+                return false;
+            }
+            const file = files[0];
+            return (file.type.indexOf("image") !== -1);
         }
         const extension = contentVersion.FileType.toLowerCase();
         if(['jpg', 'jpeg', 'png', 'gif'].indexOf(extension) !== -1){

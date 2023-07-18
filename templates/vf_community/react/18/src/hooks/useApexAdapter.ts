@@ -50,6 +50,60 @@ const useApexAdapter = (params: any, justData = false) => {
     return [ state.loading, data, state, setAdapterState ];
 }
 
+const useSampleAdapter = (params, justData = false, callBack: any = null) => {
+    const [state, setState] = React.useState({
+        loading: false,
+        callApi: true,
+    });
+    let [data, setData] = React.useState({
+        response: null
+    });
+    function getData(){
+        let headers = {};
+        let method = 'GET';
+        let route = '/v1/sobject';
+        setAdapterState({
+            loading: true,
+            callApi: false
+        });
+        apexAdapter(method, route, {}, params, headers, (result: any, event: any) =>{
+            let data = JSON.parse(result);
+            
+            const newState = {
+                loading: false,
+                callApi: false,
+            };
+            setAdapterState(newState);
+            setData(data);
+            if(callBack !== null){
+                callBack(data);
+            }
+        });
+    }
+
+    React.useEffect(() => {
+        if(!state.callApi){
+            return;
+        }
+        getData();
+    });
+
+    if(justData){
+        return [data];
+    }
+    function setAdapterState(newState){
+        newState = {
+            ...state,
+            ...newState
+        };
+        setState(newState);
+    }
+    if(callBack !== null){
+        return [ state.loading, state, setAdapterState ];
+    }
+    return [ state.loading, data, state, setAdapterState ];
+}
+
 function translateNamespace(data: any){
     let newData: any = {};
     if(typeof(data) === "object"){
@@ -71,6 +125,6 @@ function translateNamespace(data: any){
     return data;
 }
 
-export { useApexAdapter, translateNamespace };
+export { useApexAdapter, translateNamespace, useSampleAdapter };
 
 export default useApexAdapter;
