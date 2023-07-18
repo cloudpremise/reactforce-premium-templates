@@ -11,7 +11,7 @@ import InlineIcon from "../components/Icons/InlineIcon";
 
 const InternalApi = (props) => {
     let defaultState = {
-        url: window.location.origin+"/vfreactportal/apexremote/v1/sobject",
+        url: window.location.origin+"/apexremote/v1/sobject",
         method: "GET",
         methodSelection: [{id: 'get', label: 'GET'}],
         queryParams: [],
@@ -20,7 +20,8 @@ const InternalApi = (props) => {
         rawData: "",
         response: "",
         errorMessage: null,
-        activeBodyTab: 0
+        activeBodyTab: 0,
+        urlEditMode: false
     };
     const [state, setState] = React.useReducer(stateReducer, defaultState);
     const methods = [
@@ -43,7 +44,6 @@ const InternalApi = (props) => {
     ];
     function handleUrlChange(event, name){
         const valueArray = event.target.value.split("?");
-        let value = valueArray[0];
         let queryParams = [];
         if(valueArray.hasOwnProperty(1)){
             let paramsArray = valueArray[1].split("&");
@@ -64,14 +64,18 @@ const InternalApi = (props) => {
         setState({
             type: "update",
             state: {
-                [name]: value,
+                urlEditMode: true,
+                [name]: event.target.value,
                 queryParams: queryParams
             }
         });
     }
     function prepareRouteUrl(){
         let url = state.url;
-        url += prepareQueryString();
+        if(!state.urlEditMode){
+            url = url.split("?")[0];
+            url += prepareQueryString();
+        }
         return url;
     }
     function prepareQueryString(){
@@ -107,6 +111,7 @@ const InternalApi = (props) => {
         setState({
             type: "update",
             state: {
+                urlEditMode: false,
                 [dataKey]: data
             }
         });
@@ -123,6 +128,7 @@ const InternalApi = (props) => {
         setState({
             type: "update",
             state: {
+                urlEditMode: false,
                 [dataKey]: newData
             }
         });
@@ -209,7 +215,7 @@ const InternalApi = (props) => {
         if(methodSelection.length > 0){
             method = methodSelection[0].label;
         }
-        let url = window.location.origin+"/vfreactportal/apexremote";
+        let url = window.location.origin+"/apexremote";
         let route = state.url;
         route = route.replace(url, "");
         Api.apexAdapter(params, route, method, data, headersObj).then(data => {
@@ -243,7 +249,7 @@ const InternalApi = (props) => {
     return (
         <div className="slds-p-horizontal_small slds-is-relative">
             <div className="slds-grid slds-gutters slds-grid_vertical-align-end slds-m-bottom_medium">
-                <div className="slds-col slds-col-method">
+                <div className="slds-col slds-col-method slds-size_1-of-8">
                     <Combobox
                         events={{
                             onSelect: (event, data) => {
@@ -266,14 +272,14 @@ const InternalApi = (props) => {
                         variant="readonly"
                     />
                 </div>
-                <div className="slds-col">
+                <div className="slds-col slds-size_5-of-8">
                     <Input 
                         label="Route"
                         onChange={(event) => handleUrlChange(event, "url")}
                         value={prepareRouteUrl()}
                     />
                 </div>
-                <div className="slds-col slds-col-method">
+                <div className="slds-col slds-col-method slds-size_2-of-8">
                     <Button
                         variant="brand"
                         label="Send"
