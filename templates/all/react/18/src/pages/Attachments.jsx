@@ -10,7 +10,7 @@ const Attachments = (props) => {
     const MAX_FILE_SIZE = 4500000; //Max file size 4.5 MB 
     const CHUNK_SIZE = 750000; //Chunk Max size 750Kb 
     const [state, setState] = React.useReducer(stateReducer, {
-        parentId: "00Q0p000003PlmT",
+        parentId: "",
         files: null,
         cancelToken: null,
         attachment: null,
@@ -162,7 +162,14 @@ const Attachments = (props) => {
                                         <svg className="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                         <use xlinkHref="/assets/icons/utility-sprite/svg/symbols.svg#upload"></use>
                                         </svg>Upload Files</span>
-                                        <span className="slds-file-selector__text slds-medium-show">or Drop Files</span>
+                                        <span className="slds-file-selector__text slds-medium-show">
+                                            {
+                                                state.files !== null ?
+                                                    state.files[0].name
+                                                :
+                                                    "or Drop Files"
+                                            }
+                                        </span>
                                     </label>
                                 </div>
                             </div>

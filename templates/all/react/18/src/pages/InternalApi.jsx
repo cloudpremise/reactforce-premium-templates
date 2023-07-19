@@ -21,7 +21,8 @@ const InternalApi = (props) => {
         response: "",
         errorMessage: null,
         activeBodyTab: 0,
-        urlEditMode: false
+        urlEditMode: false,
+        statusCode: null
     };
     const [state, setState] = React.useReducer(stateReducer, defaultState);
     const methods = [
@@ -227,8 +228,14 @@ const InternalApi = (props) => {
                 }
             });  
         }).catch(err => {
+            const response = JSON.stringify(err, null, '\t');
+            let statusCode = 500;
+            if(typeof(err) === "object" && err.hasOwnProperty("statusCode")){
+                statusCode = err.statusCode;
+            }
             setState({type: "update", state: {
-                response: err.message,
+                response: response,
+                statusCode: statusCode
             }});
         });
         setState({

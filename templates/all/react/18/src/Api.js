@@ -15,13 +15,23 @@ const ApiHelper = {
                     event = response;
                 }
                 if(event.statusCode !== 200 && event.statusCode !== 201){
-                    return reject({message: event.message});
+                    try{
+                        response = JSON.parse(event.message);
+                    }catch(e){
+                        response = {
+                            message: event.message
+                        }
+                    }
+                    return reject({
+                        statusCode: event.statusCode,
+                        ...response
+                    });
                 }
                 if(typeof(response) !== "object" || !response.hasOwnProperty("result")){
                     response = {result: []};
                 }
                 const data = translateNamespace(response.result);
-                resolve(data);
+                resolve(data, event.statusCode);
             });
         });
     },

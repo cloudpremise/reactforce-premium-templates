@@ -177,7 +177,14 @@ const ContentVersion = (props) => {
                                         <svg className="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                         <use xlinkHref="/assets/icons/utility-sprite/svg/symbols.svg#upload"></use>
                                         </svg>Upload Files</span>
-                                        <span className="slds-file-selector__text slds-medium-show">or Drop Files</span>
+                                        <span className="slds-file-selector__text slds-medium-show">
+                                            {
+                                                state.files !== null ?
+                                                    state.files[0].name
+                                                :
+                                                    "or Drop Files"
+                                            }
+                                        </span>
                                     </label>
                                 </div>
                             </div>
