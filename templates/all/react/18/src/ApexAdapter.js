@@ -197,6 +197,27 @@ const getContentVersion = (fileId, callback) => {
     }
 };
 
-export { ApexAdapter, prepareInlineAdapter, getSessionId, saveAttachment, saveContentVersion, loginAdapter, registerAdapter, getContentVersion };
+const getAttachment = (fileId, callback) => {
+    // mountApexAdapter();
+    let config = { 
+        buffer: true, 
+        escape: false, 
+        timeout: 30000
+    }
+    try{
+
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.getAttachment,
+                                                                    fileId,
+                                                                    (result, event) =>{
+                                                                        callback(result, event);
+                                                                    },
+                                                                    config);        
+    } catch (e) {
+        console.log('e:',e);
+        //alert(e.message);
+    }
+};
+
+export { ApexAdapter, prepareInlineAdapter, getSessionId, saveAttachment, saveContentVersion, loginAdapter, registerAdapter, getContentVersion, getAttachment };
 
 export default ApexAdapter;

@@ -33,6 +33,7 @@
                 'Visualforce': Visualforce,
                 'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
                 'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
+                'getAttachment': '{!$RemoteAction.rfPrototypeCtrl.getAttachment}',
                 'saveContentVersion': '{!$RemoteAction.rfPrototypeCtrl.saveContentVersion}',
                 'getContentVersion': '{!$RemoteAction.rfPrototypeCtrl.getContentVersion}',
                 'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',

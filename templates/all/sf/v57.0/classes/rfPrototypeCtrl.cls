@@ -335,4 +335,22 @@ global with sharing class rfPrototypeCtrl {
 
         return JSON.serialize(response);
     }
+
+    @RemoteAction
+    public static String getAttachment(Id fileId) {
+        Attachment attachemnt = [
+            SELECT Id, Body, Name, ContentType
+            FROM Attachment
+            WHERE Id = : fileId
+        ];
+        
+        String body = EncodingUtil.base64Encode(attachemnt.Body);
+        Map<String, String> response = new Map<String, String>();
+        response.put('Body', body);
+        response.put('Id', attachemnt.Id);
+        response.put('Name', attachemnt.Name);
+        response.put('ContentType', attachemnt.ContentType);
+
+        return JSON.serialize(response);
+    }
 }

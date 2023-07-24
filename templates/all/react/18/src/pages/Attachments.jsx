@@ -1,9 +1,8 @@
 import React from "react";
 import Input from '@salesforce/design-system-react/components/input';
 import stateReducer from "../hooks/stateReducer";
-import Api from "../Api";
 import axios from "axios";
-import { saveAttachment } from "../ApexAdapter";
+import { saveAttachment, getAttachment } from "../ApexAdapter";
 import Spinner from '@salesforce/design-system-react/components/spinner';
 
 const Attachments = (props) => {
@@ -15,7 +14,8 @@ const Attachments = (props) => {
         cancelToken: null,
         attachment: null,
         attachmentId: "",
-        attachmentBody: null
+        attachmentBody: null,
+        attachmentLiveBody: null
     });
 
     function handleChange(event, name){
@@ -27,11 +27,14 @@ const Attachments = (props) => {
         });
 	}
 
-    function handleFileChange(event, name){
+    async function handleFileChange(event, name){
+        const file = event.target.files[0];
+        let fileContents = await toBase64(file);
         setState({
             type: "update",
             state: {
                 [name]: event.target.files,
+                attachmentBody: fileContents
             }
         });
 	}
@@ -103,54 +106,87 @@ const Attachments = (props) => {
         });        
     }
 
-    async function handleGetAttachment(){
-        const { attachmentId, attachment } = state;
+    async function handleGetAttachment(attachmentId, downloadFile = false, render = false){
         if(attachmentId === null || attachmentId.length <= 0){
             return;
         }
-        const cancelToken = axios.CancelToken.source();
-        Api.getFileBlob("/sobjects/Attachment/"+attachmentId+"/Body", cancelToken).then(async function(blob){
-            console.log(blob);
-            const fileContents = await toBase64(blob);
+        getAttachment(attachmentId, async (data) => {
+            try{
+                const result = JSON.parse(data);
+                const byteCharacters = atob(result.Body);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                var blob = new Blob([byteArray]);
+                const fileContents = await toBase64(blob);
 
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.href = fileContents;
-            a.target = "_blank";
-            a.download = attachment.Name;
-            a.click();
+                setState({type: "update", state: {
+                    loading: false,
+                    cancelToken: null,
+                    attachment: result,
+                    attachmentLiveBody: (render ? fileContents : state.attachmentLiveBody)
+                }});
 
-            setState({type: "update", state: {
-                loading: false,
-                cancelToken: null,
-                attachmentBody: fileContents
-            }});
-        }).catch(err => {
-            console.log(err);
-            setState({type: "update", state: {
-                loading: false,
-                error: true,
-                errorMessage: err.message,
-                cancelToken: null
-            }});
+                if(downloadFile){
+                    download(fileContents, result);
+                }
+            }catch(e){
+                console.log(e);
+            }
+            
         });
-
+        const cancelToken = axios.CancelToken.source();
         setState({type: "update", state: {
             loading: true,
             cancelToken: cancelToken
         }});
     }
-    console.log(state);
+    function download(attachmentLiveBody = null, attachment = null){
+        if(attachmentLiveBody === null){
+            attachmentLiveBody = state.attachmentBody;
+        }
+        if(attachment === null){
+            attachmentLiveBody = state.attachment;
+        }
+        if(attachment === null || attachmentLiveBody === null){
+            return handleGetAttachment(state.attachmentId, true);
+        }
+        var a = document.createElement("a");
+        document.body.appendChild(a);
+        a.href = attachmentLiveBody;
+        a.target = "_blank";
+        a.download = attachment.Name;
+        a.click();
+    }
+    function isImage(){
+        const { attachment, files } = state;
+        if(attachment === null){
+            if(files === null){
+                return false;
+            }
+            const file = files[0];
+            return (file.type.indexOf("image") !== -1);
+        }
+        const extension = attachment.ContentType.toLowerCase();
+        return (extension.indexOf("image") !== -1);
+    }
     return (
         <div className="slds-p-around_medium">
             <div className="slds-grid slds-grid_vertical-stretch slds-wrap slds-gutters">
-                <div className="slds-p-bottom_small slds-order_1 slds-medium-order_2 slds-col slds-size_12-of-12 slds-medium-size_6-of-12">
+                <div className="slds-p-bottom_small slds-order_1 slds-medium-order_2 slds-col slds-size_12-of-12 slds-medium-size_12-of-12">
                     <Input
                         label="Salesforce Id"
                         onChange={(event) => handleChange(event, "parentId")}
                         className="slds-m-bottom_small"
                         value={state.parentId}
                     />
+                </div>
+            </div>
+            <div className="slds-grid slds-grid_vertical-stretch slds-wrap slds-gutters">
+                <div className="slds-p-bottom_small slds-order_1 slds-medium-order_2 slds-col slds-size_12-of-12 slds-medium-size_6-of-12">
+                    
                     <div className="slds-form-element slds-m-bottom_medium">
                         <span className="slds-form-element__label" id="file-selector-primary-label-105">Attachment</span>
                         <div className="slds-form-element__control">
@@ -181,6 +217,15 @@ const Attachments = (props) => {
                     >
                         Upload
                     </button>
+                    {
+                        state.attachmentBody !== null && isImage() ?
+                            <div>
+                                <h3 className="slds-m-top_medium slds-m-bottom_medium">Loaded from State</h3>
+                                <img src={state.attachmentBody} alt="contentVersion" />
+                            </div>
+                        :
+                        null
+                    }
                 </div>
                 <div className="slds-p-bottom_small slds-order_1 slds-medium-order_2 slds-col slds-size_12-of-12 slds-medium-size_6-of-12">
                     <Input
@@ -191,10 +236,27 @@ const Attachments = (props) => {
                     />
                     <button
                         className="slds-button slds-button_brand"
-                        onClick={() => handleGetAttachment()}
+                        onClick={() => download()}
+                        disabled={state.attachmentId.length === 0 && state.attachmentLiveBody === null}
                     >
-                        Get Attachment
+                        Download
                     </button>
+                    <button
+                        className="slds-button slds-button_brand"
+                        onClick={() => handleGetAttachment(state.attachmentId, false, true)}
+                        disabled={state.attachmentId.length === 0}
+                    >
+                        Render
+                    </button>
+                    {
+                        state.attachmentLiveBody !== null && isImage() ?
+                            <div>
+                                <h3 className="slds-m-top_medium slds-m-bottom_medium">Loaded from Controller</h3>
+                                <img src={state.attachmentLiveBody} alt="attachment" />
+                            </div>
+                        :
+                        null
+                    }
                 </div>
             </div>
             {
@@ -205,12 +267,6 @@ const Attachments = (props) => {
                         size="large"
                         variant="brand"
                     />
-                :
-                null
-            }
-            {
-                state.attachmentBody !== null ?
-                    <img src={state.attachmentBody} alt="attachment" />
                 :
                 null
             }
