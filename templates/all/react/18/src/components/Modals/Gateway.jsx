@@ -194,7 +194,7 @@ const Gateway = (props) => {
             setState({type: "update", state: {
                 loading: false,
             }});
-            props.onSuccess(data[0]);
+            props.onSuccess(data.result[0]);
         }).catch(err => {
             setState({type: "update", state: {
                 loading: false,

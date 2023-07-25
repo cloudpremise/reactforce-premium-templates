@@ -219,8 +219,9 @@ const InternalApi = (props) => {
         let url = window.location.origin+"/apexremote";
         let route = state.url.split("?")[0];
         route = route.replace(url, "");
-        Api.apexAdapter(params, route, method, data, headersObj).then((data, statusCode) => {
-            const response = JSON.stringify(data, null, '\t');
+        Api.apexAdapter(params, route, method, data, headersObj).then((data) => {
+            const response = JSON.stringify(data.result, null, '\t');
+            const statusCode = data.statusCode;
             setState({
                 type: "update",
                 state: {
