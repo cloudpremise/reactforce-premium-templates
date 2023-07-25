@@ -217,14 +217,15 @@ const InternalApi = (props) => {
             method = methodSelection[0].label;
         }
         let url = window.location.origin+"/apexremote";
-        let route = state.url;
+        let route = state.url.split("?")[0];
         route = route.replace(url, "");
-        Api.apexAdapter(params, route, method, data, headersObj).then(data => {
+        Api.apexAdapter(params, route, method, data, headersObj).then((data, statusCode) => {
             const response = JSON.stringify(data, null, '\t');
             setState({
                 type: "update",
                 state: {
                     response: response,
+                    statusCode: statusCode
                 }
             });  
         }).catch(err => {
@@ -331,7 +332,16 @@ const InternalApi = (props) => {
                 }
             </Tabs>
             <Textarea
-                label="Response"
+                label={
+                    state.statusCode ?
+                        <>
+                            Response (
+                                <span>Status: {state.statusCode}</span>
+                            )
+                        </>
+                    :
+                        "Response"
+                }
                 rows={15}
                 readOnly
                 value={state.response}
