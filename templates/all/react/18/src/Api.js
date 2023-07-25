@@ -30,8 +30,9 @@ const ApiHelper = {
                 if(typeof(response) !== "object" || !response.hasOwnProperty("result")){
                     response = {result: []};
                 }
-                const data = translateNamespace(response.result);
-                resolve(data, event.statusCode);
+                response.result = translateNamespace(response.result);
+                response.statusCode = event.statusCode;
+                resolve(data);
             });
         });
     },

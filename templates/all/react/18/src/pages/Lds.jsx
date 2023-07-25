@@ -17,7 +17,7 @@ import Textarea from '@salesforce/design-system-react/components/textarea';
 import Table from "../components/Table";
 import Details from "../components/Details";
 
-import useApexAdapter from "../hooks/useApexAdapter";
+import { useSampleAdapter } from "../hooks/useApexAdapter";
 
 function Lds() {
     const accounts = [
@@ -58,7 +58,7 @@ function Lds() {
             ),
         },
     }));
-    const [loading, apexState] = useApexAdapter({});
+    const [loading, apexState] = useSampleAdapter({});
     const [state, setState] = React.useState({
         inputValue: '',
 		selection: [accountsWithIcon[0], accountsWithIcon[1]],
@@ -326,8 +326,10 @@ function Lds() {
                 </div>
                 <p className='slds-p-horizontal_medium api-response'>
                     {
-                        loading === false && apexState.response !== null ?
-                            apexState.response
+                        loading === false && apexState.message !== null ?
+                            <a href="https://cloudpremise.gitbook.io/reactforce/" rel="noreferrer" target="_blank" className="slds-text-heading_small slds-text-color_destructive">
+                                {apexState.message}
+                            </a>
                         :
                             null
                     }
