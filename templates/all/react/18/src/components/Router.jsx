@@ -254,7 +254,7 @@ const RouterComponent = class extends React.Component {
             <>
                 <div className={sessionId.length === 0 ? 'non-logged-in' : ''}>
                     <Header basename={basename} page={page} />
-                    <NavigationBar basename={basename} page={page} />
+                    {/* <NavigationBar basename={basename} page={page} /> */}
                 </div>
                 <div id="global_wrapper">
                     <div id="global_content" style={{paddingTop: "15px", paddingBottom: "15px"}} data-testid="content">

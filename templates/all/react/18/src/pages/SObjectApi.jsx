@@ -55,6 +55,9 @@ const SObjectApi = (props) => {
                 }
             });
         }).catch(err => {
+            if(typeof(err) === "object" && err.hasOwnProperty("error")){
+                err['message'] = err.error;
+            }
             setState({
                 type: "update",
                 state: {
