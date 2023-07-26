@@ -1021,3 +1021,6 @@ div .non-logged-in .slds-global-header__item.slds-global-header__item_logo {
 .slds-checkbox_toggle .slds-form-element__label {
     width: 200px;
 }
+#root .slds-scope .slds-global-header_container {
+    position: static;
+}

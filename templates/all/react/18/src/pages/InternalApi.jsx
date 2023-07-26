@@ -220,7 +220,7 @@ const InternalApi = (props) => {
         let route = state.url.split("?")[0];
         route = route.replace(url, "");
         Api.apexAdapter(params, route, method, data, headersObj).then((data) => {
-            const response = JSON.stringify(data.result, null, '\t');
+            const response = JSON.stringify(data, null, '\t');
             const statusCode = data.statusCode;
             setState({
                 type: "update",
