@@ -1,5 +1,5 @@
 import React from "react";
-import apexAdapter from "../ApexAdapter";
+import {ApexAdapter, SampleApexAdapter} from "../ApexAdapter";
 
 const namespace = process.env.REACT_APP_SFDC_NAMESPACE;
 const useApexAdapter = (params, justData = false, callBack = null) => {
@@ -23,7 +23,7 @@ const useApexAdapter = (params, justData = false, callBack = null) => {
         if(!params.hasOwnProperty("RF_LIMIT")){
             params['RF_LIMIT'] = state.RF_LIMIT;
         }
-        apexAdapter(method, route, {}, params, headers, (result, event) =>{
+        ApexAdapter(method, route, {}, params, headers, (result, event) =>{
             let response = JSON.parse(result);
             if(typeof(response) !== "object" || !response.hasOwnProperty("result")){
                 response = {result: []};
@@ -31,7 +31,7 @@ const useApexAdapter = (params, justData = false, callBack = null) => {
 
             let hasMore = true;
 			const newData = translateNamespace(response.result);
-            if(newData.length <= 0){
+            if(newData.length <= 0 || newData.length <= state.RF_LIMIT){
                 hasMore = false;
             }
             if(data !== null){
@@ -92,7 +92,7 @@ const useSampleAdapter = (params, justData = false, callBack = null) => {
             loading: true,
             callApi: false
         });
-        apexAdapter(method, route, {}, params, headers, (result, event) =>{
+        SampleApexAdapter(method, route, {}, params, headers, (result, event) =>{
             let data = JSON.parse(result);
             
             const newState = {
