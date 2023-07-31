@@ -172,6 +172,32 @@ class StreamingApi extends React.Component {
             topic: event.target.value
         });
     }
+    createTopic(){
+        const data = {
+            sObject: {
+                attributes: {
+                    "type":"PushTopic"
+                },
+                "Name": "Push_Contact",
+                "Query": "SELECT Id, FirstName, LastName FROM Contact",
+                "ApiVersion": 58.0,
+                "NotifyForOperationCreate": true,
+                "NotifyForOperationUpdate": true,
+                "NotifyForOperationUndelete": true,
+                "NotifyForOperationDelete": true,
+                "NotifyForFields": "All",
+            }
+        };
+
+        let headers = {};
+        let method = 'POST';
+        let route = '/v1/sobject';
+        apexAdapter(method, route, data, {}, headers, (result, event) =>{
+            const response = JSON.parse(result);
+			const data = response.result;
+            console.log(data);
+        });
+    }
 
     render(){
         const { topic, subscribedTopic, status } = this.state;
@@ -202,6 +228,11 @@ class StreamingApi extends React.Component {
                                 variant="brand"
                                 onClick={() => this.subscribeTopic(topic)}
                                 disabled={(subscribedTopic === topic)}
+                            />
+                            <Button
+                                label="Create Push_Contact"
+                                variant="brand"
+                                onClick={() => this.createTopic(topic)}
                             />
                         </div>
                         <div className="slds-col"></div>
