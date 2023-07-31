@@ -32,6 +32,7 @@
             var inlineApexAdaptor = {
                 'Visualforce': Visualforce,
                 'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
+                'callSampleInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callSampleInternalApi}',
                 'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
                 'getAttachment': '{!$RemoteAction.rfPrototypeCtrl.getAttachment}',
                 'saveContentVersion': '{!$RemoteAction.rfPrototypeCtrl.saveContentVersion}',
