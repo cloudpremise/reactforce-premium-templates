@@ -74,6 +74,20 @@ global with sharing class rfPrototypeCtrl {
         return response;
     }
 
+    @RemoteAction
+    public static String callSampleInternalApi(String method, String requestURI, String requestEntityStr, String params, String headers) {
+        System.debug('sfPrototypeAllCtrl.callInternalApi()');
+        System.debug('method:'+method);
+        System.debug('requestURI:'+requestURI);
+        System.debug('requestEntityStr:'+requestEntityStr);
+        System.debug('params:'+params);
+        System.debug('headers:'+headers);
+
+        String response = '{"message": "Learn about Reactforce here.", "result": []}';
+        system.debug('callInternalApi response:'+response);
+        return response;
+    }
+
 
     //Login related code
     global PageReference login() {
