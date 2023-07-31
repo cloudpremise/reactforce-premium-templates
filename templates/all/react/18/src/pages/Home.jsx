@@ -1,8 +1,10 @@
 import React from "react";
 import { getSessionId } from "../ApexAdapter";
+import { useSampleAdapter } from "../hooks/useApexAdapter";
 import { useNavigate } from "react-router-dom";
 
 const Home = (props) => {
+    const [loading, state] = useSampleAdapter({});
     const navigate = useNavigate();
     React.useEffect(() => {
         const sessionId = getSessionId();
@@ -17,9 +19,14 @@ const Home = (props) => {
                 Home page for authenticated users.
             </div>
             <p className="slds-m-top_medium">
-                <a href="https://cloudpremise.gitbook.io/reactforce/" rel="noreferrer" target="_blank" className="slds-text-heading_small slds-text-color_destructive">
-                    Learn about Reactforce here.
-                </a>
+                {
+                    loading === false && state !== null && state.hasOwnProperty("message") && state.message !== null ?
+                        <a href="https://cloudpremise.gitbook.io/reactforce/" rel="noreferrer" target="_blank" className="slds-text-heading_small slds-text-color_destructive">
+                            {state.message}
+                        </a>
+                    :
+                        null
+                }
             </p>
         </div>
     )
