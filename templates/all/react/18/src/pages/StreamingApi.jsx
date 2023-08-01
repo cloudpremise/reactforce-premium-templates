@@ -140,6 +140,9 @@ class StreamingApi extends React.Component {
             case "/topic/SMS":
                 heading = "Message Received";
                 break;
+            case "PushTopic":
+                heading = "PushTopic Created";
+                break;
             default:
                 break;
         }
@@ -173,6 +176,7 @@ class StreamingApi extends React.Component {
         });
     }
     createTopic(){
+        const { actions } = this.state;
         const data = {
             sObject: {
                 attributes: {
@@ -195,7 +199,12 @@ class StreamingApi extends React.Component {
         apexAdapter(method, route, data, {}, headers, (result, event) =>{
             const response = JSON.parse(result);
 			const data = response.result;
-            console.log(data);
+            data['id'] = data.Id;
+            data['channel'] = 'PushTopic';
+            actions.push(data);
+            this.setState({
+                actions: actions,
+            });
         });
     }
 

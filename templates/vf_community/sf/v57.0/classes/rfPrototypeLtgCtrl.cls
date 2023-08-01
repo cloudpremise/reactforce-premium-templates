@@ -314,7 +314,7 @@ global with sharing class rfPrototypeLtgCtrl {
         cv.Title = fileName;
         cv.PathOnClient = fileName;
         cv.VersionData =  EncodingUtil.base64Decode(base64Data);        
-        cv.IsMajorVersion = true; 
+        cv.IsMajorVersion = false; 
         cv.origin = 'C';
         
         insert cv;        
