@@ -18,6 +18,9 @@ const ApiHelper = {
                     try{
                         response = JSON.parse(event.message);
                     }catch(e){
+                        if(event.hasOwnProperty("error")){
+                            event['message'] = event.error;
+                        }
                         response = {
                             message: event.message
                         }
