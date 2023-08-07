@@ -12,6 +12,7 @@ import Radio from '@salesforce/design-system-react/components/radio';
 import Checkbox from '@salesforce/design-system-react/components/checkbox';
 import Tooltip from '@salesforce/design-system-react/components/tooltip';
 import Textarea from '@salesforce/design-system-react/components/textarea'; 
+import InlineIcon from "../components/Icons/InlineIcon";
 
 
 import Table from "../components/Table";
@@ -253,6 +254,21 @@ function Lds() {
                             selection={state.singleSelection}
                             value={state.inputValue}
                             variant="readonly"
+                            input={{
+                                props: {
+                                    iconRight: (
+                                        <InlineIcon
+                                            category="utility"
+                                            name="down"
+                                            iconPosition="right"
+                                            size="x-small"
+                                            color="grey"
+                                            inputIcon
+                                            combobox
+                                        />
+                                    )
+                                }
+                            }}
                         />
                         </div>
                     </div>

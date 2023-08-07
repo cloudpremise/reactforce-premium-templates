@@ -241,7 +241,7 @@ class StreamingApi extends React.Component {
                             <Button
                                 label="Create Push_Contact"
                                 variant="brand"
-                                onClick={() => this.createTopic(topic)}
+                                onClick={() => this.createTopic()}
                             />
                         </div>
                         <div className="slds-col"></div>

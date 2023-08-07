@@ -835,7 +835,7 @@ const Gateway = (props) => {
     return (
         <Modal
             isOpen={props.open}
-            containerClassName="slds-scope"
+            portalClassName="slds-scope"
             footer={[
                 state.loading ?
                     <div key="spinner" className="slds-is-relative" style={{height: "45px"}}>

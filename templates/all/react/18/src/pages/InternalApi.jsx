@@ -279,6 +279,21 @@ const InternalApi = (props) => {
                         selection={state.methodSelection}
                         value={state.method}
                         variant="readonly"
+                        input={{
+                            props: {
+                                iconRight: (
+                                    <InlineIcon
+                                        category="utility"
+                                        name="down"
+                                        iconPosition="right"
+                                        size="x-small"
+                                        color="grey"
+                                        inputIcon
+                                        combobox
+                                    />
+                                )
+                            }
+                        }}
                     />
                 </div>
                 <div className="slds-col slds-size_5-of-8">
