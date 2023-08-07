@@ -12,7 +12,6 @@ import Radio from '@salesforce/design-system-react/components/radio';
 import Checkbox from '@salesforce/design-system-react/components/checkbox';
 import Tooltip from '@salesforce/design-system-react/components/tooltip';
 import Textarea from '@salesforce/design-system-react/components/textarea'; 
-import InlineIcon from "../components/Icons/InlineIcon";
 
 
 import Table from "../components/Table";
