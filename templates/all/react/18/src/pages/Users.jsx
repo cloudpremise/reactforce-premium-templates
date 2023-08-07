@@ -109,16 +109,16 @@ const Users = (props) => {
     function getItems(){
         let items = [];
         if(loading){
-            for(let i = 0; i <= 15; i++){
-                items.push({
-                    id: "",
-                    Id: "",
-                    IsSsoEnabled: false,
-                    Name: "",
-                    UserLicenseId: "",
-                    UserType: "",
-                });
-            }
+            // for(let i = 0; i <= 15; i++){
+            //     items.push({
+            //         id: "",
+            //         Id: "",
+            //         IsSsoEnabled: false,
+            //         Name: "",
+            //         UserLicenseId: "",
+            //         UserType: "",
+            //     });
+            // }
             return items;
         }
         if(users === null){

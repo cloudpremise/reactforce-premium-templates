@@ -120,18 +120,18 @@ const Contacts = (props) => {
     function getItems(){
         let items = [];
         if(loading && state.contacts === null){
-            for(let i = 0; i <= 4; i++){
-                items.push({
-                    key: "",
-                    id: "",
-                    Id: "",
-                    Name: "",
-                    ScheduleType__c: "",
-                    Type__c: "",
-                    BatchScope__c: 0,
-                    onClick: () => {},
-                });
-            }
+            // for(let i = 0; i <= 4; i++){
+            //     items.push({
+            //         key: "",
+            //         id: "",
+            //         Id: "",
+            //         Name: "",
+            //         ScheduleType__c: "",
+            //         Type__c: "",
+            //         BatchScope__c: 0,
+            //         onClick: () => {},
+            //     });
+            // }
             return items;
         }
         if(state.contacts === null){

@@ -7,6 +7,7 @@ import Spinner from '@salesforce/design-system-react/components/spinner';
 import Combobox from '@salesforce/design-system-react/components/combobox';
 import AccountModal from "../components/Modals/Account";
 import Confirmation from "../components/Modals/Confirmation";
+import InlineIcon from "../components/Icons/InlineIcon";
 
 const SObjectApi = (props) => {
     let defaultState = {
@@ -168,6 +169,21 @@ const SObjectApi = (props) => {
                         selection={state.apiTypeSelection}
                         value={state.apiType}
                         variant="readonly"
+                        input={{
+                            props: {
+                                iconRight: (
+                                    <InlineIcon
+                                        category="utility"
+                                        name="down"
+                                        iconPosition="right"
+                                        size="x-small"
+                                        color="grey"
+                                        inputIcon
+                                        combobox
+                                    />
+                                )
+                            }
+                        }}
                     />
                 </div>
                 <div className="slds-col slds-size_4-of-8">

@@ -24,7 +24,7 @@ const Confirmation = (props) => {
             isOpen={props.open}
             footer={footer}
             onRequestClose={onRequestClose}
-            containerClassName="slds-scope"
+            portalClassName="slds-scope"
         >
             {
                 props.errorMessage !== null ?
