@@ -1024,3 +1024,6 @@ div .non-logged-in .slds-global-header__item.slds-global-header__item_logo {
 #root .slds-scope .slds-global-header_container {
     position: static;
 }
+.slds-textarea-response {
+    min-height: 300px;
+}
