@@ -35,7 +35,7 @@ const ApiHelper = {
                 }
                 response.result = translateNamespace(response.result);
                 response.statusCode = event.statusCode;
-                resolve(data);
+                resolve(response);
             });
         });
     },
