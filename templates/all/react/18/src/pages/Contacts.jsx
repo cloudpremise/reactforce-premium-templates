@@ -464,7 +464,7 @@ const Contacts = (props) => {
                 <DataTableRowActions
                     options={getTableRowOptions()}
                     onAction={handleRowAction}
-                    dropdown={<Dropdown length="7" onClick={handleRowClick} />}
+                    dropdown={<Dropdown length="7" showButtonIcon onClick={handleRowClick} />}
                 />
             </DataTable>
             {
