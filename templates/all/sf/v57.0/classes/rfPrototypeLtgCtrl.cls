@@ -93,14 +93,24 @@ global with sharing class rfPrototypeLtgCtrl {
 
         Callable handlerClass = null;
         try{
-            Type internalHandlerType = Type.forName('ApiInternalEntry.CallableEntryPoint');
+            Type internalHandlerType = Type.forName('backend.ApiInternalEntry.CallableEntryPoint');
             System.debug('internalHandlerType:'+internalHandlerType);
 
             handlerClass = (Callable) internalHandlerType.newInstance();
             System.debug('handlerClass:'+handlerClass);
 
         } catch (Exception e){
-            throw new CustomException(CustomException.ERROR_TYPE.SERVER_ERROR, String.valueOf(PackageUtil.getPackageNamespace() + ' API is not installed').removeStart(' '));
+            System.debug('backend.ApiInternalEntry was not found.  Trying without namespace');
+            try{
+                Type internalHandlerType = Type.forName('ApiInternalEntry.CallableEntryPoint');
+                System.debug('internalHandlerType:'+internalHandlerType);
+    
+                handlerClass = (Callable) internalHandlerType.newInstance();
+                System.debug('handlerClass:'+handlerClass);
+
+            } catch (Exception e2){
+                throw new ReactforceCtrlException('Api is not Installed');
+            }
         }
 
         Map<String, Object> args = new Map<String, Object>();
@@ -275,6 +285,8 @@ global with sharing class rfPrototypeLtgCtrl {
     	System.debug(JSON.serialize(resultObj));
     	return resultObj;
     }
+
+    public class ReactforceCtrlException extends Exception {}
     
     global class ProcessingResult {
     	global Boolean isSuccess {get;set;}
