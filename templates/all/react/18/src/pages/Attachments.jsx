@@ -4,6 +4,7 @@ import stateReducer from "../hooks/stateReducer";
 import axios from "axios";
 import { saveAttachment, getAttachment } from "../ApexAdapter";
 import Spinner from '@salesforce/design-system-react/components/spinner';
+import InlineIcon from "../components/Icons/InlineIcon";
 
 const Attachments = (props) => {
     const MAX_FILE_SIZE = 4500000; //Max file size 4.5 MB 
@@ -194,10 +195,10 @@ const Attachments = (props) => {
                                 <div className="slds-file-selector__dropzone">
                                     <input type="file" onChange={(event) => handleFileChange(event, "files")} className="slds-file-selector__input slds-assistive-text" accept="image/*" id="file-upload-input-107" aria-labelledby="file-selector-primary-label-105 file-selector-secondary-label106" />
                                     <label className="slds-file-selector__body" htmlFor="file-upload-input-107" id="file-selector-secondary-label106">
-                                    <span className="slds-file-selector__button slds-button slds-button_neutral">
-                                        <svg className="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                        <use xlinkHref="/assets/icons/utility-sprite/svg/symbols.svg#upload"></use>
-                                        </svg>Upload Files</span>
+                                        <span className="slds-file-selector__button slds-button slds-button_neutral">
+                                            <InlineIcon justIcon category="utility" name="upload" size="xx-small" iconClassName="slds-button__icon slds-button__icon_left" />
+                                            Upload Files
+                                        </span>
                                         <span className="slds-file-selector__text slds-medium-show">
                                             {
                                                 state.files !== null ?
