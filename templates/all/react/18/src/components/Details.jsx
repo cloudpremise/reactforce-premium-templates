@@ -382,7 +382,7 @@ const Details = (props) => {
                                             ]}
                                             menuPosition="overflowBoundaryElement"
                                             onAction={handleRowAction}
-                                            dropdown={<Dropdown />}
+                                            dropdown={<Dropdown showButtonIcon />}
                                         />
                                     </DataTable>
                                 </Card>
