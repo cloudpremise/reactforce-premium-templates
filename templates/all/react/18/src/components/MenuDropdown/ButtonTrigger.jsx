@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 // joining classNames together."
 import classnames from 'classnames';
 
-import Button from '@salesforce/design-system-react/components/button';
+import Button from '../Button';
 
 // ### Children
 import { MENU_DROPDOWN_TRIGGER } from '@salesforce/design-system-react/utilities/constants';
@@ -129,6 +129,7 @@ class Trigger extends React.Component {
 			onMouseLeave,
 			triggerRef,
 			triggerClassName,
+            showButtonIcon,
 			...deprecatedPropsFromMenuDropdown
 		} = this.props;
 
@@ -175,13 +176,18 @@ class Trigger extends React.Component {
 					{...propsFromGrandchildButton}
 					buttonRef={triggerRef}
 				>
-                    <InlineIcon
-                        category="utility"
-                        name="down"
-                        size="x-small"
-                        iconClassName="slds-button__icon slds-button__icon_hint"
-                        justIcon={true}
-                    />
+                    {
+                        showButtonIcon ?
+                            <InlineIcon
+                                category="utility"
+                                name="down"
+                                size="x-small"
+                                iconClassName="slds-button__icon slds-button__icon_hint"
+                                justIcon={true}
+                            />
+                        :
+                        null
+                    }
                 </Button>
 				{menu}
 			</div>

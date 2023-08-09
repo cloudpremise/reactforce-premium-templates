@@ -1084,6 +1084,7 @@ class MenuDropdown extends React.Component {
 				triggerRef={this.saveRefToTrigger}
 				variant={this.props.buttonVariant}
 				{...CustomTriggerChildProps}
+                showButtonIcon={this.props.showButtonIcon}
 			/>
 		);
 	}
