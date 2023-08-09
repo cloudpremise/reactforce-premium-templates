@@ -8,6 +8,7 @@ import Combobox from '@salesforce/design-system-react/components/combobox';
 import AccountModal from "../components/Modals/Account";
 import Confirmation from "../components/Modals/Confirmation";
 import InlineIcon from "../components/Icons/InlineIcon";
+import Icon from '@salesforce/design-system-react/components/icon';
 
 const SObjectApi = (props) => {
     let defaultState = {
@@ -145,6 +146,39 @@ const SObjectApi = (props) => {
             }
         });
     }
+    function onRenderMenuItem(props){
+        const {assistiveText, selected, option} = props;
+        return (
+            <span
+                className={'slds-truncate '+ option.disabled ? '' : 'slds-disabled-text'}
+                title={option.label}
+            >
+                {
+                    selected ?
+                        <Icon
+                            assistiveText={{ label: option.label }}
+                            category="utility"
+                            icon={require("@salesforce/design-system-react/icons/utility/check").default}
+                            name='check'
+                            size="x-small"
+                            className={"slds-listbox__icon-selected slds-listbox__icon-selected-custom slds-m-right_xx-small"}
+                        />
+                    :
+                    null
+                }
+                {selected ? (
+                    <span className="slds-assistive-text">
+                        {assistiveText.optionSelectedInMenu}
+                    </span>
+                ) : null}{' '}
+                {option.type === 'deselect' ? (
+                    <em>{option.label}</em>
+                ) : (
+                    option.label
+                )}
+            </span>
+        )
+    }
     return (
         <div className="slds-p-horizontal_small">
             <div className="slds-grid slds-gutters slds-grid_vertical-align-end slds-m-bottom_x-small">
@@ -167,6 +201,8 @@ const SObjectApi = (props) => {
                         }}
                         options={apiTypes}
                         selection={state.apiTypeSelection}
+                        onRenderMenuItem={onRenderMenuItem}
+                        classNameContainer={"customize-combobox"}
                         value={state.apiType}
                         variant="readonly"
                         input={{

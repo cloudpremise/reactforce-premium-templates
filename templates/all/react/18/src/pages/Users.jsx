@@ -166,7 +166,7 @@ const Users = (props) => {
                     )
                 }
                 heading="Users sObject API Demo (MP)"
-                icon={<InlineIcon category="standard" name="customers" />}
+                icon={<InlineIcon category="standard" name="customers" size="medium" />}
             >
                 <DataTable
                     id="users-table"

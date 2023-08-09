@@ -7,11 +7,12 @@ import comboboxFilterAndLimit from '@salesforce/design-system-react/components/c
 import Combobox from '@salesforce/design-system-react/components/combobox';
 import Datepicker from '@salesforce/design-system-react/components/date-picker';
 import Timepicker from '@salesforce/design-system-react/components/time-picker'; 
-import Button from '@salesforce/design-system-react/components/button';
+import Button from '../components/Button';
 import Radio from '@salesforce/design-system-react/components/radio'; 
 import Checkbox from '@salesforce/design-system-react/components/checkbox';
 import Tooltip from '@salesforce/design-system-react/components/tooltip';
 import Textarea from '@salesforce/design-system-react/components/textarea'; 
+import Icon from '@salesforce/design-system-react/components/icon';
 
 
 import Table from "../components/Table";
@@ -73,7 +74,40 @@ function Lds() {
             ...state,
             value: data.date
         });
-	};
+	}
+    function onRenderMenuItem(props){
+        const {assistiveText, selected, option} = props;
+        return (
+            <span
+                className={'slds-truncate '+ option.disabled ? '' : 'slds-disabled-text'}
+                title={option.label}
+            >
+                {
+                    selected ?
+                        <Icon
+                            assistiveText={{ label: option.label }}
+                            category="utility"
+                            icon={require("@salesforce/design-system-react/icons/utility/check").default}
+                            name='check'
+                            size="x-small"
+                            className={"slds-listbox__icon-selected slds-listbox__icon-selected-custom slds-m-right_xx-small"}
+                        />
+                    :
+                    null
+                }
+                {selected ? (
+                    <span className="slds-assistive-text">
+                        {assistiveText.optionSelectedInMenu}
+                    </span>
+                ) : null}{' '}
+                {option.type === 'deselect' ? (
+                    <em>{option.label}</em>
+                ) : (
+                    option.label
+                )}
+            </span>
+        )
+    }
     return (
         <IconSettings iconPath={getSFResourcesPath()+"assets/icons"}>
             <div className="App">
@@ -251,6 +285,8 @@ function Lds() {
                             }}
                             options={accounts}
                             selection={state.singleSelection}
+                            onRenderMenuItem={onRenderMenuItem}
+                            classNameContainer={"customize-combobox"}
                             value={state.inputValue}
                             variant="readonly"
                             input={{
