@@ -56,7 +56,11 @@
             return;
         }
         var callbackId = payload.callbackId;
-        var action = component.get("c.callInternalApi");
+        var actionName = "callInternalApi";
+        if(payload.hasOwnProperty("action")){
+            actionName = payload.action;
+        }
+        var action = component.get("c."+actionName);
         action.setParams(payload.params);
         action.setCallback(this, function(response){
             var state = response.getState();
@@ -69,7 +73,7 @@
                         error = errors[0].message;
                     }
                 }
-                data = error;
+                data = '{"message": "'+error+'", "statusCode": 500'+'}';
             }
             container.message({ //Send message to react app with data and callback id so that actual callback function is triggered.
                 data: data,

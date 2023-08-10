@@ -151,7 +151,7 @@ global with sharing class rfPrototypeLtgCtrl {
         return redirectURL;
     }
     
-    @RemoteAction
+    @AuraEnabled
     global Static ProcessingResult login(String credentialObj){
     	ProcessingResult resultObj = new ProcessingResult ();
     	resultObj.isSuccess = false;
@@ -265,7 +265,7 @@ global with sharing class rfPrototypeLtgCtrl {
         return null;
     }
 
-    @RemoteAction
+    @AuraEnabled
     global Static ProcessingResult registerUser(String firstName, String lastName, String email, String password, String confirmPassword, String communityNickname){
         ProcessingResult resultObj = new ProcessingResult ();
     	resultObj.isSuccess = false;
@@ -297,7 +297,7 @@ global with sharing class rfPrototypeLtgCtrl {
 
 
     //Attachments and content version related code
-    @RemoteAction
+    @AuraEnabled
     public static Id saveAttachment(Id parentId, String fileName, String base64Data, String contentType, String fileId) {
         // check if fileId id ''(Always blank in first chunk), then call the saveTheFile method,
         //  which is save the check data and return the attachemnt Id after insert,
@@ -340,7 +340,7 @@ global with sharing class rfPrototypeLtgCtrl {
     }
 
 
-    @RemoteAction
+    @AuraEnabled
     public static Id saveContentVersion(String fileName, String base64Data, String fileId) {
         // check if fileId id ''(Always blank in first chunk), then call the saveTheFile method,
         //  which is save the check data and return the attachemnt Id after insert,
@@ -382,7 +382,7 @@ global with sharing class rfPrototypeLtgCtrl {
         update cv;
     }
 
-    @RemoteAction
+    @AuraEnabled
     public static String getContentVersion(Id fileId) {
         ContentVersion cv = [
             SELECT Id, VersionData, Title, FileType
@@ -400,7 +400,7 @@ global with sharing class rfPrototypeLtgCtrl {
         return JSON.serialize(response);
     }
 
-    @RemoteAction
+    @AuraEnabled
     public static String getAttachment(Id fileId) {
         Attachment attachemnt = [
             SELECT Id, Body, Name, ContentType

@@ -73,7 +73,7 @@
                         error = errors[0].message;
                     }
                 }
-                data = error;
+                data = '{"message": "'+error+'", "statusCode": 500'+'}';
             }
             container.message({ //Send message to react app with data and callback id so that actual callback function is triggered.
                 data: data,
