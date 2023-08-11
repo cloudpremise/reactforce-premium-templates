@@ -77,6 +77,7 @@ const SObjectApi = (props) => {
         });
     }
     function onAccountModal(status = false){
+        Api.apiType = state.apiType;
         setState({
             type: "update",
             state: {
@@ -190,7 +191,16 @@ const SObjectApi = (props) => {
                                     type: "update",
                                     state: {
                                         apiType: data.selection[0].id,
-                                        apiTypeSelection: data.selection,
+                                        apiTypeSelection: {
+                                            ...data.selection,
+                                            icon: (
+                                                <InlineIcon
+                                                    assistiveText={{ label: 'Account' }}
+                                                    category="standard"
+                                                    name="account"
+                                                />
+                                            ),
+                                        },
                                     }
                                 });
                             },

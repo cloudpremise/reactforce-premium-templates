@@ -1,5 +1,6 @@
 import React from "react";
 import apexAdapter from "../ApexAdapter";
+import SampleApexAdapter from "../ApexAdapter";
 
 const namespace: any = process.env.REACT_APP_SFDC_NAMESPACE;
 const useApexAdapter = (params: any, justData = false) => {
@@ -50,12 +51,12 @@ const useApexAdapter = (params: any, justData = false) => {
     return [ state.loading, data, state, setAdapterState ];
 }
 
-const useSampleAdapter = (params, justData = false, callBack: any = null) => {
+const useSampleAdapter = (params: any, justData = false) => {
     const [state, setState] = React.useState({
         loading: false,
         callApi: true,
     });
-    let [data, setData] = React.useState({
+    let [data, setData] = React.useState<any>({
         response: null
     });
     function getData(){
@@ -66,7 +67,7 @@ const useSampleAdapter = (params, justData = false, callBack: any = null) => {
             loading: true,
             callApi: false
         });
-        apexAdapter(method, route, {}, params, headers, (result: any, event: any) =>{
+        SampleApexAdapter(method, route, {}, params, headers, (result: any, event: any) =>{
             let data = JSON.parse(result);
             
             const newState = {
@@ -75,9 +76,6 @@ const useSampleAdapter = (params, justData = false, callBack: any = null) => {
             };
             setAdapterState(newState);
             setData(data);
-            if(callBack !== null){
-                callBack(data);
-            }
         });
     }
 
@@ -91,15 +89,12 @@ const useSampleAdapter = (params, justData = false, callBack: any = null) => {
     if(justData){
         return [data];
     }
-    function setAdapterState(newState){
+    function setAdapterState(newState: any){
         newState = {
             ...state,
             ...newState
         };
         setState(newState);
-    }
-    if(callBack !== null){
-        return [ state.loading, state, setAdapterState ];
     }
     return [ state.loading, data, state, setAdapterState ];
 }
