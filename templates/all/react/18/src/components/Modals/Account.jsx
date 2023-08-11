@@ -91,7 +91,7 @@ const AccountModal = (props) => {
             });
             let id = '';
             if(method === 'POST'){
-                id = data.id;
+                id = data.Id;
             }else{
                 id = state.Id;
             }

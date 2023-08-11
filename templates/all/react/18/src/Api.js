@@ -140,7 +140,7 @@ const ApiHelper = {
                 self.apexAdapter((method !== 'GET' ? {} : params), route, method, data, headers)
                     .then((data) => {
                         const result = data.result;
-                        if(params.hasOwnProperty("Id")){
+                        if(Array.isArray(result)){
                             resolve(result[0]);
                         }else{
                             resolve(result);
