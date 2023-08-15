@@ -105,7 +105,7 @@ global with sharing class rfPrototypeCtrl {
         System.debug('params:'+params);
         System.debug('headers:'+headers);
 
-        String response = '{"message": "Learn about Reactforce here.", "result": []}';
+        String response = '{"response": "Learn about Reactforce here.", "result": []}';
         system.debug('callInternalApi response:'+response);
         return response;
     }
