@@ -1,5 +1,6 @@
 import React from "react";
 import apexAdapter from "../ApexAdapter";
+import { SampleApexAdapter } from "../ApexAdapter";
 
 const namespace: any = process.env.REACT_APP_SFDC_NAMESPACE;
 const useApexAdapter = (params: any, justData = false) => {
@@ -66,7 +67,7 @@ const useSampleAdapter = (params, justData = false, callBack: any = null) => {
             loading: true,
             callApi: false
         });
-        apexAdapter(method, route, {}, params, headers, (result: any, event: any) =>{
+        SampleApexAdapter(method, route, {}, params, headers, (result: any, event: any) =>{
             let data = JSON.parse(result);
             
             const newState = {
