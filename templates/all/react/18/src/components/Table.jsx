@@ -2,10 +2,10 @@ import React from 'react';
 
 import Button from './Button';
 import ButtonGroup from '@salesforce/design-system-react/components/button-group';
-import DataTable from '@salesforce/design-system-react/components/data-table';
+import DataTable from '../components/DataTable';
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
-import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
-import DataTableRowActions from '@salesforce/design-system-react/components/data-table/row-actions';
+import DataTableCell from '../components/DataTable/Cell';
+import DataTableRowActions from '../components/DataTable/RowActions';
 import Dropdown from '../components/MenuDropdown';
 import DropdownTrigger from '../components/MenuDropdown/ButtonTrigger';
 import InlineIcon from "./Icons/InlineIcon";
@@ -456,7 +456,7 @@ const Table = (props) => {
                     ]}
                     menuPosition="overflowBoundaryElement"
                     onAction={handleRowAction}
-                    dropdown={<Dropdown length="7" />}
+                    dropdown={<Dropdown showButtonIcon length="7" />}
                 />
             </DataTable>
             {
