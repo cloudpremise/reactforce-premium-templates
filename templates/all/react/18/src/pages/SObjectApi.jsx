@@ -118,8 +118,8 @@ const SObjectApi = (props) => {
     }
     function onDeleteModalSuccess(){
         let method = 'DELETE';
-
-        Api.callApi({sobjecttypename: "Account", Id: state.AccountId}, method).then(data => {
+        let data = [state.AccountId];
+        Api.callApi({sobjecttypename: "Account", Id: state.AccountId}, method, data).then(data => {
             setState({
                 type: "update",
                 state: {
