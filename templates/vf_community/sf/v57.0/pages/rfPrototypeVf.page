@@ -32,8 +32,6 @@
             var inlineApexAdaptor = {
                 'Visualforce': Visualforce,
                 'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
-                'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
-                'saveContentVersion': '{!$RemoteAction.rfPrototypeCtrl.saveContentVersion}',
                 'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',
                 'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
                 'sessionId': '{!sessionId}',
