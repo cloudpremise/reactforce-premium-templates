@@ -20,9 +20,9 @@ const Home = (props) => {
             </div>
             <p className="slds-m-top_medium">
                 {
-                    loading === false && state !== null && state.hasOwnProperty("message") && state.message !== null ?
+                    loading === false && state !== null && state.hasOwnProperty("response") && state.response !== null ?
                         <a href="https://cloudpremise.gitbook.io/reactforce/" rel="noreferrer" target="_blank" className="slds-text-heading_small slds-text-color_destructive">
-                            {state.message}
+                            {state.response}
                         </a>
                     :
                         null
