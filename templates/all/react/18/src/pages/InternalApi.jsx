@@ -200,7 +200,7 @@ const InternalApi = (props) => {
         return data;
     }
     function sendRemoteRequest(){
-        const { body, methodSelection, queryParams, headers, activeBodyTab, rawData } = state;
+        const { body, queryParams, headers, activeBodyTab, rawData } = state;
         let data = prepareData(body);
         if(activeBodyTab === 1){
             if(rawData.length > 0){
@@ -213,10 +213,7 @@ const InternalApi = (props) => {
         }
         const params = prepareData(queryParams);
         const headersObj = prepareData(headers);
-        let method = 'GET';
-        if(methodSelection.length > 0){
-            method = methodSelection[0].label;
-        }
+        let method = state.method;
         let url = window.location.origin+"/apexremote";
         let route = state.url.split("?")[0];
         route = route.replace(url, "");
@@ -300,7 +297,16 @@ const InternalApi = (props) => {
                                     type: "update",
                                     state: {
                                         method: data.selection[0].label,
-                                        methodSelection: data.selection,
+                                        methodSelection: {
+                                            ...data.selection,
+                                            icon: (
+                                                <InlineIcon
+                                                    assistiveText={{ label: 'Account' }}
+                                                    category="standard"
+                                                    name="account"
+                                                />
+                                            ),
+                                        },
                                     }
                                 });
                             },
