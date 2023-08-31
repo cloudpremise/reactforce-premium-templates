@@ -310,6 +310,49 @@ const getAttachment = (fileId, callback) => {
     }
 };
 
-export { ApexAdapter, prepareInlineAdapter, getSessionId, saveAttachment, saveContentVersion, loginAdapter, registerAdapter, getContentVersion, getAttachment, SampleApexAdapter };
+const loginWithCodeAdapter = (email, callback) => {
+    // mountApexAdapter();
+    let config = { 
+        buffer: true, 
+        escape: false, 
+        timeout: 30000
+    }
+    try{
+
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.emailLoginApi,
+                                                                    email,
+                                                                    (result, event) =>{
+                                                                        callback(result, event);
+                                                                    },
+                                                                    config);        
+    } catch (e) {
+        console.log('e:',e);
+        //alert(e.message);
+    }
+};
+
+const signupWithCodeAdapter = (email, callback) => {
+    // mountApexAdapter();
+    let config = { 
+        buffer: true, 
+        escape: false, 
+        timeout: 30000
+    }
+    try{
+
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.registerEmailApi,
+                                                                    email,
+                                                                    (result, event) =>{
+                                                                        callback(result, event);
+                                                                    },
+                                                                    config);        
+    } catch (e) {
+        console.log('e:',e);
+        //alert(e.message);
+    }
+};
+
+export { ApexAdapter, prepareInlineAdapter, getSessionId, saveAttachment, saveContentVersion, loginAdapter, registerAdapter, 
+    getContentVersion, getAttachment, SampleApexAdapter, loginWithCodeAdapter, signupWithCodeAdapter };
 
 export default ApexAdapter;
