@@ -394,7 +394,7 @@ global with sharing class rfPrototypeCtrl {
 
     @RemoteAction
     global Static ProcessingResult emailLogin(String email){
-        System.debug('challengePasswordlessEmailLogin()');
+        System.debug('emailLogin()');
         System.debug('this.userEmail:'+email);
         List<User> users = [SELECT Id from User where Email = :email];
         System.debug('usr:'+users.size());        
@@ -429,9 +429,7 @@ global with sharing class rfPrototypeCtrl {
 
     @RemoteAction
     global Static ProcessingResult registerUserEmail(String userEmail) {
-        System.debug('registerUserEmail()');      
-        
-        
+        System.debug('registerUserEmail()');        
         Account acct = [SELECT Id from Account WHERE Name = 'Portal Users' Limit 1];
         Contact cont = new Contact();
         cont.AccountId = acct.Id;
@@ -442,12 +440,18 @@ global with sharing class rfPrototypeCtrl {
         
         Profile prof = [SELECT Id from Profile where Name = 'vfCommunityVfCCPLogin User' LIMIT 1];
 
+        Long CURRENT_TIME = DateTime.now().getTime();
+		String timeString = String.valueOf(CURRENT_TIME);
+		String alias = timeString.substring(timeString.length() - 8);
+        String nickname = userEmail.substring(22)+'.'+CURRENT_TIME;
+        String username = userEmail + '.' + CURRENT_TIME;
+
         User u = new user();
         u.LastName = 'Test 1';
         u.Email = userEmail;
-        u.Alias = 'Tcode10';
-        u.Username = userEmail; //NOTE - this will need to be unique each sign up
-        u.CommunityNickname = 'test10'; //NOTE - this will need to be unique each sign up
+        u.Alias = alias;
+        u.Username = username; //NOTE - this will need to be unique each sign up
+        u.CommunityNickname = nickname;
         u.LocaleSidKey = 'en_US';
         u.TimeZoneSidKey = 'GMT';
         u.ProfileID = prof.Id; //hvcpu
@@ -469,26 +473,6 @@ global with sharing class rfPrototypeCtrl {
             resultObj.isSuccess = true;
             resultObj.userId = u.Id;
             resultObj.identifier = identifier;
-        }
-        return resultObj;
-
-    }
-
-    @RemoteAction
-    global Static ProcessingResult verifyRegistrationCode(String identifier, String verificationCode) {
-		System.debug('verifyEmailRegistration()');
-        System.debug('Identifier = '+identifier);
-        System.debug('Verification Code = '+verificationCode);
-        String startURL = '/';
-        Auth.VerificationResult res = System.UserManagement.verifySelfRegistration(Auth.VerificationMethod.EMAIL, identifier, verificationCode, startUrl);
-        System.debug('res:'+String.valueOf(res));
-
-        ProcessingResult resultObj = new ProcessingResult ();
-        resultObj.isSuccess = true;
-    	resultObj.result = 'Code is valid!';
-        if(res.success != true){
-            resultObj.result = res.message;
-            resultObj.isSuccess = false;
         }
         return resultObj;
     }
