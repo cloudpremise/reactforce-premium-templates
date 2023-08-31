@@ -54,7 +54,6 @@
                 'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
                 'emailLoginApi': '{!$RemoteAction.rfPrototypeCtrl.emailLogin}',
                 'registerEmailApi': '{!$RemoteAction.rfPrototypeCtrl.registerUserEmail}',
-                'registerCodeApi': '{!$RemoteAction.rfPrototypeCtrl.verifyRegistrationCode}',
                 'sessionId': '{!sessionId}',
                 'resources': '{!$Resource.ReactforceAssets}',
                 'landingResources': '{!$Resource.CustomerPortal}',
