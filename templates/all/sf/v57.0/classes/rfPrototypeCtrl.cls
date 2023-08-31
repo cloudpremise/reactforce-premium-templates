@@ -272,11 +272,13 @@ global with sharing class rfPrototypeCtrl {
     public class ReactforceCtrlException extends Exception {}
 
     global class ProcessingResult {
-    	global Boolean isSuccess {get;set;}
-    	global String result {get;set;}
-        global string email {get;set;}
-        global string startURL {get;set;}
-        // global PageReference pageReference {get;set;}
+    	public Boolean isSuccess {get;set;}
+    	public String result {get;set;}
+        public string email {get;set;}
+        public string startURL {get;set;}
+        public string userId {get;set;}
+        public string identifier {get;set;}
+        // public PageReference pageReference {get;set;}
     }
 
 
@@ -400,5 +402,122 @@ global with sharing class rfPrototypeCtrl {
         response.put('ContentType', attachemnt.ContentType);
 
         return JSON.serialize(response);
+    }
+
+    @RemoteAction
+    global Static ProcessingResult emailLogin(String email){
+        System.debug('challengePasswordlessEmailLogin()');
+        System.debug('this.userEmail:'+email);
+        List<User> users = [SELECT Id from User where Email = :email];
+        System.debug('usr:'+users.size());        
+
+        ProcessingResult resultObj = new ProcessingResult ();
+        resultObj.isSuccess = false;
+    	resultObj.result = 'Email is not valid!';
+        if(users.size() > 0){
+            resultObj.result = 'Email is valid!';
+            String loginIdentifier = System.UserManagement.initPasswordlessLogin(users[0].Id, Auth.VerificationMethod.EMAIL);
+            resultObj.isSuccess = true;
+            resultObj.userId = users[0].Id;
+            resultObj.identifier = loginIdentifier;
+        }
+        return resultObj;
+    }
+    
+    global PageReference verifyEmailLogin() {
+        String startUrl = '/';
+        String userId = System.currentPageReference().getParameters().get('userId');
+        String identifier = System.currentPageReference().getParameters().get('identifier');
+        String verificationCode = System.currentPageReference().getParameters().get('verificationCode');        
+		System.debug('verifyEmailLogin()');
+        System.debug('startUrl:'+startUrl);
+        Auth.VerificationResult res = System.UserManagement.verifyPasswordlessLogin(userId, Auth.VerificationMethod.EMAIL, identifier, verificationCode, startUrl);
+        System.debug('res:'+String.valueOf(res));
+        if(res.success == true){
+     		return res.redirect;
+        }
+        return null;
+    }
+
+    @RemoteAction
+    global Static ProcessingResult registerUserEmail(String userEmail) {
+        System.debug('registerUserEmail()');      
+        
+        
+        Account acct = [SELECT Id from Account WHERE Name = 'Portal Users' Limit 1];
+        Contact cont = new Contact();
+        cont.AccountId = acct.Id;
+        cont.LastName = 'Unverified Passwordless User';
+        cont.Email = userEmail;
+        insert cont;
+        
+        
+        Profile prof = [SELECT Id from Profile where Name = 'vfCommunityVfCCPLogin User' LIMIT 1];
+
+        User u = new user();
+        u.LastName = 'Test 1';
+        u.Email = userEmail;
+        u.Alias = 'Tcode10';
+        u.Username = userEmail; //NOTE - this will need to be unique each sign up
+        u.CommunityNickname = 'test10'; //NOTE - this will need to be unique each sign up
+        u.LocaleSidKey = 'en_US';
+        u.TimeZoneSidKey = 'GMT';
+        u.ProfileID = prof.Id; //hvcpu
+        u.LanguageLocaleKey = 'en_US';
+        u.EmailEncodingKey = 'UTF-8';
+        u.ContactId = cont.Id;
+        System.debug('u:'+u);
+        //insert u;
+ 
+        String identifier = System.UserManagement.initSelfRegistration(Auth.VerificationMethod.Email, u);
+        System.debug('this.registrationIdentifier:'+identifier);
+
+
+        ProcessingResult resultObj = new ProcessingResult ();
+        resultObj.isSuccess = false;
+    	resultObj.result = 'Username is not valid';
+        if(u != null){
+            resultObj.result = 'Username is valid';
+            resultObj.isSuccess = true;
+            resultObj.userId = u.Id;
+            resultObj.identifier = identifier;
+        }
+        return resultObj;
+
+    }
+
+    @RemoteAction
+    global Static ProcessingResult verifyRegistrationCode(String identifier, String verificationCode) {
+		System.debug('verifyEmailRegistration()');
+        System.debug('Identifier = '+identifier);
+        System.debug('Verification Code = '+verificationCode);
+        String startURL = '/';
+        Auth.VerificationResult res = System.UserManagement.verifySelfRegistration(Auth.VerificationMethod.EMAIL, identifier, verificationCode, startUrl);
+        System.debug('res:'+String.valueOf(res));
+
+        ProcessingResult resultObj = new ProcessingResult ();
+        resultObj.isSuccess = true;
+    	resultObj.result = 'Code is valid!';
+        if(res.success != true){
+            resultObj.result = res.message;
+            resultObj.isSuccess = false;
+        }
+        return resultObj;
+    }
+
+    global PageReference verifyEmailRegistration() {
+		System.debug('verifyEmailRegistration()');
+        String startUrl = '/';
+        if(System.currentPageReference() != null){
+            startUrl = System.currentPageReference().getParameters().get('startURL');
+        }
+        String identifier = System.currentPageReference().getParameters().get('identifier');
+        String verificationCode = System.currentPageReference().getParameters().get('verificationCode');
+        Auth.VerificationResult res = System.UserManagement.verifySelfRegistration(Auth.VerificationMethod.EMAIL, identifier, verificationCode, startUrl);
+        System.debug('res:'+String.valueOf(res));
+        if(res.success == true){
+     		return res.redirect;
+        }
+        return null;
     }
 }

@@ -11,6 +11,8 @@ import Home from "../pages/Home";
 import Landing from "../pages/Landing";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import LoginWithCode from "../pages/LoginWithCode";
+import SignupWithCode from "../pages/SignupWithCode";
 
 import Users from "../pages/Users";
 import Contacts from "../pages/Contacts";
@@ -235,8 +237,18 @@ const NavigationBar = (props) => {
                             </span>
                         </li>
                         <li className={'slds-context-bar__item'}>
+                            <span url={props.basename+"/login-code"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Login With Code'>Login With Code</span>
+                            </span>
+                        </li>
+                        <li className={'slds-context-bar__item'}>
                             <span url={props.basename+"/signup"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
                                 <span className='slds-truncate' title='Signup'>Signup</span>
+                            </span>
+                        </li>
+                        <li className={'slds-context-bar__item'}>
+                            <span url={props.basename+"/signup-code"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Signup With Code'>Signup With Code</span>
                             </span>
                         </li>
                     </GlobalNavigationBarRegion>
@@ -264,6 +276,8 @@ const RouterComponent = class extends React.Component {
                             <Route path="/home" element={<Home history={history} basename={basename} page={page} />} />
                             <Route path="/login" element={<Login history={history} basename={basename} page={page} />} />
                             <Route path="/signup" element={<Signup history={history} basename={basename} page={page} />} />
+                            <Route path="/login-code" element={<LoginWithCode history={history} basename={basename} page={page} />} />
+                            <Route path="/signup-code" element={<SignupWithCode history={history} basename={basename} page={page} />} />
 
 
                             <Route path="/users" element={<Users history={this.history} basename={basename} page={page} />} />

@@ -26,6 +26,19 @@
                 <apex:param name="communityNicknameJS" value="" />
             </apex:actionFunction>
         </apex:form>
+        <apex:form>
+            <apex:actionFunction name="verifyEmailLoginAF" oncomplete="onLoginFormComplete(request, event, data);" action="{!verifyEmailLogin}" reRender="false">
+                <apex:param name="userId" value="" />
+                <apex:param name="identifier" value="" />
+                <apex:param name="verificationCode" value="" />
+            </apex:actionFunction>
+        </apex:form>
+        <apex:form>
+            <apex:actionFunction name="verifyEmailRegistrationAF" oncomplete="onRegistrationFormComplete(request, event, data);" action="{!verifyEmailRegistration}" reRender="false">
+                <apex:param name="identifier" value="" />
+                <apex:param name="verificationCode" value="" />
+            </apex:actionFunction>
+        </apex:form>
         <script type="text/javascript">
             Visualforce.remoting.timeout = 120000;
             //This object will be available from within the reactforce apps via the global.inlineApexAdaptor object
@@ -39,6 +52,9 @@
                 'getContentVersion': '{!$RemoteAction.rfPrototypeCtrl.getContentVersion}',
                 'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',
                 'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
+                'emailLoginApi': '{!$RemoteAction.vfCommunityVfCtrl.emailLogin}',
+                'registerEmailApi': '{!$RemoteAction.vfCommunityVfCtrl.registerUserEmail}',
+                'registerCodeApi': '{!$RemoteAction.vfCommunityVfCtrl.verifyRegistrationCode}',
                 'sessionId': '{!sessionId}',
                 'resources': '{!$Resource.ReactforceAssets}',
                 'landingResources': '{!$Resource.CustomerPortal}',
@@ -49,6 +65,8 @@
                 'bundleId': '{!bundleId}',
             };
 
+            function onLoginFormComplete(request, event, data){}
+            function onRegistrationFormComplete(request, event, data){}
         </script>
         <div style="min-height: 100vh;" id="root"></div>
 
