@@ -61,8 +61,46 @@ global with sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     public static String callInternalApi(String method, String requestURI, String requestEntityStr, String params, String headers) {
-        System.debug('rfPrototypeCtrl.callInternalApi()');
+        System.debug('ApiInternalEntryCtrl.callInternalApi(method, requestURI, requestEntityStr, params, headers)');
+        
+        Map<String,String> paramMap = new Map<String,String>();
+        paramMap = (Map<String,String>) JSON.deserialize(params, Map<String,String>.Class);
+        System.debug('paramMap:'+paramMap);
+
+        Map<String,String> headerMap = new Map<String,String>();
+        headerMap = (Map<String,String>) JSON.deserialize(headers, Map<String,String>.Class);
+        System.debug('headerMap:'+headerMap);
+
+        /* This code may not exist in the backend.  It needs to be dynamically constructed*/
+
+        Callable handlerClass = null;
+        try{
+            Type internalHandlerType = Type.forName('ApiInternalEntry.CallableEntryPoint');
+            System.debug('internalHandlerType:'+internalHandlerType);
+
+            handlerClass = (Callable) internalHandlerType.newInstance();
+            System.debug('handlerClass:'+handlerClass);
+
+        } catch (Exception e){
+            throw new rfPrototypeCtrlException('API is not installed');
+        }
+
+        Map<String, Object> args = new Map<String, Object>();
+        args.put('httpMethod', method);
+        args.put('requestUri', requestURI);
+        args.put('requestEntityStr', requestEntityStr);
+        args.put('params',paramMap);
+        args.put('headers',headerMap);
+
+        return JSON.serialize(handlerClass.call('invoke', args));
+    }
+
+    @RemoteAction
+    @AuraEnabled
+    public static String callSampleInternalApi(String method, String requestURI, String requestEntityStr, String params, String headers) {
+        System.debug('sfPrototypeAllCtrl.callInternalApi()');
         System.debug('method:'+method);
         System.debug('requestURI:'+requestURI);
         System.debug('requestEntityStr:'+requestEntityStr);
@@ -89,6 +127,7 @@ global with sharing class rfPrototypeCtrl {
     }
     
     @RemoteAction
+    @AuraEnabled
     global Static ProcessingResult login(String credentialObj){
     	ProcessingResult resultObj = new ProcessingResult ();
     	resultObj.isSuccess = false;
@@ -203,6 +242,7 @@ global with sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     global Static ProcessingResult registerUser(String firstName, String lastName, String email, String password, String confirmPassword, String communityNickname){
         ProcessingResult resultObj = new ProcessingResult ();
     	resultObj.isSuccess = false;
@@ -230,4 +270,6 @@ global with sharing class rfPrototypeCtrl {
         global string startURL {get;set;}
         // global PageReference pageReference {get;set;}
     }
+
+    public class rfPrototypeCtrlException extends Exception{}
 }
