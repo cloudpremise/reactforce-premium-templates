@@ -61,6 +61,7 @@ global without sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     public static String callInternalApi(String method, String requestURI, String requestEntityStr, String params, String headers) {
         System.debug('ApiInternalEntryCtrl.callInternalApi(method, requestURI, requestEntityStr, params, headers)');
         
@@ -83,7 +84,7 @@ global without sharing class rfPrototypeCtrl {
             System.debug('handlerClass:'+handlerClass);
 
         } catch (Exception e){
-            throw new CustomException(CustomException.ERROR_TYPE.SERVER_ERROR, String.valueOf(PackageUtil.getPackageNamespace() + ' API is not installed').removeStart(' '));
+            throw new rfPrototypeCtrlException('API is not installed');
         }
 
         Map<String, Object> args = new Map<String, Object>();
@@ -97,6 +98,7 @@ global without sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     public static String callSampleInternalApi(String method, String requestURI, String requestEntityStr, String params, String headers) {
         System.debug('sfPrototypeAllCtrl.callInternalApi()');
         System.debug('method:'+method);
@@ -125,6 +127,7 @@ global without sharing class rfPrototypeCtrl {
     }
     
     @RemoteAction
+    @AuraEnabled
     global Static ProcessingResult login(String credentialObj){
     	ProcessingResult resultObj = new ProcessingResult ();
     	resultObj.isSuccess = false;
@@ -239,6 +242,7 @@ global without sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     global Static ProcessingResult registerUser(String firstName, String lastName, String email, String password, String confirmPassword, String communityNickname){
         ProcessingResult resultObj = new ProcessingResult ();
     	resultObj.isSuccess = false;
@@ -272,6 +276,7 @@ global without sharing class rfPrototypeCtrl {
 
     //Attachments and content version related code
     @RemoteAction
+    @AuraEnabled
     public static Id saveAttachment(Id parentId, String fileName, String base64Data, String contentType, String fileId) {
         // check if fileId id ''(Always blank in first chunk), then call the saveTheFile method,
         //  which is save the check data and return the attachemnt Id after insert,
@@ -315,6 +320,7 @@ global without sharing class rfPrototypeCtrl {
 
 
     @RemoteAction
+    @AuraEnabled
     public static Id saveContentVersion(String fileName, String base64Data, String fileId) {
         // check if fileId id ''(Always blank in first chunk), then call the saveTheFile method,
         //  which is save the check data and return the attachemnt Id after insert,
@@ -357,6 +363,7 @@ global without sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     public static String getContentVersion(Id fileId) {
         ContentVersion cv = [
             SELECT Id, VersionData, Title, FileType
@@ -375,6 +382,7 @@ global without sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     public static String getAttachment(Id fileId) {
         Attachment attachemnt = [
             SELECT Id, Body, Name, ContentType
@@ -393,6 +401,7 @@ global without sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     global Static ProcessingResult emailLogin(String email){
         System.debug('emailLogin()');
         System.debug('this.userEmail:'+email);
@@ -428,6 +437,7 @@ global without sharing class rfPrototypeCtrl {
     }
 
     @RemoteAction
+    @AuraEnabled
     global Static ProcessingResult registerUserEmail(String userEmail) {
         System.debug('registerUserEmail()');        
         Account acct = [SELECT Id from Account WHERE Name = 'Portal Users' Limit 1];
@@ -492,4 +502,6 @@ global without sharing class rfPrototypeCtrl {
         }
         return null;
     }
+
+    public class rfPrototypeCtrlException extends Exception{}
 }
