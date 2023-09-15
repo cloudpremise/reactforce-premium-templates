@@ -77,7 +77,7 @@ global without sharing class rfPrototypeCtrl {
 
         Callable handlerClass = null;
         try{
-            Type internalHandlerType = Type.forName('ApiInternalEntry.CallableEntryPoint');
+            Type internalHandlerType = Type.forName('backend.ApiInternalEntry.CallableEntryPoint');
             System.debug('internalHandlerType:'+internalHandlerType);
 
             handlerClass = (Callable) internalHandlerType.newInstance();
@@ -263,6 +263,8 @@ global without sharing class rfPrototypeCtrl {
     	return resultObj;
     }
     
+    public class ReactforceCtrlException extends Exception {}
+
     global class ProcessingResult {
     	public Boolean isSuccess {get;set;}
     	public String result {get;set;}
