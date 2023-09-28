@@ -458,7 +458,6 @@ const Cases = (props) => {
             closeModal: false
         }});
     }
-    console.log(state);
     return (
         <div className="slds-m-around_medium">
             <div className="slds-grid slds-wrap slds-grid_align-center">
