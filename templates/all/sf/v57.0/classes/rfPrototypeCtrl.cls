@@ -450,7 +450,7 @@ global without sharing class rfPrototypeCtrl {
         insert cont;
         
         
-        Profile prof = [SELECT Id from Profile where Name = 'vfCommunityVfCCPLogin User' LIMIT 1];
+        Profile prof = [SELECT Id from Profile where Name = 'rfPrototypeCCPLogin User' LIMIT 1];
 
         Long CURRENT_TIME = DateTime.now().getTime();
 		String timeString = String.valueOf(CURRENT_TIME);
