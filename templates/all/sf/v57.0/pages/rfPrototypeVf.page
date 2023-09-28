@@ -54,6 +54,7 @@
                 'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
                 'emailLoginApi': '{!$RemoteAction.rfPrototypeCtrl.emailLogin}',
                 'registerEmailApi': '{!$RemoteAction.rfPrototypeCtrl.registerUserEmail}',
+                'createLeadApi': '{!$RemoteAction.myReactforceAppCtrl.createLead}',
                 'sessionId': '{!sessionId}',
                 'resources': '{!$Resource.ReactforceAssets}',
                 'landingResources': '{!$Resource.CustomerPortal}',
