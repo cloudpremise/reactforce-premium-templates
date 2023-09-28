@@ -232,9 +232,14 @@ const NavigationBar = (props) => {
                 :
                     <GlobalNavigationBarRegion region="secondary" navigation>
                         <li className={'slds-context-bar__item'}>
-                            <span url={props.basename+"/login"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
-                                <span className='slds-truncate' title='Login'>Login</span>
+                            <span url={props.basename+"/login-react"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Login (React)'>Login (React)</span>
                             </span>
+                        </li>
+                        <li className={'slds-context-bar__item'}>
+                            <a href={props.basename+"/login"} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Login (Salesforce)'>Login (Salesforce)</span>
+                            </a>
                         </li>
                         <li className={'slds-context-bar__item'}>
                             <span url={props.basename+"/login-code"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
@@ -242,9 +247,14 @@ const NavigationBar = (props) => {
                             </span>
                         </li>
                         <li className={'slds-context-bar__item'}>
-                            <span url={props.basename+"/signup"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
-                                <span className='slds-truncate' title='Signup'>Signup</span>
+                            <span url={props.basename+"/signup-react"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Sign-Up (React)'>Sign-Up (React)</span>
                             </span>
+                        </li>
+                        <li className={'slds-context-bar__item'}>
+                            <a href={props.basename+"/CommunitiesSelfReg?locale=us"} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Sign-Up (Salesforce)'>Sign-Up (Salesforce)</span>
+                            </a>
                         </li>
                         <li className={'slds-context-bar__item'}>
                             <span url={props.basename+"/signup-code"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
@@ -274,8 +284,8 @@ const RouterComponent = class extends React.Component {
                             <Route path="/" element={<Landing history={history} basename={basename} page={page} />} />
                             <Route path="/landing" element={<Landing history={history} basename={basename} page={page} />} />
                             <Route path="/home" element={<Home history={history} basename={basename} page={page} />} />
-                            <Route path="/login" element={<Login history={history} basename={basename} page={page} />} />
-                            <Route path="/signup" element={<Signup history={history} basename={basename} page={page} />} />
+                            <Route path="/login-react" element={<Login history={history} basename={basename} page={page} />} />
+                            <Route path="/signup-react" element={<Signup history={history} basename={basename} page={page} />} />
                             <Route path="/login-code" element={<LoginWithCode history={history} basename={basename} page={page} />} />
                             <Route path="/signup-code" element={<SignupWithCode history={history} basename={basename} page={page} />} />
 
