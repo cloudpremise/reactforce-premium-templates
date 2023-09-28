@@ -505,5 +505,28 @@ global without sharing class rfPrototypeCtrl {
         return null;
     }
 
+    @RemoteAction
+    @AuraEnabled
+    global Static ProcessingResult createLead(String firstName, String lastName, String email, String company){
+        System.debug('createLead()');
+
+        ProcessingResult resultObj = new ProcessingResult();
+        resultObj.isSuccess = false;
+        try {
+            Lead lead = new Lead();
+            lead.FirstName = firstName;
+            lead.LastName = lastName;
+            lead.Email = email;
+            lead.Company = company;
+            insert lead;
+
+            resultObj.isSuccess = true;
+            resultObj.result = 'Success';
+    	} catch(Exception e){
+    		resultObj.result = 'Error - '+e.getMessage();
+    	}
+        return resultObj;
+    }
+
     public class rfPrototypeCtrlException extends Exception{}
 }
