@@ -10,6 +10,7 @@
     </head>
     <body class="slds-scope">
         <apex:slds />
+        <apex:outputPanel rendered="{!(!maintenanceMode)}">
         <apex:form>
             <apex:actionFunction name="loginAF" action="{!login}" reRender="false">
                 <apex:param name="usernameJS" value="" />
@@ -78,16 +79,53 @@
             </div>
             <span class="slds-update-experience" id="update-application-experience" style="display:none;position: absolute;top: 50%;left: 0px;right: 0px;z-index: 9051;width: 350px;margin: 0px auto;text-align: center;margin-top: 25px;">One moment while we update your CustomerPortal Experience…</span>
         </div>
+        </apex:outputPanel>
 
         <!-- Load the app from the bundle domain -->
-        <apex:outputPanel rendered="{!NOT(ISBLANK(bundleDomain))}">
+        <apex:outputPanel rendered="{!NOT(ISBLANK(bundleDomain)) && !maintenanceMode}">
             <script type="text/javascript" src="{!bundleDomain + '/assets/js/app.main.v1.js'}"></script>
         </apex:outputPanel>
 
         <!-- Load the app from the static resource -->
-        <apex:outputPanel rendered="{!(ISBLANK(bundleDomain))}">
+        <apex:outputPanel rendered="{!(ISBLANK(bundleDomain)) && !maintenanceMode}">
             <script type="text/javascript" src="{!URLFOR($Resource.CustomerPortal, 'assets/js/app.main.v1.js')}"></script>
         </apex:outputPanel>
 
+        <apex:outputPanel rendered="{!(maintenanceMode)}">
+            <div class="slds-grid slds-gutters slds-grid_align-center slds-m-top_medium slds-maintenance-container">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_5-of-12">
+                    <article class="slds-card">
+                        <div class="slds-card__header" style="text-align: center;">
+                            <img src="{!$Resource.CustomerPortal}/assets/img/logo.png" alt="logo" style="max-width: 200px;" />
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <h2>Temporarily Down for Maintenance</h2>
+                            <p>We are performing scheduled maintenance. We should be back online shortly.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <style type="text/css">
+                .slds-maintenance-container {
+                    position: absolute;
+                    left: 0px;
+                    right: 0px;
+                    bottom: 0px;
+                    top: 0px;
+                    margin: auto !important;
+                    height: 230px;
+                    text-align: center;
+                }
+                .slds-maintenance-container h2 {
+                    font-size: 23px;
+                    font-weight: bold;
+                    margin: 20px 0px;
+                }
+                .slds-maintenance-container p {
+                    margin-bottom: 50px;
+                    font-size: 16px;
+                }
+            </style>
+        </apex:outputPanel>
     </body>
 </apex:page>

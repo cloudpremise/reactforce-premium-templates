@@ -8,6 +8,7 @@ global without sharing class rfPrototypeCtrl {
     public String sessionId {get;set;}
     public Boolean userInterfacePreview {get;set;}
     public Boolean advancedConfiguration {get;set;}
+    public Boolean maintenanceMode {get;set;}
 
     //Login related code
     global String username {get; set;}
@@ -32,12 +33,14 @@ global without sharing class rfPrototypeCtrl {
         this.sObjId = stdController.getId();
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
         this.checkBundleId();
+        maintenanceMode = false;
     }
     public rfPrototypeCtrl(){
         System.debug('rfPrototypeCtrl()');
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
         sessionId = rfPrototypeCtrl.getSessionId();
         this.checkBundleId();
+        maintenanceMode = false;
     }
 
     private void checkBundleId(){
