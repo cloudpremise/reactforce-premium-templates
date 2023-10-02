@@ -88,7 +88,10 @@
         <!-- Load the app from the bundle domain -->
         <apex:outputPanel rendered="{!
             AND(
-                NOT(ISBLANK(bundleDomain)), 
+                AND(
+                    NOT(ISBLANK(bundleDomain)), 
+                    !productionMode
+                ),
                 !maintenanceMode
             )}">
             <script type="text/javascript" src="{!bundleDomain + '/assets/js/app.main.v1.js'}"></script>
