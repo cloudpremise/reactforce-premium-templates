@@ -1,6 +1,38 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const paths = require('react-scripts/config/paths');
 const { processMainAppJs } = require("./config/salesforce");
+var splitStaticResources = 'splitStaticResourcesFlag';
+
+class CustomHtmlWebpackPlugin {
+    apply (compiler) {
+      compiler.hooks.compilation.tap('CustomHtmlWebpackPlugin', (compilation) => {  
+        HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapAsync(
+          'CustomHtmlWebpackPlugin',
+          (data, cb) => {
+            if(splitStaticResources === 'true'){
+                let publicUrl = '';
+                if(typeof(process.env.PUBLIC_URL) === "string"){
+                    publicUrl = process.env.PUBLIC_URL;
+                }
+                data.assetTags.scripts = [{
+                    tagName: 'script',
+                    voidTag: false,
+                    meta: { plugin: 'html-webpack-plugin' },
+                    attributes: {
+                      defer: true,
+                      type: 'text/javascript',
+                      src: publicUrl+'assets/js/app.main.v1.js'
+                    }
+                }];
+            }
+            cb(null, data)
+          }
+        )
+      })
+    }
+}
 
 module.exports = function override(config, env) {
     const isEnvDevelopment = env === 'development';
@@ -19,6 +51,13 @@ module.exports = function override(config, env) {
             : isEnvDevelopment && 'static/js/main.chunk'+process.env.REACT_APP_BUNDLE_ID+'.js';
     let cssFilename = 'static/css/main'+process.env.REACT_APP_BUNDLE_ID+'.css';
     let cssChunkFilename = 'static/css/main.chunk'+process.env.REACT_APP_BUNDLE_ID+'.css';
+    if(splitStaticResources === 'true'){
+        chunkFilename = isEnvProduction
+            ? 'chunk/js/main.chunk'+process.env.REACT_APP_BUNDLE_ID+'.js'
+            : isEnvDevelopment && 'chunk/js/main.chunk'+process.env.REACT_APP_BUNDLE_ID+'.js';
+        cssFilename = 'css/main'+process.env.REACT_APP_BUNDLE_ID+'.css';
+        cssChunkFilename = 'css/main.chunk'+process.env.REACT_APP_BUNDLE_ID+'.css';
+    }
     config.module.rules = [
         // salesforce dependencies
         // this will compile salesforce lightning as src, not as package
@@ -52,6 +91,8 @@ module.exports = function override(config, env) {
         publicPath: process.env.REACT_APP_PUBLIC_URL
     };
 
+    config.plugins.push(new CustomHtmlWebpackPlugin({ options: '' }));
+
     //Override css output file names
     let plugins = [];
     config.plugins.map((plugin, key) => {
@@ -62,6 +103,32 @@ module.exports = function override(config, env) {
                 filename: cssFilename,
                 chunkFilename: cssChunkFilename,
             });
+        }else if(splitStaticResources === 'true' && plugin.hasOwnProperty("userOptions") && plugin.userOptions.hasOwnProperty("template") && plugin.userOptions.template.indexOf("index.html") !== -1) {
+            plugins[key] = new HtmlWebpackPlugin(
+                Object.assign(
+                  {},
+                  {
+                    inject: true,
+                    template: paths.appHtml,
+                  },
+                  isEnvProduction
+                    ? {
+                        minify: {
+                          removeComments: true,
+                          collapseWhitespace: true,
+                          removeRedundantAttributes: true,
+                          useShortDoctype: true,
+                          removeEmptyAttributes: true,
+                          removeStyleLinkTypeAttributes: true,
+                          keepClosingSlash: true,
+                          minifyJS: true,
+                          minifyCSS: true,
+                          minifyURLs: true,
+                        },
+                      }
+                    : undefined
+                )
+              );
         }else {
             plugins[key] = plugin;
         }
