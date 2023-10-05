@@ -16,6 +16,7 @@ class CustomHtmlWebpackPlugin {
                 if(typeof(process.env.PUBLIC_URL) === "string"){
                     publicUrl = process.env.PUBLIC_URL;
                 }
+                data.assetTags.styles = [];
                 data.assetTags.scripts = [{
                     tagName: 'script',
                     voidTag: false,
