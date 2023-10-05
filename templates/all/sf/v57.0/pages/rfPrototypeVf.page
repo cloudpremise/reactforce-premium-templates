@@ -10,90 +10,109 @@
     </head>
     <body class="slds-scope">
         <apex:slds />
-        <apex:outputPanel rendered="{!(!maintenanceMode)}">
-        <apex:form>
-            <apex:actionFunction name="loginAF" action="{!login}" reRender="false">
-                <apex:param name="usernameJS" value="" />
-                <apex:param name="passwordJS" value="" />
-            </apex:actionFunction>
-        </apex:form>
-        <apex:form>
-            <apex:actionFunction name="registerAF" action="{!registerUser}" reRender="false">
-                <apex:param name="firstNameJS" value="" />
-                <apex:param name="lastNameJS" value="" />
-                <apex:param name="emailJS" value="" />
-                <apex:param name="passwordJS" value="" />
-                <apex:param name="confirmPasswordJS" value="" />
-                <apex:param name="communityNicknameJS" value="" />
-            </apex:actionFunction>
-        </apex:form>
-        <apex:form>
-            <apex:actionFunction name="verifyEmailLoginAF" oncomplete="onLoginFormComplete(request, event, data);" action="{!verifyEmailLogin}" reRender="false">
-                <apex:param name="userId" value="" />
-                <apex:param name="identifier" value="" />
-                <apex:param name="verificationCode" value="" />
-            </apex:actionFunction>
-        </apex:form>
-        <apex:form>
-            <apex:actionFunction name="verifyEmailRegistrationAF" oncomplete="onRegistrationFormComplete(request, event, data);" action="{!verifyEmailRegistration}" reRender="false">
-                <apex:param name="identifier" value="" />
-                <apex:param name="verificationCode" value="" />
-            </apex:actionFunction>
-        </apex:form>
-        <script type="text/javascript">
-            Visualforce.remoting.timeout = 120000;
-            //This object will be available from within the reactforce apps via the global.inlineApexAdaptor object
-            var inlineApexAdaptor = {
-                'Visualforce': Visualforce,
-                'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
-                'callSampleInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callSampleInternalApi}',
-                'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
-                'getAttachment': '{!$RemoteAction.rfPrototypeCtrl.getAttachment}',
-                'saveContentVersion': '{!$RemoteAction.rfPrototypeCtrl.saveContentVersion}',
-                'getContentVersion': '{!$RemoteAction.rfPrototypeCtrl.getContentVersion}',
-                'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',
-                'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
-                'emailLoginApi': '{!$RemoteAction.rfPrototypeCtrl.emailLogin}',
-                'registerEmailApi': '{!$RemoteAction.rfPrototypeCtrl.registerUserEmail}',
-                'createLeadApi': '{!$RemoteAction.rfPrototypeCtrl.createLead}',
-                'sessionId': '{!sessionId}',
-                'resources': '{!$Resource.ReactforceAssets}',
-                'landingResources': '{!$Resource.CustomerPortal}',
-                'chunkResources': '{!$Resource.CustomerPortalChunk}',
-                'cssResources': '{!$Resource.CustomerPortalCss}',
-                'bundleDomain': '{!bundleDomain}',
-                'page': 'home',
-                'rte': '{!$CurrentPage.parameters.rte}',
-                'baseUrl': window.location.pathname,
-                'bundleId': '{!bundleId}',
-            };
+        <apex:outputPanel rendered="{!
+            AND(
+                true, 
+                !maintenanceMode
+            )}">
+            <apex:form>
+                <apex:actionFunction name="loginAF" action="{!login}" reRender="false">
+                    <apex:param name="usernameJS" value="" />
+                    <apex:param name="passwordJS" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <apex:form>
+                <apex:actionFunction name="registerAF" action="{!registerUser}" reRender="false">
+                    <apex:param name="firstNameJS" value="" />
+                    <apex:param name="lastNameJS" value="" />
+                    <apex:param name="emailJS" value="" />
+                    <apex:param name="passwordJS" value="" />
+                    <apex:param name="confirmPasswordJS" value="" />
+                    <apex:param name="communityNicknameJS" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <apex:form>
+                <apex:actionFunction name="verifyEmailLoginAF" oncomplete="onLoginFormComplete(request, event, data);" action="{!verifyEmailLogin}" reRender="false">
+                    <apex:param name="userId" value="" />
+                    <apex:param name="identifier" value="" />
+                    <apex:param name="verificationCode" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <apex:form>
+                <apex:actionFunction name="verifyEmailRegistrationAF" oncomplete="onRegistrationFormComplete(request, event, data);" action="{!verifyEmailRegistration}" reRender="false">
+                    <apex:param name="identifier" value="" />
+                    <apex:param name="verificationCode" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <script type="text/javascript">
+                Visualforce.remoting.timeout = 120000;
+                //This object will be available from within the reactforce apps via the global.inlineApexAdaptor object
+                var inlineApexAdaptor = {
+                    'Visualforce': Visualforce,
+                    'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
+                    'callSampleInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callSampleInternalApi}',
+                    'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
+                    'getAttachment': '{!$RemoteAction.rfPrototypeCtrl.getAttachment}',
+                    'saveContentVersion': '{!$RemoteAction.rfPrototypeCtrl.saveContentVersion}',
+                    'getContentVersion': '{!$RemoteAction.rfPrototypeCtrl.getContentVersion}',
+                    'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',
+                    'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
+                    'emailLoginApi': '{!$RemoteAction.rfPrototypeCtrl.emailLogin}',
+                    'registerEmailApi': '{!$RemoteAction.rfPrototypeCtrl.registerUserEmail}',
+                    'createLeadApi': '{!$RemoteAction.rfPrototypeCtrl.createLead}',
+                    'sessionId': '{!sessionId}',
+                    'resources': '{!$Resource.ReactforceAssets}',
+                    'landingResources': '{!$Resource.CustomerPortal}',
+                    'chunkResources': '{!$Resource.CustomerPortalChunk}',
+                    'cssResources': '{!$Resource.CustomerPortalCss}',
+                    'bundleDomain': '{!bundleDomain}',
+                    'page': 'home',
+                    'rte': '{!$CurrentPage.parameters.rte}',
+                    'baseUrl': window.location.pathname,
+                    'bundleId': '{!bundleId}',
+                };
 
-            function onLoginFormComplete(request, event, data){}
-            function onRegistrationFormComplete(request, event, data){}
-        </script>
-        <div style="min-height: 100vh;" id="root"></div>
+                function onLoginFormComplete(request, event, data){}
+                function onRegistrationFormComplete(request, event, data){}
+            </script>
+            <div style="min-height: 100vh;" id="root"></div>
 
-        <div class="slds-spinner_container" id="main-application-loader">
-            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
-                <span class="slds-assistive-text">One moment while we update your Reactforce Experience…</span>
-                <div class="slds-spinner__dot-a"></div>
-                <div class="slds-spinner__dot-b"></div>
+            <div class="slds-spinner_container" id="main-application-loader">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">One moment while we update your Reactforce Experience…</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+                <span class="slds-update-experience" id="update-application-experience" style="display:none;position: absolute;top: 50%;left: 0px;right: 0px;z-index: 9051;width: 350px;margin: 0px auto;text-align: center;margin-top: 25px;">One moment while we update your CustomerPortal Experience…</span>
             </div>
-            <span class="slds-update-experience" id="update-application-experience" style="display:none;position: absolute;top: 50%;left: 0px;right: 0px;z-index: 9051;width: 350px;margin: 0px auto;text-align: center;margin-top: 25px;">One moment while we update your CustomerPortal Experience…</span>
-        </div>
         </apex:outputPanel>
 
         <!-- Load the app from the bundle domain -->
-        <apex:outputPanel rendered="{!NOT(ISBLANK(bundleDomain)) && !maintenanceMode}">
+        <apex:outputPanel rendered="{!
+            AND(
+                AND(
+                    NOT(ISBLANK(bundleDomain)), 
+                    !productionMode
+                ),
+                !maintenanceMode
+            )}">
             <script type="text/javascript" src="{!bundleDomain + '/assets/js/app.main.v1.js'}"></script>
         </apex:outputPanel>
 
         <!-- Load the app from the static resource -->
-        <apex:outputPanel rendered="{!(ISBLANK(bundleDomain)) && !maintenanceMode}">
+        <apex:outputPanel rendered="{!
+            AND(
+                ISBLANK(bundleDomain), 
+                !maintenanceMode
+            )}">
             <script type="text/javascript" src="{!URLFOR($Resource.CustomerPortal, 'assets/js/app.main.v1.js')}"></script>
         </apex:outputPanel>
 
-        <apex:outputPanel rendered="{!(maintenanceMode)}">
+        <apex:outputPanel rendered="{!
+            AND(
+                true, 
+                maintenanceMode
+            )}">
             <div class="slds-grid slds-gutters slds-grid_align-center slds-m-top_medium slds-maintenance-container">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_5-of-12">
                     <article class="slds-card">
