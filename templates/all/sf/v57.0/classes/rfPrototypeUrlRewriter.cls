@@ -7,7 +7,7 @@ global with sharing class rfPrototypeUrlRewriter implements Site.UrlRewriter {
         //if we are in production, remove the 'schooladmin/' from the url redirect as it is assumed by the custom url
     
         String sanitizedUrl = String.valueOf(myFriendlyUrl);
-        sanitizedUrl = sanitizedUrl.replace('schooladmin/','');
+        sanitizedUrl = sanitizedUrl.replace('rfPrototype/','');
         
         System.debug('sanitizedUrl:'+sanitizedUrl);
         
@@ -24,7 +24,7 @@ global with sharing class rfPrototypeUrlRewriter implements Site.UrlRewriter {
         
 
         Pagereference pageref = null;
-        if(url.startsWith('/login')){
+        if(url == '/login'){
         // } else if(url.startsWith('/secur/logout.jsp')){
         //} else if(url.startsWith('/_ui/system/security/ChangePassword')){
 
