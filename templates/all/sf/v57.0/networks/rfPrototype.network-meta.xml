@@ -32,7 +32,7 @@
     <headlessForgotPasswordTemplate>unfiled$public/CommunityHeadlessForgotPasswordTemplate</headlessForgotPasswordTemplate>
     <networkMemberGroups>
         <permissionSet>rfPrototype</permissionSet>
-        <profile>rfprototypeccplogin user</profile>
+        <profile>rfPrototypeCCPLogin User</profile>
     </networkMemberGroups>
     <networkPageOverrides>
         <changePasswordPageOverrideSetting>Standard</changePasswordPageOverrideSetting>
@@ -42,7 +42,7 @@
         <selfRegProfilePageOverrideSetting>Standard</selfRegProfilePageOverrideSetting>
     </networkPageOverrides>
     <picassoSite>rfPrototype1</picassoSite>
-    <selfRegProfile>rfPrototypeccplogin user</selfRegProfile>
+    <selfRegProfile>rfPrototypeCCPLogin User</selfRegProfile>
     <selfRegistration>true</selfRegistration>
     <sendWelcomeEmail>true</sendWelcomeEmail>
     <site>rfPrototype</site>
