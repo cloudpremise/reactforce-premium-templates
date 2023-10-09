@@ -49,7 +49,7 @@
     <siteArchiveStatus>NotArchived</siteArchiveStatus>
     <status>Live</status>
     <tabs>
-        <defaultTab>rfPrototypeVf</customTab>
+        <defaultTab>rfPrototypeVf</defaultTab>
     </tabs>
     <urlPathPrefix>rfPrototype</urlPathPrefix>
     <welcomeTemplate>unfiled$public/CommunityWelcomeEmailTemplate</welcomeTemplate>
