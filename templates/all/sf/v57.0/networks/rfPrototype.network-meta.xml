@@ -49,8 +49,7 @@
     <siteArchiveStatus>NotArchived</siteArchiveStatus>
     <status>Live</status>
     <tabs>
-        <customTab>rfPrototypeVf</customTab>
-        <defaultTab>01rOx000007VobT</defaultTab>
+        <defaultTab>rfPrototypeVf</customTab>
     </tabs>
     <urlPathPrefix>rfPrototype</urlPathPrefix>
     <welcomeTemplate>unfiled$public/CommunityWelcomeEmailTemplate</welcomeTemplate>
