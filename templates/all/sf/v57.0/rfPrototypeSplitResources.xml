@@ -48,13 +48,7 @@
     </types>
     <types>
         <members>rfPrototype</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
         <members>rfPrototypeChunk</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
         <members>rfPrototypeCss</members>
         <name>StaticResource</name>
     </types>
@@ -62,5 +56,16 @@
         <members>rfPrototype</members>
         <name>CustomSite</name>
     </types>
+    <types>
+        <members>rfPrototype</members>
+        <name>Network</name>
+    </types>
+    <types>
+        <members>cbrfPrototype</members>
+        <name>NetworkBranding</name>
+    </types>
+    <types>
+        <members>rfPrototype1</members>
+        <name>SiteDotCom</name>
     <version>57.0</version>
 </Package>
