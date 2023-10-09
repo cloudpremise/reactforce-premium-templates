@@ -43,11 +43,6 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>rfPrototypeLtg</members>
-        <members>rfPrototypeVf</members>
-        <name>Tabs</name>
-    </types>
-    <types>
         <members>rfPrototypeRole</members>
         <name>Role</name>
     </types>
