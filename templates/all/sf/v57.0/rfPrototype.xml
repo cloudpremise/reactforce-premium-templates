@@ -54,5 +54,16 @@
         <members>rfPrototype</members>
         <name>CustomSite</name>
     </types>
+    <types>
+        <members>rfPrototype</members>
+        <name>Network</name>
+    </types>
+    <types>
+        <members>rfPrototype</members>
+        <name>NetworkBranding</name>
+    </types>
+    <types>
+        <members>rfPrototype1</members>
+        <name>SiteDotCom</name>
     <version>57.0</version>
 </Package>
