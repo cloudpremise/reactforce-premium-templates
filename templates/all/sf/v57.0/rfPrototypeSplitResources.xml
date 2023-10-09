@@ -67,5 +67,6 @@
     <types>
         <members>rfPrototype1</members>
         <name>SiteDotCom</name>
+    </types>
     <version>57.0</version>
 </Package>
