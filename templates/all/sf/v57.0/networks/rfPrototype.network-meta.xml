@@ -5,6 +5,8 @@
     <changePasswordTemplate>unfiled$public/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
     <communityRoles/>
     <disableReputationRecordConversations>true</disableReputationRecordConversations>
+    <emailSenderAddress>greg@cloudpremise.com</emailSenderAddress>
+    <emailSenderName>rfPrototype</emailSenderName>
     <enableApexCDNCaching>true</enableApexCDNCaching>
     <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>
     <enableDirectMessages>true</enableDirectMessages>
@@ -30,7 +32,7 @@
     <headlessForgotPasswordTemplate>unfiled$public/CommunityHeadlessForgotPasswordTemplate</headlessForgotPasswordTemplate>
     <networkMemberGroups>
         <permissionSet>rfPrototype</permissionSet>
-        <profile>rfprototypeccplogin user</profile>
+        <profile>rfPrototypeCCPLogin User</profile>
     </networkMemberGroups>
     <networkPageOverrides>
         <changePasswordPageOverrideSetting>Standard</changePasswordPageOverrideSetting>
@@ -39,15 +41,16 @@
         <loginPageOverrideSetting>Standard</loginPageOverrideSetting>
         <selfRegProfilePageOverrideSetting>Standard</selfRegProfilePageOverrideSetting>
     </networkPageOverrides>
-    <picassoSite>rfPrototype</picassoSite>
-    <selfRegProfile>rfPrototypeccplogin user</selfRegProfile>
+    <picassoSite>rfPrototype1</picassoSite>
+    <selfRegProfile>rfPrototypeCCPLogin User</selfRegProfile>
     <selfRegistration>true</selfRegistration>
     <sendWelcomeEmail>true</sendWelcomeEmail>
     <site>rfPrototype</site>
     <siteArchiveStatus>NotArchived</siteArchiveStatus>
     <status>Live</status>
     <tabs>
-        <defaultTab>rfPrototypeVf</defaultTab>
+        <customTab>rfPrototypeVf</customTab>
+        <defaultTab>01rOx000007VobT</defaultTab>
     </tabs>
     <urlPathPrefix>rfPrototype</urlPathPrefix>
     <welcomeTemplate>unfiled$public/CommunityWelcomeEmailTemplate</welcomeTemplate>
