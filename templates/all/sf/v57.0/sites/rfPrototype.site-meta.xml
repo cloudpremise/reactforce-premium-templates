@@ -8,7 +8,7 @@
     <allowStandardLookups>false</allowStandardLookups>
     <allowStandardPortalPages>true</allowStandardPortalPages>
     <allowStandardSearch>false</allowStandardSearch>
-    <authorizationRequiredPage>Unauthorized</authorizationRequiredPage>
+    <authorizationRequiredPage>CommunitiesLogin</authorizationRequiredPage>
     <bandwidthExceededPage>BandwidthExceeded</bandwidthExceededPage>
     <browserXssProtection>true</browserXssProtection>
     <cachePublicVisualforcePagesInProxyServers>true</cachePublicVisualforcePagesInProxyServers>
@@ -19,9 +19,17 @@
     <genericErrorPage>Exception</genericErrorPage>
     <inMaintenancePage>InMaintenance</inMaintenancePage>
     <indexPage>rfPrototypeVf</indexPage>
-    <masterLabel>rfPrototypeSite</masterLabel>
-    <redirectToCustomDomain>true</redirectToCustomDomain>
+    <masterLabel>rfPrototype</masterLabel>
+    <redirectToCustomDomain>false</redirectToCustomDomain>
     <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
-    <siteType>Visualforce</siteType>
+    <selfRegPage>CommunitiesSelfReg</selfRegPage>
+    <siteRedirectMappings>
+        <action>Permanent</action>
+        <isActive>true</isActive>
+        <isDynamic>false</isDynamic>
+        <source>/rfPrototype/apex/rfPrototypeVf</source>
+        <target>/rfPrototype</target>
+    </siteRedirectMappings>
+    <siteType>ChatterNetwork</siteType>
     <urlPathPrefix>rfPrototype</urlPathPrefix>
 </CustomSite>

@@ -5,6 +5,8 @@
     <changePasswordTemplate>unfiled$public/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
     <communityRoles/>
     <disableReputationRecordConversations>true</disableReputationRecordConversations>
+    <emailSenderAddress>ahmad@cloudpremise.com</emailSenderAddress>
+    <emailSenderName>rfPrototype</emailSenderName>
     <enableApexCDNCaching>true</enableApexCDNCaching>
     <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>
     <enableDirectMessages>true</enableDirectMessages>
@@ -39,7 +41,7 @@
         <loginPageOverrideSetting>Standard</loginPageOverrideSetting>
         <selfRegProfilePageOverrideSetting>Standard</selfRegProfilePageOverrideSetting>
     </networkPageOverrides>
-    <picassoSite>rfPrototype</picassoSite>
+    <picassoSite>rfPrototype1</picassoSite>
     <selfRegProfile>rfPrototypeccplogin user</selfRegProfile>
     <selfRegistration>true</selfRegistration>
     <sendWelcomeEmail>true</sendWelcomeEmail>
@@ -47,7 +49,7 @@
     <siteArchiveStatus>NotArchived</siteArchiveStatus>
     <status>Live</status>
     <tabs>
-        <defaultTab>rfPrototypeVf</defaultTab>
+        <customTab>rfPrototypeVf</customTab>
     </tabs>
     <urlPathPrefix>rfPrototype</urlPathPrefix>
     <welcomeTemplate>unfiled$public/CommunityWelcomeEmailTemplate</welcomeTemplate>
