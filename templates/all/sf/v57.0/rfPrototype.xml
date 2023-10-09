@@ -59,7 +59,7 @@
         <name>Network</name>
     </types>
     <types>
-        <members>rfPrototype</members>
+        <members>cbrfPrototype</members>
         <name>NetworkBranding</name>
     </types>
     <types>
