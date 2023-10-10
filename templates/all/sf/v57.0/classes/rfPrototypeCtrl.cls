@@ -345,7 +345,21 @@ global without sharing class rfPrototypeCtrl {
     
     public static Id saveTheContentVersion(String fileName, String base64Data) {
         base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
-        
+
+        // Uncomment this code and customize as necessary to whitelist for images etc
+        // This should come from the site metadata
+        // System.debug('filename:'+fileName);
+        // Set<String> whiteListedTypes = new Set<String>{
+        //     'bmp',
+        //     'gif',
+        //     'jpeg',
+        //     'jpg',
+        //     'png'
+        // };
+        // String extension = fileName.substringAfterLast('.').toLowerCase();
+        // if(!whiteListedTypes.contains(extension)){
+        //     throw new ReactforceAllTemplateCtrlException('This file type is not supported:'+extension);
+        // }
         ContentVersion cv = new ContentVersion();
         cv.Title = fileName;
         cv.PathOnClient = fileName;

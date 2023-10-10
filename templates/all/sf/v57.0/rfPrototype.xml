@@ -43,11 +43,6 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>rfPrototypeLtg</members>
-        <members>rfPrototypeVf</members>
-        <name>Tabs</name>
-    </types>
-    <types>
         <members>rfPrototypeRole</members>
         <name>Role</name>
     </types>
@@ -59,5 +54,16 @@
         <members>rfPrototype</members>
         <name>CustomSite</name>
     </types>
+    <types>
+        <members>rfPrototype</members>
+        <name>Network</name>
+    </types>
+    <types>
+        <members>cbrfPrototype</members>
+        <name>NetworkBranding</name>
+    </types>
+    <types>
+        <members>rfPrototype1</members>
+        <name>SiteDotCom</name>
     <version>57.0</version>
 </Package>
