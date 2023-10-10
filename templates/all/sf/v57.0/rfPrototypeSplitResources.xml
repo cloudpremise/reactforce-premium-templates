@@ -38,7 +38,6 @@
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>Admin</members>
         <members>rfPrototypeCCPLogin User</members>
         <name>Profile</name>
     </types>
