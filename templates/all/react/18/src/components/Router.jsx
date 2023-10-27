@@ -6,6 +6,7 @@ import GlobalNavigationBar from '@salesforce/design-system-react/components/glob
 import GlobalNavigationBarRegion from '@salesforce/design-system-react/components/global-navigation-bar/region';
 import GlobalHeader from './Header';
 import { getSessionId } from "../ApexAdapter";
+import Button from './Button';
 
 import Home from "../pages/Home";
 import Landing from "../pages/Landing";
@@ -46,7 +47,35 @@ const HeaderProfileCustomContent = (props) => (
 );
 HeaderProfileCustomContent.displayName = 'HeaderProfileCustomContent';
 
+const HeaderProfileCustomMenuButton = (props) => (
+	<Button {...props}
+        iconName="rows"
+        iconVariant="border"
+        className="slds-m-left_small slds-custom-menu-button"
+    />
+);
+HeaderProfileCustomMenuButton.displayName = 'HeaderProfileCustomMenuButton';
+
+const CustomNavigationBarRegion = (props) => (
+	<Button {...props}
+        iconName="close"
+        iconVariant="global-header"
+    />
+);
+CustomNavigationBarRegion.displayName = 'SLDSGlobalNavigationBarRegion';
+
+const CustomNavigationBarPopover = (props) => (
+	<div
+        {...props}
+        className='slds-navigation-popover'
+    ></div>
+);
+CustomNavigationBarPopover.displayName = 'SLDSGlobalNavigationBarRegion';
+
 const Header = (props) => {
+    const [state, setState] = React.useState({
+        openMenu: false
+    });
     const { basename, page } = props;
     let cdn = "";
     if(window.inlineApexAdaptor && window.inlineApexAdaptor.landingResources){
@@ -54,6 +83,9 @@ const Header = (props) => {
     }
     const logoUrl = cdn+"/assets/img/logo.png";
     const sessionId = getSessionId();
+    function onMenuToggle(status = null){
+        setState({openMenu: status});
+    }
     return (
         <GlobalHeader
             logoSrc={logoUrl}
@@ -63,7 +95,7 @@ const Header = (props) => {
             onSkipToNav={() => {
                 console.log('>>> Skip to Nav Clicked');
             }}
-            navigation={<NavigationBar basename={basename} page={page} />}
+            navigation={<NavigationBar basename={basename} page={page} onMenuToggle={onMenuToggle} className={state.openMenu ? 'slds-open-menu' : ''} />}
         >
             {
                 sessionId.length > 0 ?
@@ -79,6 +111,9 @@ const Header = (props) => {
                 :
                 null
             }
+            <HeaderProfileCustomMenuButton
+                onClick={() => onMenuToggle(true)}
+            />
         </GlobalHeader>
     )
 };
@@ -96,6 +131,7 @@ const NavigationBar = (props) => {
         setState({activeUrl: url});
         navigate(url);
         window.history.replaceState(null, document.title, props.basename+url+window.location.search);
+        props.onMenuToggle(false);
     }
 
     let savedTabs = localStorage.getItem("reactforce_settings");
@@ -119,7 +155,9 @@ const NavigationBar = (props) => {
     }
 
     return (
-        <GlobalNavigationBar>
+        <GlobalNavigationBar
+            className={"slds-custom-primary-navigation "+props.className}
+        >
             {
                 sessionId.length > 0 ?
                     <GlobalNavigationBarRegion region="secondary" navigation>
@@ -263,6 +301,12 @@ const NavigationBar = (props) => {
                         </li>
                     </GlobalNavigationBarRegion>
             }
+            <CustomNavigationBarRegion
+                region="secondary"
+                onClick={() => props.onMenuToggle(false)}
+                className="slds-custom-navigation-close"
+            />
+            <CustomNavigationBarPopover onClick={() => props.onMenuToggle(false)} region="secondary" />
         </GlobalNavigationBar>
     )
 };

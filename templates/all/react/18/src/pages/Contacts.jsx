@@ -376,7 +376,7 @@ const Contacts = (props) => {
     const { sortColumn } = state;
     const sortColumns = getSortColumnName();
     return (
-        <div className="slds-grid slds-grid_vertical">
+        <div className="slds-grid slds-grid_vertical slds-custom-table-container">
             <div
                 className="table-container"
             >
@@ -395,7 +395,7 @@ const Contacts = (props) => {
                     joined
                     label="Contacts sObject API Demo7 (MP)"
                     onRenderControls={controls}
-                    className="table-main-heading"
+                    className="table-main-heading card-details-header"
                     title={
                         <h1 className="slds-page-header__title slds-p-right_x-small">
                         </h1>
@@ -414,8 +414,8 @@ const Contacts = (props) => {
                     selectAllRows: 'Select all rows',
                     selectRow: 'Select this row',
                 }}
-                fixedLayout
-                resizable
+                // fixedLayout
+                // resizable
                 resizableOptions={{
                     widths: ['50px', '200px'],
                     disabledColumns: [0]
@@ -428,7 +428,7 @@ const Contacts = (props) => {
                 onLoadMore={handleLoadMore}
                 selection={state.selection}
                 selectRows="checkbox"
-                className={loading ? "table_stencils" : ""}
+                className={loading ? "slds-custom-table table_stencils" : "slds-custom-table"}
             >
                 <DataTableColumn
                     isSorted={state.sortColumn === 'Id'}
