@@ -115,13 +115,13 @@ function Lds() {
                     <h1 className="slds-text-title_caps slds-p-vertical_large slds-p-top_none">
                         Inputs
                     </h1>
-                    <div className="slds-grid slds-gutters">
-                        <div className="slds-col slds-size_1-of-4">
+                    <div className="slds-grid slds-gutters slds-wrap">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">
                             <Input
                                 label="Input Label"
                             />
                         </div>
-                        <div className="slds-col slds-size_1-of-4">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">
                             <Input
                                 iconLeft={
                                     <InlineIcon
@@ -144,20 +144,20 @@ function Lds() {
                                 }
                             />
                         </div>
-                        <div className="slds-col slds-size_1-of-4">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">
                             <Input
                                 label="Input with Error Message"
                                 required
                                 errorText="Error Message"
                             />
                         </div>
-                        <div className="slds-col slds-size_1-of-4 slds-m-top_large">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4 slds-m-top_large">
                             <Radio id="radioId1" name="sampleRadio" labels={{ label: 'Radio Label' }} />
                             <Radio id="radioId2" name="sampleRadio" labels={{ label: 'Radio Label2' }} />
                         </div>
                     </div>
-                    <div className="slds-grid slds-gutters">
-                        <div className="slds-col slds-size_1-of-4">
+                    <div className="slds-grid slds-gutters slds-wrap">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">
                             <Combobox
                                 labels={{
                                     label: 'Multiple Select',
@@ -229,7 +229,7 @@ function Lds() {
                                 }}
                             />
                         </div>
-                        <div className="slds-col slds-size_1-of-4 datepicker">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4 datepicker">
                             <Datepicker
                                 labels={{
                                     label: 'Date',
@@ -240,7 +240,7 @@ function Lds() {
                                 value={state.value}
                             />
                         </div>
-                        <div className="slds-col slds-size_1-of-4 datepicker">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4 datepicker">
                             <Timepicker
                                 label="Time"
                                 stepInMinutes={30}
@@ -249,7 +249,7 @@ function Lds() {
                                 }}
                             />
                         </div>
-                        <div className="slds-col slds-size_1-of-4 slds-m-top_large">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4 slds-m-top_large">
                             <Checkbox
                                 assistiveText={{
                                     label: 'Default',
@@ -261,14 +261,14 @@ function Lds() {
                             />
                         </div>
                     </div>
-                    <div className="slds-grid slds-gutters">
-                        <div className="slds-col slds-size_1-of-4 slds-m-top_large">
+                    <div className="slds-grid slds-gutters slds-wrap">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4 slds-m-top_large">
                             <Textarea id="unique-id-1" label="Textarea Label" />
                         </div>
-                        <div className="slds-col slds-size_1-of-4 slds-m-top_large">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4 slds-m-top_large">
                             <Input id="counter-input-1" label="Counter" variant="counter" />
                         </div>
-                        <div className="slds-col slds-size_1-of-4 slds-m-top_large">
+                        <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4 slds-m-top_large">
                         <Combobox
                             id="combobox-readonly-single"
                             events={{

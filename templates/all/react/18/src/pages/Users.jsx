@@ -152,7 +152,7 @@ const Users = (props) => {
     const items = getItems();
     const isEmpty = items.length === 0;
     return (
-        <div className="slds-grid slds-grid_vertical">
+        <div className="slds-grid slds-grid_vertical slds-custom-table-container">
             <Card
                 id="ExampleCard"
                 filter={
@@ -178,15 +178,15 @@ const Users = (props) => {
                         selectAllRows: 'Select all rows',
                         selectRow: 'Select this row',
                     }}
-                    fixedLayout={true}
-                    resizable={false}
+                    // fixedLayout={true}
+                    // resizable={false}
                     keyboardNavigation
                     items={items}
                     onRowChange={handleChanged}
                     onSort={handleSort}
                     selection={state.selection}
                     selectRows="checkbox"
-                    className={loading ? "table_stencils" : ""}
+                    className={loading ? "slds-custom-table table_stencils" : "slds-custom-table"}
                 >
                     <DataTableColumn
                         isSorted={state.sortColumn === 'Id'}
