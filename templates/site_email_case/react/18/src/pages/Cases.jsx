@@ -315,7 +315,7 @@ const Cases = (props) => {
         const items = getItems();
         const closedItems = getItems(true);
         return (
-            <div>
+            <div className="slds-custom-table-container">
                 <Button
                     onClick={() => onNewCaseModal()}
                 >
@@ -331,8 +331,8 @@ const Cases = (props) => {
                         selectAllRows: 'Select all rows',
                         selectRow: 'Select this row',
                     }}
-                    fixedLayout={true}
-                    resizable={false}
+                    // fixedLayout={true}
+                    // resizable={false}
                     keyboardNavigation
                     items={items}
                     onRowChange={handleChanged}
@@ -340,7 +340,7 @@ const Cases = (props) => {
                     selection={state.selection}
                     loading={state.loading}
                     selectRows="checkbox"
-                    className={"slds-m-top_medium"}
+                    className={"slds-m-top_medium slds-custom-table"}
                 >
                     <DataTableColumn
                         isSorted={state.sortColumn === 'Id'}
@@ -371,7 +371,7 @@ const Cases = (props) => {
                 </DataTable>
                 <h3 className="slds-m-top_large slds-m-bottom_large slds-text-heading_small">Closes Cases</h3>
                 <DataTable
-                    id="cases-table"
+                    id="closed-cases-table"
                     assistiveText={{
                         actionsHeader: 'actions',
                         columnSort: 'sort this column',
@@ -380,8 +380,8 @@ const Cases = (props) => {
                         selectAllRows: 'Select all rows',
                         selectRow: 'Select this row',
                     }}
-                    fixedLayout={true}
-                    resizable={false}
+                    // fixedLayout={true}
+                    // resizable={false}
                     keyboardNavigation
                     items={closedItems}
                     onRowChange={handleChanged}
@@ -389,7 +389,7 @@ const Cases = (props) => {
                     selection={state.selection}
                     loading={state.loading}
                     selectRows="checkbox"
-                    className={"slds-m-top_medium"}
+                    className={"slds-m-top_medium slds-custom-table"}
                 >
                     <DataTableColumn
                         isSorted={state.sortColumn === 'Id'}
@@ -461,7 +461,7 @@ const Cases = (props) => {
     return (
         <div className="slds-m-around_medium">
             <div className="slds-grid slds-wrap slds-grid_align-center">
-                <form className={"slds-size_4-of-"+(state.verifiedEntity !== null ? "6" : "12")}>
+                <form className={"slds-size_1-of-1 slds-medium-size_6-of-"+(state.verifiedEntity !== null ? "6" : "12")+" slds-large-size_4-of-"+(state.verifiedEntity !== null ? "6" : "12")}>
                     <Card
                         heading={state.heading}
                         footer={(state.loadingLinkInfo ? null : state.footer)}
