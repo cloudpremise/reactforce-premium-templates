@@ -62,8 +62,10 @@ const CustomNavigationBarPopover = (props) => (
 CustomNavigationBarPopover.displayName = 'SLDSGlobalNavigationBarRegion';
 
 const Header = (props) => {
+    const url = props.page.replace(props.basename, "");
     const [state, setState] = React.useState({
-        openMenu: false
+        openMenu: false,
+        activeUrl: url
     });
     const { basename, page } = props;
     let cdn = "";
@@ -73,18 +75,49 @@ const Header = (props) => {
     const logoUrl = cdn+"/assets/img/logo.png";
     const sessionId = getSessionId();
     function onMenuToggle(status = null){
-        setState({openMenu: status});
+        setState({
+            ...state,
+            openMenu: status
+        });
     }
+    function onLogoClick(){
+        onUrlChange(null, (sessionId.length > 0 ? '/home' : '/'));
+    }
+    const navigate = useNavigate();
+    function onUrlChange(event, url = ''){
+        if(event){
+            url = event.currentTarget.getAttribute("url");
+        }
+        url = url.replace(props.basename, "");
+        setState({
+            ...state,
+            activeUrl: url
+        });
+        navigate(url);
+        window.history.replaceState(null, document.title, props.basename+url+window.location.search);
+        onMenuToggle(false);
+    }
+
     return (
         <GlobalHeader
             logoSrc={logoUrl}
+            onLogoClick={() => onLogoClick()}
             onSkipToContent={() => {
                 console.log('>>> Skip to Content Clicked');
             }}
             onSkipToNav={() => {
                 console.log('>>> Skip to Nav Clicked');
             }}
-            navigation={<NavigationBar basename={basename} page={page} onMenuToggle={onMenuToggle} className={state.openMenu ? 'slds-open-menu' : ''} />}
+            navigation={
+                <NavigationBar
+                    basename={basename}
+                    page={page}
+                    onMenuToggle={onMenuToggle}
+                    className={state.openMenu ? 'slds-open-menu' : ''}
+                    onUrlChange={onUrlChange}
+                    activeUrl={state.activeUrl}
+                />
+            }
         >
             {
                 sessionId.length > 0 ?
@@ -108,20 +141,7 @@ const Header = (props) => {
 };
 
 const NavigationBar = (props) => {
-    const url = props.page.replace(props.basename, "");
-    const [state, setState] = React.useState({
-        activeUrl: url
-    });
     const sessionId = getSessionId();
-    const navigate = useNavigate();
-    function onUrlChange(event){
-        let url = event.currentTarget.getAttribute("url");
-        url = url.replace(props.basename, "");
-        setState({activeUrl: url});
-        navigate(url);
-        window.history.replaceState(null, document.title, props.basename+url+window.location.search);
-        props.onMenuToggle(false);
-    }
     return (
         <GlobalNavigationBar
             className={"slds-custom-primary-navigation "+props.className}
@@ -129,18 +149,18 @@ const NavigationBar = (props) => {
             {
                 sessionId.length > 0 ?
                     <GlobalNavigationBarRegion region="secondary" navigation>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/home" ? "slds-is-active" : "")}>
-                            <span url="/home" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                        <li className={'slds-context-bar__item '+(props.activeUrl === "/home" ? "slds-is-active" : "")}>
+                            <span url="/home" onClick={(event) => props.onUrlChange(event)} className="slds-context-bar__label-action">
                                 <span className='slds-truncate' title='Home'>Home</span>
                             </span>
                         </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/route2" ? "slds-is-active" : "")}>
-                            <span url="/route2" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                        <li className={'slds-context-bar__item '+(props.activeUrl === "/route2" ? "slds-is-active" : "")}>
+                            <span url="/route2" onClick={(event) => props.onUrlChange(event)} className="slds-context-bar__label-action">
                                 <span className='slds-truncate' title='Route2'>Route2</span>
                             </span>
                         </li>
-                        <li className={'slds-context-bar__item '+(state.activeUrl === "/route3" ? "slds-is-active" : "")}>
-                            <span url="/route3" onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                        <li className={'slds-context-bar__item '+(props.activeUrl === "/route3" ? "slds-is-active" : "")}>
+                            <span url="/route3" onClick={(event) => props.onUrlChange(event)} className="slds-context-bar__label-action">
                                 <span className='slds-truncate' title='Route3'>Route3</span>
                             </span>
                         </li>
@@ -148,12 +168,12 @@ const NavigationBar = (props) => {
                 :
                     <GlobalNavigationBarRegion region="secondary" navigation>
                         <li className={'slds-context-bar__item'}>
-                            <span url={props.basename+"/login"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                            <span url={props.basename+"/login"} onClick={(event) => props.onUrlChange(event)} className="slds-context-bar__label-action">
                                 <span className='slds-truncate' title='Login'>Login</span>
                             </span>
                         </li>
                         <li className={'slds-context-bar__item'}>
-                            <span url={props.basename+"/signup"} onClick={(event) => onUrlChange(event)} className="slds-context-bar__label-action">
+                            <span url={props.basename+"/signup"} onClick={(event) => props.onUrlChange(event)} className="slds-context-bar__label-action">
                                 <span className='slds-truncate' title='Signup'>Signup</span>
                             </span>
                         </li>
