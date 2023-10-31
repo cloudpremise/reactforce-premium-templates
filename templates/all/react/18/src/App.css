@@ -1181,12 +1181,25 @@ div .non-logged-in .slds-global-header__item.slds-global-header__item_logo {
 html, body {
     overflow-x: hidden;
 }
-.slds-custom-table-container {
-    & .slds-custom-table {
-        & .slds-checkbox {
-            text-align: center;
-        }
-    }
+.slds-scope .slds-th__action_form,
+.slds-scope .slds-th__action--form {
+    padding: 0px;
+}
+.slds-scope .slds-th__action_form:hover,
+.slds-scope .slds-th__action--form:hover {
+    background-color: transparent;
+}
+.slds-scope .slds-table_cell-buffer tr>th.slds-table-checkbox-container,
+.slds-scope .slds-table--cell-buffer tr>th.slds-table-checkbox-container,
+.slds-scope .slds-table_cell-buffer tr>td.slds-table-checkbox-container,
+.slds-scope .slds-table--cell-buffer tr>td.slds-table-checkbox-container{
+    height: auto;
+    text-align: left;
+    padding-left: 10px;
+    max-width: 35px;
+}
+.slds-global-header__logo {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1024px) {

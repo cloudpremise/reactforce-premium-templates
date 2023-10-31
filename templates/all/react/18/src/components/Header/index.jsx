@@ -38,6 +38,7 @@ const defaultProps = {
 		skipToContent: 'Skip to Main Content',
 	},
 	logoSrc: '/assets/images/logo-noname.svg',
+    onLogoClick: function(){}
 };
 
 /**
@@ -88,6 +89,8 @@ class GlobalHeader extends React.Component {
 		 * Required for accessibility. Should jump the user to the primary navigation.
 		 */
 		onSkipToNav: PropTypes.func,
+
+        onLogoClick: PropTypes.func
 	};
 
 	static defaultProps = defaultProps;
@@ -174,6 +177,7 @@ class GlobalHeader extends React.Component {
 						<div
 							className="slds-global-header__logo"
 							style={{ backgroundImage: `url(${this.props.logoSrc})` }}
+                            onClick={this.props.onLogoClick}
 						/>
                         {this.props.navigation}
 					</div>

@@ -29,6 +29,9 @@ div .non-logged-in .slds-global-header__item.slds-global-header__item_logo {
 html, body {
     overflow-x: hidden;
 }
+.slds-global-header__logo {
+    cursor: pointer;
+}
 
 @media screen and (max-width: 1024px) {
     .slds-scope .slds-context-bar.slds-custom-primary-navigation {
