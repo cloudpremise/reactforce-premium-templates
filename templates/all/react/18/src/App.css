@@ -1200,6 +1200,7 @@ html, body {
 }
 .slds-global-header__logo {
     cursor: pointer;
+    align-self: center;    
 }
 
 @media screen and (max-width: 1024px) {
