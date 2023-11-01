@@ -1199,6 +1199,7 @@ html, body {
 }
 .slds-global-header__logo {
     cursor: pointer;
+    align-self: center;    
 }
 @media screen and (max-width: 1024px) {
     .slds-scope .slds-context-bar.slds-custom-primary-navigation {
