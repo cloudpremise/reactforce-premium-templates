@@ -42,7 +42,7 @@ const Settings = (props) => {
     return (
         <div className="slds-p-horizontal_small">
             <div className="slds-grid slds-gutters slds-grid_vertical-align-end slds-m-bottom_small">
-                <div className="slds-col slds-size_2-of-8">
+                <div className="slds-col slds-size_1-of-1 slds-medium-size_4-of-8 slds-large-size_2-of-8">
                     <Checkbox
                         id="settings-home"
                         labels={{
