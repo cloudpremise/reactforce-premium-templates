@@ -9,13 +9,6 @@ let sessionId = getSessionId();
 const cometdUrl = window.location.protocol + "//" + window.location.hostname + "/cometd/52.0/";
 const cometd = new CometD();
 cometd.websocketEnabled = false;
-cometd.configure({
-    url: cometdUrl,
-    requestHeaders: {
-        "Authorization": "OAuth " + sessionId
-    },
-    appendMessageTypeToURL: false
-});
 
 class StreamingApi extends React.Component {
     constructor(props){
@@ -31,6 +24,15 @@ class StreamingApi extends React.Component {
         };
     }
     componentDidMount(){
+        const sessionId = getSessionId();
+        cometd.configure({
+            url: cometdUrl,
+            requestHeaders: {
+                "Authorization": "OAuth " + sessionId
+            },
+            appendMessageTypeToURL: false
+        });
+
         cometd.addListener("/meta/handshake", (data) => this.onEvent(data));
         cometd.addListener("/meta/connect", (data) => {
             this.onEvent(data, () => {

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { getSessionId } from "../ApexAdapter";
 
 const namespace = process.env.REACT_APP_SFDC_NAMESPACE;
 const useApi = (url, params, justData = false, callBack = null, callApi = true) => {
@@ -14,7 +15,7 @@ const useApi = (url, params, justData = false, callBack = null, callApi = true) 
     let [data, setData] = React.useState(null);
     function getData(){
         let headers = {
-            'Authorization': "Bearer "+window.inlineApexAdaptor.sessionId,
+            'Authorization': "Bearer "+getSessionId(),
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         };

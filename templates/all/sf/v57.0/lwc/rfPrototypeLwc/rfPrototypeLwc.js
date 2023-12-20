@@ -1,17 +1,18 @@
 import { LightningElement, track, api } from 'lwc';
-import premiumAll from '@salesforce/resourceUrl/premiumAll';
-import callInternalApi from '@salesforce/apex/premiumAllCtrl.callInternalApi';
-import callSampleInternalApi from '@salesforce/apex/premiumAllCtrl.callSampleInternalApi';
-import login from '@salesforce/apex/premiumAllCtrl.login';
-import registerUser from '@salesforce/apex/premiumAllCtrl.registerUser';
-import saveAttachment from '@salesforce/apex/premiumAllCtrl.saveAttachment';
-import saveContentVersion from '@salesforce/apex/premiumAllCtrl.saveContentVersion';
-import getContentVersion from '@salesforce/apex/premiumAllCtrl.getContentVersion';
-import getAttachment from '@salesforce/apex/premiumAllCtrl.getAttachment';
-import emailLogin from '@salesforce/apex/premiumAllCtrl.emailLogin';
-import registerUserEmail from '@salesforce/apex/premiumAllCtrl.registerUserEmail';
-import createLead from '@salesforce/apex/premiumAllCtrl.createLead';
-import getSessionId from '@salesforce/apex/premiumAllCtrl.getSessionId';
+import rfPrototype from '@salesforce/resourceUrl/rfPrototype';
+import resources from "@salesforce/resourceUrl/ReactforceAssets";
+import callInternalApi from '@salesforce/apex/rfPrototypeCtrl.callInternalApi';
+import callSampleInternalApi from '@salesforce/apex/rfPrototypeCtrl.callSampleInternalApi';
+import login from '@salesforce/apex/rfPrototypeCtrl.login';
+import registerUser from '@salesforce/apex/rfPrototypeCtrl.registerUser';
+import saveAttachment from '@salesforce/apex/rfPrototypeCtrl.saveAttachment';
+import saveContentVersion from '@salesforce/apex/rfPrototypeCtrl.saveContentVersion';
+import getContentVersion from '@salesforce/apex/rfPrototypeCtrl.getContentVersion';
+import getAttachment from '@salesforce/apex/rfPrototypeCtrl.getAttachment';
+import emailLogin from '@salesforce/apex/rfPrototypeCtrl.emailLogin';
+import registerUserEmail from '@salesforce/apex/rfPrototypeCtrl.registerUserEmail';
+import createLead from '@salesforce/apex/rfPrototypeCtrl.createLead';
+import getSessionId from '@salesforce/apex/rfPrototypeCtrl.getSessionId';
 
 export default class Reactforce extends LightningElement {
     @track reactAppUrl;
@@ -27,12 +28,12 @@ export default class Reactforce extends LightningElement {
             if(this.page.length <= 0){
                 this.page = "home";
             }
-            var queryString = '?'+'chunkResources='+premiumAll+'&cssResources='+premiumAll+'&page='+this.page;
+            var queryString = '?'+'chunkResources='+rfPrototype+'&cssResources='+rfPrototype+'&page='+this.page;
             // Load the React app URL from the Static Resource
-            if(this.bundleDomain.length > 0){
+            if(typeof(this.bundleDomain) === "string" && this.bundleDomain.length > 0){
                 this.reactAppUrl = this.bundleDomain + "/" + queryString;
             }else{
-                this.reactAppUrl = premiumAll + '/index.html' + queryString + '&landingResources='+premiumAll;
+                this.reactAppUrl = rfPrototype + '/index.html' + queryString + '&landingResources='+rfPrototype + '&resources='+resources;
             }
 
             this.channel = new MessageChannel();

@@ -59,6 +59,14 @@ const prepareInlineAdapter = () => {
         return null;
     }
 
+    var landingResources = decodeURIComponent(getParam("landingResources"));
+    if(!landingResources || landingResources === "null"){
+        landingResources = '';
+    }
+    var resources = decodeURIComponent(getParam("resources"));
+    if(!resources || resources === "null"){
+        resources = '';
+    }
     window.inlineApexAdaptor = {
         'Visualforce': {
             'remoting': {
@@ -106,8 +114,8 @@ const prepareInlineAdapter = () => {
         'getContentVersion': 'c.getContentVersion',
         'getAttachment': 'c.getAttachment',
         'saveAttachment': 'c.saveAttachment',
-        'resources': decodeURIComponent(getParam("resources")), //For app icons hosted in static resources.
-        'landingResources': decodeURIComponent(getParam("landingResources")), //For app assets other than icons.
+        'resources': resources, //For app icons hosted in static resources.
+        'landingResources': landingResources, //For app assets other than icons.
         'page': getParam("page"), //Page received through lightning container url.
         'sessionId': sessionId,
         'bundleDomain': getParam("bundleDomain"),
@@ -123,10 +131,13 @@ const prepareInlineAdapter = () => {
 
 const getSessionId = () => {
     var sessionId = LCC.getRESTAPISessionKey();
-    if(typeof(window.inlineApexAdaptor) !== 'undefined'){
+    if(typeof(sessionId) === "string" && sessionId.length > 0){
+        return sessionId;
+    }
+    if(typeof(window.inlineApexAdaptor.sessionId) !== 'undefined'){
         return window.inlineApexAdaptor.sessionId;
     }
-    return sessionId;
+    return "";
 };
 
 const loginAdapter = (requestData, callback) => {
