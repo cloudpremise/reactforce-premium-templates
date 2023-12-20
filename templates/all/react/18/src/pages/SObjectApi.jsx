@@ -182,8 +182,8 @@ const SObjectApi = (props) => {
     }
     return (
         <div className="slds-p-horizontal_small">
-            <div className="slds-grid slds-gutters slds-grid_vertical-align-end slds-m-bottom_x-small">
-                <div className="slds-col slds-size_1-of-8">
+            <div className="slds-grid slds-gutters slds-wrap slds-grid_vertical-align-end slds-m-bottom_x-small">
+                <div className="slds-col slds-size_1-of-1 slds-small-size_4-of-8 slds-medium-size_2-of-8  slds-large-size_1-of-8">
                     <Combobox
                         events={{
                             onSelect: (event, data) => {
@@ -232,14 +232,14 @@ const SObjectApi = (props) => {
                         }}
                     />
                 </div>
-                <div className="slds-col slds-size_4-of-8">
+                <div className="slds-col slds-size_1-of-1 slds-small-size_6-of-8 slds-medium-size_6-of-8 slds-large-size_1-of-8">
                     <Input 
                         label="Account Id"
                         onChange={(event) => handleChange(event, "AccountId")}
                         value={state.AccountId}
                     />
                 </div>
-                <div className="slds-col slds-size_2-of-8">
+                <div className="slds-col slds-size_1-of-1 slds-medium-size_4-of-8 slds-large-size_2-of-8">
                     <Button
                         label="Get Account"
                         variant="brand"
