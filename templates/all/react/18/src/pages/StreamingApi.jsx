@@ -5,7 +5,6 @@ import apexAdapter from "../ApexAdapter";
 import { getSessionId } from "../ApexAdapter";
 import  { Navigate } from 'react-router-dom';
 
-let sessionId = getSessionId();
 const cometdUrl = window.location.protocol + "//" + window.location.hostname + "/cometd/52.0/";
 const cometd = new CometD();
 cometd.websocketEnabled = false;
@@ -212,7 +211,7 @@ class StreamingApi extends React.Component {
 
     render(){
         const { topic, subscribedTopic, status } = this.state;
-        sessionId = getSessionId();
+        const sessionId = getSessionId();
         if(typeof(sessionId) === "string" && sessionId.length <= 0){
             return <Navigate to="/home" />
         }

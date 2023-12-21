@@ -23,7 +23,7 @@ global without sharing class rfPrototypeCtrl {
     public String confirmPassword {get; set { confirmPassword = value == null ? value : value.trim(); } }
     public String communityNickname {get; set { communityNickname = value == null ? value : value.trim(); } }
 
-    //@AuraEnabled(Cacheable = true)
+    @AuraEnabled
     public static String getSessionId() {
         return UserInfo.getSessionId();
     }
