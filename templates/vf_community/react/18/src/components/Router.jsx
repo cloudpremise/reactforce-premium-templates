@@ -91,11 +91,11 @@ const Header = (props) => {
         url = url.replace(props.basename, "");
         setState({
             ...state,
-            activeUrl: url
+            activeUrl: url,
+            openMenu: false
         });
         navigate(url);
         window.history.replaceState(null, document.title, props.basename+url+window.location.search);
-        onMenuToggle(false);
     }
 
     return (
