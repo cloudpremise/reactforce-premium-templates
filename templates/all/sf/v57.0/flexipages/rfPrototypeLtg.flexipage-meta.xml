@@ -4,9 +4,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>bundleDomain</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>page</name>
                     <value>home</value>
                 </componentInstanceProperties>
