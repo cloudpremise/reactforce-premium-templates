@@ -6,7 +6,7 @@
             'landingResources': $A.get('$Resource.rfPrototype'),
             'chunkResources': $A.get('$Resource.rfPrototypeChunk'),
             'cssResources': $A.get('$Resource.rfPrototypeCss'),
-            'bundleDomain': component.get("v.bundleDomain"),
+            'bundleDomain': "",
             'page': component.get("v.page"),
         };
         var str = [];
