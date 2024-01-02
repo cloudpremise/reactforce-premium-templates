@@ -29,8 +29,12 @@ const useApi = (url, params, justData = false, callBack = null, callApi = true) 
         if(!params.hasOwnProperty("RF_LIMIT")){
             params['RF_LIMIT'] = state.RF_LIMIT;
         }
+        let domain = getParam("domain");
+        if(!domain || domain === "null" || domain.length <= 0){
+            domain = "";
+        }
         axios({
-            url: route,
+            url: domain+route,
             method: "GET",
             headers: headers,
             // cancelToken: cancelTokenSource.token
