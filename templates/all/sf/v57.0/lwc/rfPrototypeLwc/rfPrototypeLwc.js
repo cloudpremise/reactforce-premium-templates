@@ -13,6 +13,7 @@ import emailLogin from '@salesforce/apex/rfPrototypeCtrl.emailLogin';
 import registerUserEmail from '@salesforce/apex/rfPrototypeCtrl.registerUserEmail';
 import createLead from '@salesforce/apex/rfPrototypeCtrl.createLead';
 import getSessionId from '@salesforce/apex/rfPrototypeCtrl.getSessionId';
+import getDomain from '@salesforce/apex/rfPrototypeCtrl.getDomain';
 
 export default class Reactforce extends LightningElement {
     @track reactAppUrl;
@@ -25,10 +26,11 @@ export default class Reactforce extends LightningElement {
     async connectedCallback() {
         try{
             this.sessionId = await getSessionId();
+            let domain = await getDomain();
             if(this.page.length <= 0){
                 this.page = "home";
             }
-            var queryString = '?'+'lwc=1&chunkResources='+rfPrototype+'&cssResources='+rfPrototype+'&page='+this.page;
+            var queryString = '?'+'lwc=1&chunkResources='+rfPrototype+'&cssResources='+rfPrototype+'&page='+this.page+'&domain='+domain;
             // Load the React app URL from the Static Resource
             if(typeof(this.bundleDomain) === "string" && this.bundleDomain.length > 0){
                 this.reactAppUrl = this.bundleDomain + "/" + queryString;
