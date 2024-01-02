@@ -386,6 +386,6 @@ const leadAdapter = (firstName, lastName, email, company, callback) => {
 };
 
 export { ApexAdapter, prepareInlineAdapter, getSessionId, saveAttachment, saveContentVersion, loginAdapter, registerAdapter, 
-    getContentVersion, getAttachment, SampleApexAdapter, loginWithCodeAdapter, signupWithCodeAdapter, leadAdapter };
+    getContentVersion, getAttachment, SampleApexAdapter, loginWithCodeAdapter, signupWithCodeAdapter, leadAdapter, getParam };
 
 export default ApexAdapter;

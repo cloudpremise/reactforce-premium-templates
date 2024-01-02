@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { getSessionId } from "../ApexAdapter";
+import { getSessionId, getParam } from "../ApexAdapter";
 
 const namespace = process.env.REACT_APP_SFDC_NAMESPACE;
 const useApi = (url, params, justData = false, callBack = null, callApi = true) => {
