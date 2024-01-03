@@ -25,7 +25,7 @@ global without sharing class rfPrototypeCtrl {
 
     @AuraEnabled
     public static String getSessionId() {
-        return premiumAllCtrl.getSessionIdFromVFPage(Page.rfPrototypeSessionId);
+        return rfPrototypeCtrl.getSessionIdFromVFPage(Page.rfPrototypeSessionId);
     }
 
     @AuraEnabled
