@@ -4,17 +4,21 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>bundleDomain</name>
+                    <value></value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>page</name>
                     <value>home</value>
                 </componentInstanceProperties>
-                <componentName>rfPrototypeLtg</componentName>
-                <identifier>c_rfPrototypeLtg</identifier>
-            </componentInstance>            
+                <componentName>rfPrototypeLwc</componentName>
+                <identifier>c_rfPrototypeLwc</identifier>
+            </componentInstance>
         </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>rfPrototypeLtg</masterLabel>
+    <masterLabel>rfPrototypeLwc</masterLabel>
     <template>
         <name>flexipage:defaultAppHomeTemplate</name>
     </template>

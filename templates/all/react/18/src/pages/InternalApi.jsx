@@ -155,8 +155,8 @@ const InternalApi = (props) => {
                 inputValue = data[i];
             }
             html.push((
-                <div key={i} className={"slds-grid slds-gutters slds-grid_vertical-align-end "+(i > 0 ? 'slds-m-top_medium' : '')}>
-                    <div className="slds-col">
+                <div key={i} className={"slds-grid slds-gutters slds-wrap slds-grid_vertical-align-end "+(i > 0 ? 'slds-m-top_medium' : '')}>
+                    <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
                         <Input 
                             label={i === 0 ? "Key" : null}
                             onChange={(event) => handleInputChange(dataKey, event, "key", i)}
@@ -164,7 +164,7 @@ const InternalApi = (props) => {
                             className="slds-input-has-icon slds-input-has-icon_right"
                         />
                     </div>
-                    <div className="slds-col">
+                    <div className="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
                         <Input 
                             label={i === 0 ? "Value" : null}
                             onChange={(event) => handleInputChange(dataKey, event, "value", i)}
@@ -288,8 +288,8 @@ const InternalApi = (props) => {
     }
     return (
         <div className="slds-p-horizontal_small slds-is-relative">
-            <div className="slds-grid slds-gutters slds-grid_vertical-align-end slds-m-bottom_medium">
-                <div className="slds-col slds-col-method slds-size_1-of-8">
+            <div className="slds-grid slds-gutters slds-wrap slds-grid_vertical-align-end">
+                <div className="slds-col slds-col-method slds-size_1-of-1 slds-small-size_2-of-12 slds-medium-size_1-of-8 slds-m-bottom_medium">
                     <Combobox
                         events={{
                             onSelect: (event, data) => {
@@ -338,14 +338,14 @@ const InternalApi = (props) => {
                         }}
                     />
                 </div>
-                <div className="slds-col slds-size_5-of-8">
+                <div className="slds-col slds-size_1-of-1 slds-small-size_8-of-12 slds-medium-size_5-of-8 slds-m-bottom_medium">
                     <Input 
                         label="Route"
                         onChange={(event) => handleUrlChange(event, "url")}
                         value={prepareRouteUrl()}
                     />
                 </div>
-                <div className="slds-col slds-col-method slds-size_2-of-8">
+                <div className="slds-col slds-col-method slds-size_2-of-8 slds-small-size_2-of-12 slds-medium-size_1-of-8 slds-m-bottom_medium">
                     <Button
                         variant="brand"
                         label="Send"

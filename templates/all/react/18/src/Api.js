@@ -1,6 +1,7 @@
 import axios from 'axios';
 import apexAdapter from "./ApexAdapter";
 import { translateNamespace } from "./hooks/useApexAdapter";
+import { getSessionId } from "./ApexAdapter";
 
 const ApiHelper = {
     apiType: "standard",
@@ -42,7 +43,7 @@ const ApiHelper = {
     standardApi: function(url, cancelTokenSource){
         return new Promise(function(resolve, reject){
             let headers = {
-                'Authorization': "Bearer "+window.inlineApexAdaptor.sessionId,
+                'Authorization': "Bearer "+getSessionId(),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             };
@@ -65,7 +66,7 @@ const ApiHelper = {
             var xhr = new XMLHttpRequest()
             xhr.open('GET', ApiUrl);
             xhr.responseType = 'blob';
-            xhr.setRequestHeader("Authorization", "Bearer "+window.inlineApexAdaptor.sessionId);
+            xhr.setRequestHeader("Authorization", "Bearer "+getSessionId());
             xhr.onload = function () {
                 resolve(xhr.response);
             }
@@ -75,7 +76,7 @@ const ApiHelper = {
     standardApiPost: function(url, requestData, cancelTokenSource){
         return new Promise(function(resolve, reject){
             let headers = {
-                'Authorization': "Bearer "+window.inlineApexAdaptor.sessionId,
+                'Authorization': "Bearer "+getSessionId(),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             };
@@ -93,7 +94,7 @@ const ApiHelper = {
     standardApiPatch: function(url, requestData, cancelTokenSource){
         return new Promise(function(resolve, reject){
             let headers = {
-                'Authorization': "Bearer "+window.inlineApexAdaptor.sessionId,
+                'Authorization': "Bearer "+getSessionId(),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             };
@@ -111,7 +112,7 @@ const ApiHelper = {
     standardApiDelete: function(url, requestData, cancelTokenSource){
         return new Promise(function(resolve, reject){
             let headers = {
-                'Authorization': "Bearer "+window.inlineApexAdaptor.sessionId,
+                'Authorization': "Bearer "+getSessionId(),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             };

@@ -23,9 +23,25 @@ global without sharing class rfPrototypeCtrl {
     public String confirmPassword {get; set { confirmPassword = value == null ? value : value.trim(); } }
     public String communityNickname {get; set { communityNickname = value == null ? value : value.trim(); } }
 
-    //@AuraEnabled(Cacheable = true)
+    @AuraEnabled
     public static String getSessionId() {
-        return UserInfo.getSessionId();
+        return premiumAllCtrl.getSessionIdFromVFPage(Page.rfPrototypeSessionId);
+    }
+
+    @AuraEnabled
+    public static String getDomain() {
+        return System.URL.getSalesforceBaseURL().toExternalForm();
+    }
+
+    public static String getSessionIdFromVFPage(PageReference visualforcePage){
+        String content;
+        if(System.Test.isRunningTest())
+            content = 'Start_Of_Session_IdUnit.TestEnd_Of_Session_Id';
+        else
+            content = visualforcePage.getContent().toString();
+        Integer startIndex = content.indexOf('Start_Of_Session_Id') + 'Start_Of_Session_Id'.length(),
+                endIndex = content.indexOf('End_Of_Session_Id');
+        return content.substring(startIndex, endIndex);
     }
 
     public rfPrototypeCtrl(ApexPages.StandardController stdController){
@@ -40,7 +56,7 @@ global without sharing class rfPrototypeCtrl {
     public rfPrototypeCtrl(){
         System.debug('rfPrototypeCtrl()');
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
-        sessionId = rfPrototypeCtrl.getSessionId();
+        sessionId = UserInfo.getSessionId();
         this.checkBundleId();
         maintenanceMode = false;
         productionMode = false;
