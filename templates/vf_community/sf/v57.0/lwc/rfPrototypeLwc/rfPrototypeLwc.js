@@ -5,15 +5,7 @@ import callInternalApi from '@salesforce/apex/rfPrototypeCtrl.callInternalApi';
 import callSampleInternalApi from '@salesforce/apex/rfPrototypeCtrl.callSampleInternalApi';
 import login from '@salesforce/apex/rfPrototypeCtrl.login';
 import registerUser from '@salesforce/apex/rfPrototypeCtrl.registerUser';
-import saveAttachment from '@salesforce/apex/rfPrototypeCtrl.saveAttachment';
-import saveContentVersion from '@salesforce/apex/rfPrototypeCtrl.saveContentVersion';
-import getContentVersion from '@salesforce/apex/rfPrototypeCtrl.getContentVersion';
-import getAttachment from '@salesforce/apex/rfPrototypeCtrl.getAttachment';
-import emailLogin from '@salesforce/apex/rfPrototypeCtrl.emailLogin';
-import registerUserEmail from '@salesforce/apex/rfPrototypeCtrl.registerUserEmail';
-import createLead from '@salesforce/apex/rfPrototypeCtrl.createLead';
 import getSessionId from '@salesforce/apex/rfPrototypeCtrl.getSessionId';
-import getDomain from '@salesforce/apex/rfPrototypeCtrl.getDomain';
 
 export default class Reactforce extends LightningElement {
     @track reactAppUrl;
@@ -26,7 +18,7 @@ export default class Reactforce extends LightningElement {
     async connectedCallback() {
         try{
             this.sessionId = await getSessionId();
-            let domain = await getDomain();
+            let domain = '';
             if(this.page.length <= 0){
                 this.page = "home";
             }
@@ -102,27 +94,6 @@ export default class Reactforce extends LightningElement {
                 break;
             case 'registerUser':
                 method = registerUser;
-                break;
-            case 'saveAttachment':
-                method = saveAttachment;
-                break;
-            case 'saveContentVersion':
-                method = saveContentVersion;
-                break;
-            case 'getContentVersion':
-                method = getContentVersion;
-                break;
-            case 'getAttachment':
-                method = getAttachment;
-                break;
-            case 'emailLogin':
-                method = emailLogin;
-                break;
-            case 'registerUserEmail':
-                method = registerUserEmail;
-                break;
-            case 'createLead':
-                method = createLead;
                 break;
             default:
                 break;
