@@ -33,6 +33,7 @@
         <members>rfPrototypeSelfRegConfirm</members>
         <members>rfPrototypeVf</members>
         <members>rfPrototypeSessionId</members>
+        <members>rfPrototypeRobots</members>
         <name>ApexPage</name>
     </types>
     <types>
@@ -57,6 +58,8 @@
     </types>
     <types>
         <members>rfPrototype</members>
+        <members>rfPrototypeServerDown</members>
+        <members>rfPrototypeFavIcon</members>
         <name>StaticResource</name>
     </types>
     <types>
@@ -64,6 +67,10 @@
         <members>rfPrototypeLwc</members>
         <members>rfPrototypeVf</members>
         <name>CustomTab</name>
+    </types>
+    <types>
+        <members>rfPrototypeLwc</members>
+        <name>LightningComponentBundle</name>
     </types>
     <version>57.0</version>
 </Package>
