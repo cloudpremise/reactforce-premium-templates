@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
-        <link REL="shortcut icon" HREF="{!URLFOR($Resource.rfPrototypeFavIcon, 'favicon.ico')}" />
+        <link REL="shortcut icon" HREF="{!URLFOR($Resource.rfPrototype, 'favicon.ico')}" />
         <title>rfPrototype | Salesforce</title>
         <apex:outputPanel>
             <!-- <link rel="stylesheet" href="{!URLFOR($Resource.xxxxx, 'styles/salesforce-lightning-design-system.min.css')}" type="text/css"/> -->
