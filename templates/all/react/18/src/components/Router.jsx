@@ -318,6 +318,11 @@ const NavigationBar = (props) => {
                                 <span className='slds-truncate' title='Signup With Code'>Signup With Code</span>
                             </span>
                         </li>
+                        <li className={'slds-context-bar__item'}>
+                            <a href={props.basename+"/IdpHome"+(window.location.search.length > 0 ? window.location.search+"&" : "?")+"locale=us"} className="slds-context-bar__label-action">
+                                <span className='slds-truncate' title='Login (Vf)'>Login (Vf)</span>
+                            </a>
+                        </li>
                     </GlobalNavigationBarRegion>
             }
             <CustomNavigationBarRegion
