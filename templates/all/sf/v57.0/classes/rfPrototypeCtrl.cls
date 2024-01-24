@@ -81,6 +81,16 @@ global without sharing class rfPrototypeCtrl {
         banner = settings.Banner__c;
         bannerText = settings.BannerText__c;
         bannerColor = settings.BannerColor__c;
+        textColor = settings.BannerTextColor__c;
+        bannerCanClose = settings.BannerCanClose__c;
+        sessionTimeOut = settings.SessionTimeOut__c;
+        
+        if(banner || (datetime.now() > settings.BannerTimeOn__c && datetime.now() < settings.BannerTimeOff__c)){
+            System.debug('Banner Time Started');
+            banner = true;
+        }else{
+            banner = false;
+        }
     }
 
     private void checkBundleId(){
