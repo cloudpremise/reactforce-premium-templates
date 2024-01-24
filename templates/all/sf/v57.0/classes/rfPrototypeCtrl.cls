@@ -11,6 +11,14 @@ global without sharing class rfPrototypeCtrl {
     public Boolean maintenanceMode {get;set;}
     public Boolean productionMode {get;set;}
 
+    private ReactforceSetting__mdt settings {get;set;}
+    public Boolean banner {get;set;}
+    public String bannerText {get;set;}
+    public String bannerColor {get;set;}
+    public String textColor {get;set;}
+    public Boolean bannerCanClose {get;set;}
+    public Double sessionTimeOut {get;set;}
+
     //Login related code
     global String username {get; set;}
 
@@ -52,6 +60,8 @@ global without sharing class rfPrototypeCtrl {
         this.checkBundleId();
         maintenanceMode = false;
         productionMode = false;
+
+        this.checkSettings();
     }
     public rfPrototypeCtrl(){
         System.debug('rfPrototypeCtrl()');
@@ -60,6 +70,17 @@ global without sharing class rfPrototypeCtrl {
         this.checkBundleId();
         maintenanceMode = false;
         productionMode = false;
+
+        this.checkSettings();
+    }
+
+    private void checkSettings(){
+        settings = ReactforceSetting__mdt.getInstance('rfPrototype');
+        maintenanceMode = settings.InMaintenance__c;
+        productionMode = settings.AllowBundleDomain__c;
+        banner = settings.Banner__c;
+        bannerText = settings.BannerText__c;
+        bannerColor = settings.BannerColor__c;
     }
 
     private void checkBundleId(){

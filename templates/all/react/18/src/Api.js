@@ -169,6 +169,7 @@ const ApiHelper = {
                             }).catch(err => {
                                 reject(err);
                             });
+                        window.dispatchEvent(new Event("remoteAction"));
                         break;
                     case 'POST':
                         self.standardApiPost(route, data)
@@ -177,6 +178,7 @@ const ApiHelper = {
                             }).catch(err => {
                                 reject(err);
                             });
+                        window.dispatchEvent(new Event("remoteAction"));
                         break;
                     case 'PATCH':
                         self.standardApiPatch(route, data)
@@ -185,6 +187,7 @@ const ApiHelper = {
                             }).catch(err => {
                                 reject(err);
                             });
+                        window.dispatchEvent(new Event("remoteAction"));
                         break;
                     case 'DELETE':
                         self.standardApiDelete(route, data)
@@ -193,6 +196,7 @@ const ApiHelper = {
                             }).catch(err => {
                                 reject(err);
                             });
+                        window.dispatchEvent(new Event("remoteAction"));
                         break;
                     default:
                         break;
