@@ -61,6 +61,8 @@ const useApi = (url, params, justData = false, callBack = null, callApi = true) 
                 errors: err.response.data
             });
         });
+
+        window.dispatchEvent(new Event("remoteAction"));
     }
 
     React.useEffect(() => {

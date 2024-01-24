@@ -15,6 +15,23 @@
                 true, 
                 !maintenanceMode
             )}">
+            <apex:outputPanel rendered="{!
+            AND(
+                true, 
+                banner
+            )}">
+                <div class="slds-banner-text" style="background-color: {!bannerColor};z-index: 99999;width: 100%;padding: 16px 40px 16px 10px;color: {!textColor};">
+                    {!bannerText}
+                    <apex:outputPanel rendered="{!AND(true, bannerCanClose)}">
+                        <a href="javascript:void(0);" onclick="closeBannerText(this);" class='slds-banner-close' style="position: absolute;right: 10px;background-color: rgb(0 0 0 / 10%);color: {!textColor};width: 20px;height: 20px;text-align: center;border-radius: 3px;text-decoration: none;">X</a>
+                    </apex:outputPanel>
+                </div>
+                <script type="text/javascript">
+                    function closeBannerText(element){
+                        element.parentElement.style.display = 'none';
+                    }
+                </script>
+            </apex:outputPanel>
             <apex:form>
                 <apex:actionFunction name="loginAF" action="{!login}" reRender="false">
                     <apex:param name="usernameJS" value="" />
@@ -48,7 +65,17 @@
                 Visualforce.remoting.timeout = 120000;
                 //This object will be available from within the reactforce apps via the global.inlineApexAdaptor object
                 var inlineApexAdaptor = {
-                    'Visualforce': Visualforce,
+                    'Visualforce': {
+                        remoting: {
+                            Manager: {
+                                invokeAction: function(){
+                                    var manager = Visualforce.remoting.Manager;
+                                    manager.invokeAction.apply(manager, arguments);
+                                    window.dispatchEvent(new Event("remoteAction"));
+                                }
+                            }
+                        }
+                    },
                     'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
                     'callSampleInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callSampleInternalApi}',
                     'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
@@ -77,7 +104,7 @@
             </script>
             <div style="min-height: 100vh;" id="root"></div>
 
-            <div class="slds-spinner_container" id="main-application-loader">
+            <div class="slds-spinner_container" id="main-application-loader" style="background: #fff;">
                 <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand" style="transform: none;width: 100px;height:86px;transform-origin: inherit;left: 0px;right: 0px;top:0px;bottom:0px;margin: auto;">
                     <img src="{!URLFOR($Resource.rfPrototype, 'assets/img/reactforce_short.png')}" alt="" />
                 </div>
@@ -145,6 +172,63 @@
                     font-size: 16px;
                 }
             </style>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!NOT(ISBLANK(sessionId))}">
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal" id="slds-session-modal">
+            <div class="slds-modal__container" style="max-width: 400px;min-width:0px;">
+                <div class="slds-modal__content slds-p-around_medium slds-modal__content_headless">
+                    <p>Your session is about to expire, woud you like to continue?</p>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="closeSessionDialogue(true);">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick="resetSession(true);">Yes</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop" id="slds-session-backdrop" role="presentation"></div>
+        <script type="text/javascript">
+            var sessionResetTime = (60e3*{!sessionTimeOut}) - 60e3;
+            var sessionResetTimeout = null;
+            var sessionLogoutTimeout = null;
+            function setSessionTimeout(){
+                sessionResetTimeout = setTimeout(function(){
+                    document.querySelector("#slds-session-backdrop").classList.add("slds-backdrop_open");
+                    document.querySelector("#slds-session-modal").classList.add("slds-fade-in-open");
+                    sessionLogoutTimeout = setTimeout(function(){
+                        closeSessionDialogue(true);
+                    }, ((60e3*{!sessionTimeOut}) - sessionResetTime));
+                }, sessionResetTime);
+            }
+            function closeSessionDialogue(logout){
+                document.querySelector("#slds-session-backdrop").classList.remove("slds-backdrop_open");
+                document.querySelector("#slds-session-modal").classList.remove("slds-fade-in-open");
+                if(logout){
+                    window.location.href = "secur/logout.jsp";
+                }
+            }
+            function resetSession(callApi){
+                clearTimeout(sessionResetTimeout);
+                closeSessionDialogue(false);
+                setSessionTimeout();
+                if(callApi){
+                    inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.callSampleInternalApi,'','','','','',
+                                                                    (result, event) =>{
+                                                                        callback(result, event);
+                                                                    });
+                }
+            }
+            document.addEventListener("click", function(){
+                if(sessionResetTimeout){
+                    clearTimeout(sessionResetTimeout);
+                    setSessionTimeout();
+                }
+            });
+            setSessionTimeout();
+            window.addEventListener("remoteAction", function(){
+                console.log("Reset Session");
+                resetSession(false);
+            });
+        </script>
         </apex:outputPanel>
     </body>
 </apex:page>
