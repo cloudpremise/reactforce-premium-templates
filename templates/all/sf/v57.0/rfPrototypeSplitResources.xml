@@ -74,5 +74,26 @@
         <members>rfPrototypeLwcCmp</members>
         <name>LightningComponentBundle</name>
     </types>
+    <types>
+        <members>ReactforceSetting__mdt</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>ReactforceSetting__mdt.AllowBundleDomain__c</members>
+        <members>ReactforceSetting__mdt.Banner__c</members>
+        <members>ReactforceSetting__mdt.BannerCanClose__c</members>
+        <members>ReactforceSetting__mdt.BannerColor__c</members>
+        <members>ReactforceSetting__mdt.BannerText__c</members>
+        <members>ReactforceSetting__mdt.BannerTextColor__c</members>
+        <members>ReactforceSetting__mdt.BannerTimeOff__c</members>
+        <members>ReactforceSetting__mdt.BannerTimeOn__c</members>
+        <members>ReactforceSetting__mdt.InMaintenance__c</members>
+        <members>ReactforceSetting__mdt.SessionTimeOut__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>ReactforceSetting.rfPrototype</members>
+        <name>CustomMetadata</name>
+    </types>
     <version>57.0</version>
 </Package>

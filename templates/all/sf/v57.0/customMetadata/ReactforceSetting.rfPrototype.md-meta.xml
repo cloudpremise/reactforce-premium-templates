@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>rfPrototype</label>
+    <protected>false</protected>
+    <values>
+        <field>AllowBundleDomain__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>BannerCanClose__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>BannerColor__c</field>
+        <value xsi:type="xsd:string">#FFAB00</value>
+    </values>
+    <values>
+        <field>BannerTextColor__c</field>
+        <value xsi:type="xsd:string">#000000</value>
+    </values>
+    <values>
+        <field>BannerText__c</field>
+        <value xsi:type="xsd:string">We are performing scheduled maintenance on 01/25/2024. We should be back online shortly after the maintenance.</value>
+    </values>
+    <values>
+        <field>BannerTimeOff__c</field>
+        <value xsi:type="xsd:dateTime" />
+    </values>
+    <values>
+        <field>BannerTimeOn__c</field>
+        <value xsi:type="xsd:dateTime" />
+    </values>
+    <values>
+        <field>Banner__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>InMaintenance__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>SessionTimeOut__c</field>
+        <value xsi:type="xsd:double">120.0</value>
+    </values>
+</CustomMetadata>
