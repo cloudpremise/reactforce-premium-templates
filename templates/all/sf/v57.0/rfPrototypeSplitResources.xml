@@ -95,5 +95,9 @@
         <members>ReactforceSetting.rfPrototype</members>
         <name>CustomMetadata</name>
     </types>
+    <types>
+        <members>ReactforceSetting__mdt-Reactforce Setting Layout</members>
+        <name>Layout</name>
+    </types>
     <version>57.0</version>
 </Package>

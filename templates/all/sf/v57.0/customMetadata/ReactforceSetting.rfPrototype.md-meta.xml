@@ -24,11 +24,9 @@
     </values>
     <values>
         <field>BannerTimeOff__c</field>
-        <value xsi:type="xsd:dateTime" />
     </values>
     <values>
         <field>BannerTimeOn__c</field>
-        <value xsi:type="xsd:dateTime" />
     </values>
     <values>
         <field>Banner__c</field>
