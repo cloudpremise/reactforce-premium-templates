@@ -28,7 +28,7 @@
                 </div>
                 <script type="text/javascript">
                     function closeBannerText(element){
-                        element.parentElement.style.display = 'none';
+                        document.querySelector(".slds-banner-text").style.display = 'none';
                     }
                 </script>
             </apex:outputPanel>
@@ -208,24 +208,18 @@
             }
             function resetSession(callApi){
                 clearTimeout(sessionResetTimeout);
+                clearTimeout(sessionLogoutTimeout);
                 closeSessionDialogue(false);
                 setSessionTimeout();
                 if(callApi){
                     inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.callSampleInternalApi,'','','','','',
                                                                     (result, event) =>{
-                                                                        callback(result, event);
+                                                                        
                                                                     });
                 }
             }
-            document.addEventListener("click", function(){
-                if(sessionResetTimeout){
-                    clearTimeout(sessionResetTimeout);
-                    setSessionTimeout();
-                }
-            });
             setSessionTimeout();
             window.addEventListener("remoteAction", function(){
-                console.log("Reset Session");
                 resetSession(false);
             });
         </script>
