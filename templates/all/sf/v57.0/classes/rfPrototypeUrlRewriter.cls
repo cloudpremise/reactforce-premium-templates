@@ -24,7 +24,7 @@ global with sharing class rfPrototypeUrlRewriter implements Site.UrlRewriter {
         
 
         Pagereference pageref = null;
-        if(url == '/login'){
+        if(url.startsWith('/login')){
         // } else if(url.startsWith('/secur/logout.jsp')){
         //} else if(url.startsWith('/_ui/system/security/ChangePassword')){
 
@@ -34,6 +34,7 @@ global with sharing class rfPrototypeUrlRewriter implements Site.UrlRewriter {
        // } else if(url.startsWith('/SchoolAdminSiteLogin')){
         } else if(url.startsWith('/rfPrototypeVf')){
         } else if(url.startsWith('/Idp')){
+        } else if(url.startsWith('/idp')){
        // } else if(url.startsWith('/SchoolAdminForgotPassword')){
        // } else if(url.startsWith('/_nc_external/identity/ui/login/ForgotPasswordInterstitial')){ // Added to allow Password Reset page for new school admin portal 17th June 2020
         } else if(url.startsWith('/_nc_external/identity/selfregistration/SelfRegVerificationStart')){   
