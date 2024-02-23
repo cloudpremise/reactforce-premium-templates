@@ -14,7 +14,8 @@ const Settings = (props) => {
             attachments: true,
             contentversion: true,
             lds: true,
-            sobjectapi: false
+            sobjectapi: false,
+            uiapi: false
         }
     }
     let savedTabs = localStorage.getItem("reactforce_settings");
@@ -160,6 +161,18 @@ const Settings = (props) => {
                         }}
                         onChange={(e) => handleCheckbox(e, "sobjectapi")}
                         checked={state.tabs.sobjectapi}
+                        variant="toggle"
+                    />
+                    <Checkbox
+                        id="settings-uiapi"
+                        className="slds-m-top_small"
+                        labels={{
+                            label: 'UI Api',
+                            toggleEnabled: null,
+                            toggleDisabled: null
+                        }}
+                        onChange={(e) => handleCheckbox(e, "uiapi")}
+                        checked={state.tabs.uiapi}
                         variant="toggle"
                     />
                 </div>
