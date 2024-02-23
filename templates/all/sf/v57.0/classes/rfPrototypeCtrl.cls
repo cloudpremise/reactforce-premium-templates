@@ -77,7 +77,7 @@ global without sharing class rfPrototypeCtrl {
     private void checkSettings(){
         settings = ReactforceSetting__mdt.getInstance('rfPrototype');
         maintenanceMode = settings.InMaintenance__c;
-        productionMode = settings.AllowBundleDomain__c;
+        productionMode = !settings.AllowBundleDomain__c;
         banner = settings.Banner__c;
         bannerText = settings.BannerText__c;
         bannerColor = settings.BannerColor__c;

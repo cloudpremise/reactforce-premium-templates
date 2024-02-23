@@ -25,6 +25,7 @@ import InternalApi from "../pages/InternalApi";
 import Lds from "../pages/Lds";
 import SObjectApi from "../pages/SObjectApi";
 import Settings from "../pages/Settings";
+import UiApi from "../pages/UiApi";
 
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
@@ -164,7 +165,8 @@ const NavigationBar = (props) => {
         attachments: true,
         contentversion: true,
         lds: true,
-        sobjectapi: false
+        sobjectapi: false,
+        uiapi: false
     }
     if(savedTabs !== null){
         try{
@@ -280,6 +282,16 @@ const NavigationBar = (props) => {
                             :
                             null
                         }
+                        {
+                            tabs.uiapi ?
+                                <li className={'slds-context-bar__item '+(props.activeUrl === "/uiapi" ? "slds-is-active" : "")}>
+                                    <span url="/uiapi" onClick={(event) => props.onUrlChange(event)} className="slds-context-bar__label-action" title='Settings'>
+                                        <span className='slds-truncate' title='UI Api'>UI Api</span>
+                                    </span>
+                                </li>
+                            :
+                            null
+                        }
                         <li className={'slds-context-bar__item '+(props.activeUrl === "/settings" ? "slds-is-active" : "")}>
                             <span url="/settings" onClick={(event) => props.onUrlChange(event)} className="slds-context-bar__label-action" title='Settings'>
                                 <span className='slds-truncate' title='Settings'>Settings</span>
@@ -368,6 +380,7 @@ const RouterComponent = class extends React.Component {
                             <Route path="/lds" element={<Lds history={history} basename={basename} page={page} />} />
                             <Route path="/sobject-api" element={<SObjectApi history={history} basename={basename} page={page} />} />
                             <Route path="/settings" element={<Settings history={history} basename={basename} page={page} />} />
+                            <Route path="/uiapi" element={<UiApi history={history} basename={basename} page={page} />} />
                         </Routes>
                     </div>
                 </div>
