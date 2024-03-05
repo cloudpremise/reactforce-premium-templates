@@ -1,0 +1,225 @@
+<apex:page controller="rfPrototypeCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="true" applyBodyTag="false" docType="html-5.0" showQuickActionVfHeader="false">
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+        <link REL="shortcut icon" HREF="{!URLFOR($Resource.rfPrototype, 'favicon.ico')}" />
+        <title>rfPrototype | Salesforce</title>
+    </head>
+    <body class="slds-scope">
+        <apex:slds />
+        <apex:outputPanel rendered="{!
+            AND(
+                true, 
+                !maintenanceMode
+            )}">
+            <apex:outputPanel rendered="{!
+            AND(
+                true, 
+                banner
+            )}">
+                <div class="slds-banner-text" style="background-color: {!bannerColor};z-index: 99999;width: 100%;padding: 16px 40px 16px 10px;color: {!textColor};">
+                    {!bannerText}
+                    <apex:outputPanel rendered="{!AND(true, bannerCanClose)}">
+                        <a href="javascript:void(0);" onclick="closeBannerText(this);" class='slds-banner-close' style="position: absolute;right: 10px;background-color: rgb(0 0 0 / 10%);color: {!textColor};width: 20px;height: 20px;text-align: center;border-radius: 3px;text-decoration: none;">X</a>
+                    </apex:outputPanel>
+                </div>
+                <script type="text/javascript">
+                    function closeBannerText(element){
+                        document.querySelector(".slds-banner-text").style.display = 'none';
+                    }
+                </script>
+            </apex:outputPanel>
+            <apex:form>
+                <apex:actionFunction name="loginAF" action="{!login}" reRender="false">
+                    <apex:param name="usernameJS" value="" />
+                    <apex:param name="passwordJS" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <apex:form>
+                <apex:actionFunction name="registerAF" action="{!registerUser}" reRender="false">
+                    <apex:param name="firstNameJS" value="" />
+                    <apex:param name="lastNameJS" value="" />
+                    <apex:param name="emailJS" value="" />
+                    <apex:param name="passwordJS" value="" />
+                    <apex:param name="confirmPasswordJS" value="" />
+                    <apex:param name="communityNicknameJS" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <apex:form>
+                <apex:actionFunction name="verifyEmailLoginAF" oncomplete="onLoginFormComplete(request, event, data);" action="{!verifyEmailLogin}" reRender="false">
+                    <apex:param name="userId" value="" />
+                    <apex:param name="identifier" value="" />
+                    <apex:param name="verificationCode" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <apex:form>
+                <apex:actionFunction name="verifyEmailRegistrationAF" oncomplete="onRegistrationFormComplete(request, event, data);" action="{!verifyEmailRegistration}" reRender="false">
+                    <apex:param name="identifier" value="" />
+                    <apex:param name="verificationCode" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            <script type="text/javascript">
+                Visualforce.remoting.timeout = 120000;
+                //This object will be available from within the reactforce apps via the global.inlineApexAdaptor object
+                var inlineApexAdaptor = {
+                    'Visualforce': {
+                        remoting: {
+                            Manager: {
+                                invokeAction: function(){
+                                    var manager = Visualforce.remoting.Manager;
+                                    manager.invokeAction.apply(manager, arguments);
+                                    window.dispatchEvent(new Event("remoteAction"));
+                                }
+                            }
+                        }
+                    },
+                    'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
+                    'callSampleInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callSampleInternalApi}',
+                    'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
+                    'getAttachment': '{!$RemoteAction.rfPrototypeCtrl.getAttachment}',
+                    'saveContentVersion': '{!$RemoteAction.rfPrototypeCtrl.saveContentVersion}',
+                    'getContentVersion': '{!$RemoteAction.rfPrototypeCtrl.getContentVersion}',
+                    'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',
+                    'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
+                    'emailLoginApi': '{!$RemoteAction.rfPrototypeCtrl.emailLogin}',
+                    'registerEmailApi': '{!$RemoteAction.rfPrototypeCtrl.registerUserEmail}',
+                    'createLeadApi': '{!$RemoteAction.rfPrototypeCtrl.createLead}',
+                    'sessionId': '{!sessionId}',
+                    'resources': '{!$Resource.ReactforceAssets}',
+                    'landingResources': '{!$Resource.rfPrototype}',
+                    'chunkResources': '{!$Resource.rfPrototypeChunk}',
+                    'cssResources': '{!$Resource.rfPrototypeCss}',
+                    'bundleDomain': '{!bundleDomain}',
+                    'page': 'home',
+                    'rte': '{!$CurrentPage.parameters.rte}',
+                    'baseUrl': window.location.pathname,
+                    'bundleId': '{!bundleId}',
+                };
+
+                function onLoginFormComplete(request, event, data){}
+                function onRegistrationFormComplete(request, event, data){}
+            </script>
+            <div style="min-height: 100vh;" id="root"></div>
+
+            <div class="slds-spinner_container" id="main-application-loader" style="background: #fff;">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand" style="transform: none;width: 100px;height:86px;transform-origin: inherit;left: 0px;right: 0px;top:0px;bottom:0px;margin: auto;">
+                    <img src="{!URLFOR($Resource.rfPrototype, 'assets/img/reactforce_short.png')}" alt="" />
+                </div>
+                <style type="text/css">#main-application-loader .slds-spinner:before, #main-application-loader .slds-spinner:after {display:none;}</style>
+            </div>
+        </apex:outputPanel>
+
+        <!-- Load the app from the bundle domain -->
+        <apex:outputPanel rendered="{!
+            AND(
+                AND(
+                    NOT(ISBLANK(bundleDomain)), 
+                    !productionMode
+                ),
+                !maintenanceMode
+            )}">
+            <script type="text/javascript" src="{!bundleDomain + '/assets/js/app.main.v1.js'}"></script>
+        </apex:outputPanel>
+
+        <!-- Load the app from the static resource -->
+        <apex:outputPanel rendered="{!
+            AND(
+                ISBLANK(bundleDomain), 
+                !maintenanceMode
+            )}">
+            <script type="text/javascript" src="{!URLFOR($Resource.rfPrototype, 'assets/js/app.main.v1.js')}"></script>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!
+            AND(
+                true, 
+                maintenanceMode
+            )}">
+            <div class="slds-grid slds-gutters slds-grid_align-center slds-m-top_medium slds-maintenance-container">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_5-of-12">
+                    <article class="slds-card">
+                        <div class="slds-card__header" style="text-align: center;">
+                            <img src="{!$Resource.rfPrototype}/assets/img/logo.png" alt="logo" style="max-width: 200px;" />
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <h2>Temporarily Down for Maintenance</h2>
+                            <p>We are performing scheduled maintenance. We should be back online shortly.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <style type="text/css">
+                .slds-maintenance-container {
+                    position: absolute;
+                    left: 0px;
+                    right: 0px;
+                    bottom: 0px;
+                    top: 0px;
+                    margin: auto !important;
+                    height: 230px;
+                    text-align: center;
+                }
+                .slds-maintenance-container h2 {
+                    font-size: 23px;
+                    font-weight: bold;
+                    margin: 20px 0px;
+                }
+                .slds-maintenance-container p {
+                    margin-bottom: 50px;
+                    font-size: 16px;
+                }
+            </style>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!NOT(ISBLANK(sessionId))}">
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal" id="slds-session-modal">
+            <div class="slds-modal__container" style="max-width: 400px;min-width:0px;">
+                <div class="slds-modal__content slds-p-around_medium slds-modal__content_headless">
+                    <p>Your session is about to expire, woud you like to continue?</p>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="closeSessionDialogue(true);">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick="resetSession(true);">Yes</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop" id="slds-session-backdrop" role="presentation"></div>
+        <script type="text/javascript">
+            var sessionResetTime = (60e3*{!sessionTimeOut}) - 60e3;
+            var sessionResetTimeout = null;
+            var sessionLogoutTimeout = null;
+            function setSessionTimeout(){
+                sessionResetTimeout = setTimeout(function(){
+                    document.querySelector("#slds-session-backdrop").classList.add("slds-backdrop_open");
+                    document.querySelector("#slds-session-modal").classList.add("slds-fade-in-open");
+                    sessionLogoutTimeout = setTimeout(function(){
+                        closeSessionDialogue(true);
+                    }, ((60e3*{!sessionTimeOut}) - sessionResetTime));
+                }, sessionResetTime);
+            }
+            function closeSessionDialogue(logout){
+                document.querySelector("#slds-session-backdrop").classList.remove("slds-backdrop_open");
+                document.querySelector("#slds-session-modal").classList.remove("slds-fade-in-open");
+                if(logout){
+                    window.location.href = "secur/logout.jsp";
+                }
+            }
+            function resetSession(callApi){
+                clearTimeout(sessionResetTimeout);
+                clearTimeout(sessionLogoutTimeout);
+                closeSessionDialogue(false);
+                setSessionTimeout();
+                if(callApi){
+                    inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.callSampleInternalApi,'','','','','',
+                                                                    (result, event) =>{
+                                                                        
+                                                                    });
+                }
+            }
+            setSessionTimeout();
+            window.addEventListener("remoteAction", function(){
+                resetSession(false);
+            });
+        </script>
+        </apex:outputPanel>
+    </body>
+</apex:page>
