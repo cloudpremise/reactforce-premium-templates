@@ -13,11 +13,18 @@ const useJsforceRetrieve = (sObjectType, ids, justData = false, callBack = null)
     });
     let [data, setData] = React.useState(null);
     function getData(){
+        const conn = getConnection();
+        if(!conn){
+            setAdapterState({
+                loading: false,
+                callApi: false
+            });
+            return;
+        }
         setAdapterState({
             loading: true,
             callApi: false
         });
-        const conn = getConnection();
         conn.sobject(sObjectType).retrieve(ids, function(err, account) {
             if (err) { return console.error(err); }
             const newState = {
@@ -66,11 +73,18 @@ const useJsforceQuery = (query, justData = false, callBack = null) => {
     });
     let [data, setData] = React.useState(null);
     function getData(){
+        const conn = getConnection();
+        if(!conn){
+            setAdapterState({
+                loading: false,
+                callApi: false
+            });
+            return;
+        }
         setAdapterState({
             loading: true,
             callApi: false
         });
-        const conn = getConnection();
         conn.query(query, function(err, result) {
             if (err) { return console.error(err); }
             let hasMore = false;
@@ -112,6 +126,9 @@ const useJsforceQuery = (query, justData = false, callBack = null) => {
     return [ state.loading, data, state, setAdapterState ];
 }
 const getConnection = () => {
+    if(!window.inlineApexAdaptor || !window.inlineApexAdaptor.hasOwnProperty("jsforce")){
+        return null;
+    }
     if(connection === null){
         const sessionId = getSessionId();
         connection = new window.inlineApexAdaptor.jsforce.Connection({ accessToken: sessionId });
