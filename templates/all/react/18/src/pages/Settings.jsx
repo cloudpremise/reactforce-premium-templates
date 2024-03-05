@@ -15,7 +15,8 @@ const Settings = (props) => {
             contentversion: true,
             lds: true,
             sobjectapi: false,
-            uiapi: false
+            uiapi: false,
+            jsforce: true
         }
     }
     let savedTabs = localStorage.getItem("reactforce_settings");
