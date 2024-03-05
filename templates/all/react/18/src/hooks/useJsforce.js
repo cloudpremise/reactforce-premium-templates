@@ -1,5 +1,5 @@
 import React from "react";
-import { getSessionId } from "../ApexAdapter";
+import { getSessionId, getParam } from "../ApexAdapter";
 import { translateNamespace } from "./useApexAdapter";
 
 let connection = null;
@@ -126,12 +126,22 @@ const useJsforceQuery = (query, justData = false, callBack = null) => {
     return [ state.loading, data, state, setAdapterState ];
 }
 const getConnection = () => {
+    if(typeof(window.jsforce) !== 'undefined'){
+        window.inlineApexAdaptor.jsforce = window.jsforce;
+    }
     if(!window.inlineApexAdaptor || !window.inlineApexAdaptor.hasOwnProperty("jsforce")){
         return null;
     }
     if(connection === null){
         const sessionId = getSessionId();
-        connection = new window.inlineApexAdaptor.jsforce.Connection({ accessToken: sessionId });
+        let params = {
+            accessToken: sessionId
+        };
+        let domain = getParam("domain");
+        if(domain && domain !== "null" && domain.length > 0 && domain.indexOf("salesforce.com") !== -1){
+            params['instanceUrl'] = domain;
+        }
+        connection = new window.inlineApexAdaptor.jsforce.Connection(params);
     }
     return connection;
 }
