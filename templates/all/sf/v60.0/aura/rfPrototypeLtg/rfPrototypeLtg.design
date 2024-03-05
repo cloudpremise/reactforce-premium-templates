@@ -1,0 +1,3 @@
+<design:component label="rfPrototypeLtg (Aura)" >
+    <design:attribute name="page" label="Page Name" />
+</design:component>
