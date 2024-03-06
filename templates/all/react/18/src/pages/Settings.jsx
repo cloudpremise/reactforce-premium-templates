@@ -15,7 +15,8 @@ const Settings = (props) => {
             contentversion: true,
             lds: true,
             sobjectapi: false,
-            uiapi: false
+            uiapi: false,
+            jsforce: true
         }
     }
     let savedTabs = localStorage.getItem("reactforce_settings");
@@ -173,6 +174,18 @@ const Settings = (props) => {
                         }}
                         onChange={(e) => handleCheckbox(e, "uiapi")}
                         checked={state.tabs.uiapi}
+                        variant="toggle"
+                    />
+                    <Checkbox
+                        id="settings-jsforce"
+                        className="slds-m-top_small"
+                        labels={{
+                            label: 'JsForce',
+                            toggleEnabled: null,
+                            toggleDisabled: null
+                        }}
+                        onChange={(e) => handleCheckbox(e, "jsforce")}
+                        checked={state.tabs.jsforce}
                         variant="toggle"
                     />
                 </div>

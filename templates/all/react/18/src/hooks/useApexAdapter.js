@@ -143,7 +143,11 @@ function translateNamespace(data){
             newData = {};
             for(var key in data){
                 const newKey = key.replace(namespace, "");
-                newData[newKey] = translateNamespace(data[key]);
+                if(!data[key]){
+                    newData[newKey] = data[key];
+                }else{
+                    newData[newKey] = translateNamespace(data[key]);
+                }
             }
         }
         return newData;
