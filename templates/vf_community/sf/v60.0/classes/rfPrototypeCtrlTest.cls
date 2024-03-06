@@ -33,7 +33,7 @@ private with sharing class rfPrototypeCtrlTest {
     private static void testRfPrototypeCtrl() {
         List<Account> accounts = createAccount();
         Test.StartTest();
-        PageReference pageRef = Page.ReactforceAllTemplateVF;
+        PageReference pageRef = Page.rfPrototypeVF;
         Test.setCurrentPage(pageRef);
         pageRef.getParameters().put('bundleDomain', String.valueOf(accounts[0].Id));
         pageRef.getParameters().put('bundleId', 'testBundleId');
@@ -86,7 +86,7 @@ private with sharing class rfPrototypeCtrlTest {
             user = userObj;
         }
         Test.startTest();
-        PageReference pageRef = Page.ReactforceAllTemplateVF;
+        PageReference pageRef = Page.rfPrototypeVF;
         Test.setCurrentPage(pageRef);
         ApexPages.Standardcontroller sc = new ApexPages.Standardcontroller(user);
         ApexPages.currentPage().getParameters().put('usernameJS', user.Username);

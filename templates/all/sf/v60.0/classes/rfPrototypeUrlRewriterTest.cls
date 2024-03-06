@@ -3,7 +3,7 @@ private with sharing class rfPrototypeUrlRewriterTest {
     @isTest
     private static void testMapRequestUrl() {
         Test.StartTest();
-        PageReference pageRef = Page.ReactforceAllTemplateVF;
+        PageReference pageRef = Page.rfPrototypeVF;
         Test.setCurrentPage(pageRef);
         rfPrototypeUrlRewriter instance = new rfPrototypeUrlRewriter();
         PageReference result = instance.mapRequestUrl(pageRef);
@@ -15,7 +15,7 @@ private with sharing class rfPrototypeUrlRewriterTest {
     private static void testGenerateUrlFor() {
         List<PageReference> pageReferences = new List<PageReference>();
         Test.StartTest();
-        PageReference pageRef = Page.ReactforceAllTemplateVF;
+        PageReference pageRef = Page.rfPrototypeVF;
         Test.setCurrentPage(pageRef);
         pageReferences.add(pageRef);
         rfPrototypeUrlRewriter instance = new rfPrototypeUrlRewriter();

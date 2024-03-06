@@ -405,7 +405,7 @@ global without sharing class rfPrototypeCtrl {
         // };
         // String extension = fileName.substringAfterLast('.').toLowerCase();
         // if(!whiteListedTypes.contains(extension)){
-        //     throw new ReactforceAllTemplateCtrlException('This file type is not supported:'+extension);
+        //     throw new rfPrototypeCtrlException('This file type is not supported:'+extension);
         // }
         ContentVersion cv = new ContentVersion();
         cv.Title = fileName;
