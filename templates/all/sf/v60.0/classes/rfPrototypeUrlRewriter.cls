@@ -26,7 +26,7 @@ global with sharing class rfPrototypeUrlRewriter implements Site.UrlRewriter {
         String url = myFriendlyUrl.getUrl();
 
         Pagereference pageref = null;
-        if(url.startsWith('/login')){
+        if(url == '/login'){
         } else if(url.startsWith('/_ui/')){
         } else if(url.startsWith('/ui/')){
         } else if(url.startsWith('/secur/')){
