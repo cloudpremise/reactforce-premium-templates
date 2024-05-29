@@ -81,6 +81,18 @@ private with sharing class rfPrototypeCtrlTest {
     }
     
     @isTest
+    private static void testCallInternalApi() {
+        Test.StartTest();
+        List<Account> accounts = createAccount();
+        String params = '{"sobjecttypename":"Account", "Id":"'+accounts[0].Id+'"}';
+        String headers = '{"Content-Type":"application/json;charset=UTF-8"}';
+        String response = rfPrototypeCtrl.callInternalApi('GET', '/v1/sobject/Account/', 'requestEntityStr', params, headers);
+        Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(response);
+        Test.StopTest();
+        System.assertEquals(200, responseMap.get('statusCode'), 'Response status code should be 200.');
+    }
+
+    @isTest
     private static void testCallSampleInternalApi() {
         Test.StartTest();
         List<Account> accounts = createAccount();
