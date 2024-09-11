@@ -39,6 +39,7 @@
     </types>
     <types>
         <members>rfPrototype</members>
+        <members>rfPrototype_Site_Guest_User</members>
         <name>PermissionSet</name>
     </types>
     <types>
