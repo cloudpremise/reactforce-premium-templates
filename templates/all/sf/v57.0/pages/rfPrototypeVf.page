@@ -62,48 +62,6 @@
                     <apex:param name="verificationCode" value="" />
                 </apex:actionFunction>
             </apex:form>
-            <script type="text/javascript">
-                Visualforce.remoting.timeout = 120000;
-                //This object will be available from within the reactforce apps via the global.inlineApexAdaptor object
-                var inlineApexAdaptor = {
-                    'Visualforce': {
-                        remoting: {
-                            Manager: {
-                                invokeAction: function(){
-                                    var manager = Visualforce.remoting.Manager;
-                                    manager.invokeAction.apply(manager, arguments);
-                                    window.dispatchEvent(new Event("remoteAction"));
-                                }
-                            }
-                        }
-                    },
-                    'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
-                    'callSampleInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callSampleInternalApi}',
-                    'saveAttachment': '{!$RemoteAction.rfPrototypeCtrl.saveAttachment}',
-                    'getAttachment': '{!$RemoteAction.rfPrototypeCtrl.getAttachment}',
-                    'saveContentVersion': '{!$RemoteAction.rfPrototypeCtrl.saveContentVersion}',
-                    'getContentVersion': '{!$RemoteAction.rfPrototypeCtrl.getContentVersion}',
-                    'loginApi': '{!$RemoteAction.rfPrototypeCtrl.login}',
-                    'registerApi': '{!$RemoteAction.rfPrototypeCtrl.registerUser}',
-                    'emailLoginApi': '{!$RemoteAction.rfPrototypeCtrl.emailLogin}',
-                    'registerEmailApi': '{!$RemoteAction.rfPrototypeCtrl.registerUserEmail}',
-                    'createLeadApi': '{!$RemoteAction.rfPrototypeCtrl.createLead}',
-                    'sessionId': '{!sessionId}',
-                    'resources': '{!$Resource.ReactforceAssets}',
-                    'landingResources': '{!$Resource.rfPrototype}',
-                    'chunkResources': '{!$Resource.rfPrototypeChunk}',
-                    'cssResources': '{!$Resource.rfPrototypeCss}',
-                    'bundleDomain': '{!bundleDomain}',
-                    'page': 'home',
-                    'rte': '{!$CurrentPage.parameters.rte}',
-                    'baseUrl': window.location.pathname,
-                    'bundleId': '{!bundleId}',
-                    'jsforce': jsforce
-                };
-
-                function onLoginFormComplete(request, event, data){}
-                function onRegistrationFormComplete(request, event, data){}
-            </script>
             <div style="min-height: 100vh;" id="root"></div>
 
             <div class="slds-spinner_container" id="main-application-loader" style="background: #fff;">
@@ -123,7 +81,14 @@
                 ),
                 !maintenanceMode
             )}">
-            <script type="text/javascript" src="{!bundleDomain + '/assets/js/app.main.v1.js'}"></script>
+            <script type="text/javascript">
+                function onAdapterLoaded(){
+                    var mainElement = document.createElement("script");
+                    mainElement.setAttribute("type", "text/javascript");
+                    mainElement.setAttribute("src", "{!bundleDomain + '/assets/js/app.main.v1.js'}");
+                    document.body.appendChild(mainElement);
+                }
+            </script>
         </apex:outputPanel>
 
         <!-- Load the app from the static resource -->
@@ -132,9 +97,16 @@
                 ISBLANK(bundleDomain), 
                 !maintenanceMode
             )}">
-            <script type="text/javascript" src="{!URLFOR($Resource.rfPrototype, 'assets/js/app.main.v1.js')}"></script>
+            <script type="text/javascript">
+                function onAdapterLoaded(){
+                    var mainElement = document.createElement("script");
+                    mainElement.setAttribute("type", "text/javascript");
+                    mainElement.setAttribute("src", "{!URLFOR($Resource.rfPrototype, 'assets/js/app.main.v1.js')}");
+                    document.body.appendChild(mainElement);
+                }
+            </script>
         </apex:outputPanel>
-
+        <script type="text/javascript" src="{!sitePath}/apex/rfPrototypeAdapter?bundleDomain={!bundleDomain}&bundleId={!bundleId}" onload="onAdapterLoaded();"></script>
         <apex:outputPanel rendered="{!
             AND(
                 true, 

@@ -32,6 +32,7 @@
     <types>
         <members>rfPrototypeSelfRegConfirm</members>
         <members>rfPrototypeVf</members>
+        <members>rfPrototypeAdapter</members>
         <name>ApexPage</name>
     </types>
     <types>

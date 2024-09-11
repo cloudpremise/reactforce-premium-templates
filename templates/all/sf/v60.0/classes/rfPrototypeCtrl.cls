@@ -29,6 +29,7 @@ global without sharing class rfPrototypeCtrl {
     public Boolean advancedConfiguration {get;set;}
     public Boolean maintenanceMode {get;set;}
     public Boolean productionMode {get;set;}
+    public String sitePath {get;set;}
 
     private ReactforceSetting__mdt settings {get;set;}
     public Boolean banner {get;set;}
@@ -72,6 +73,7 @@ global without sharing class rfPrototypeCtrl {
         this.sObjId = stdController.getId();
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
         this.checkBundleId();
+        sitePath = Site.getPathPrefix();
         maintenanceMode = false;
         productionMode = false;
         this.checkSettings();
@@ -81,6 +83,7 @@ global without sharing class rfPrototypeCtrl {
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
         sessionId = UserInfo.getSessionId();
         this.checkBundleId();
+        sitePath = Site.getPathPrefix();
         maintenanceMode = false;
         productionMode = false;
         this.checkSettings();
