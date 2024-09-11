@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>rfPrototype Site User</label>
+    <tabSettings>
+        <tab>rfPrototypeLtg</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>rfPrototypeVf</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>rfPrototypeLwc</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <pageAccesses>
+        <apexPage>rfPrototypeAdapter</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+</PermissionSet>
