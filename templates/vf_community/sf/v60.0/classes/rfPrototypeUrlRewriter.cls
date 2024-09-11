@@ -36,6 +36,7 @@ global with sharing class rfPrototypeUrlRewriter implements Site.UrlRewriter {
         } else if(url.startsWith('/CommunitiesSelfReg')) {
         } else if(url.startsWith('/apex/Exception')) {
         } else if(url.startsWith('/apexremote')) {
+        } else if(url.contains('/rfPrototypeAdapter')){
         } else {
             pageref = new Pagereference('/rfPrototypeVf?rte='+sanitizedUrl);          
         }

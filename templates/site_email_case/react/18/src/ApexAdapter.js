@@ -1,6 +1,11 @@
 /*global inlineApexAdaptor */
 import LCC from "lightning-container";
 
+const getAction = (action) => {
+    let controller = window.inlineApexAdaptor.controller;
+    return (controller+'.'+action);
+};
+
 let ApexAdapter = (method, route, data, params, headers, callback) => {
     let config = { 
         buffer: true, 
@@ -9,7 +14,7 @@ let ApexAdapter = (method, route, data, params, headers, callback) => {
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.callInternalApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('callInternalApi'),
                                                                     method,
                                                                     route,
                                                                     JSON.stringify(data),
@@ -32,7 +37,7 @@ let SampleApexAdapter = (method, route, data, params, headers, callback) => {
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.callSampleInternalApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('callSampleInternalApi'),
                                                                     method,
                                                                     route,
                                                                     JSON.stringify(data),

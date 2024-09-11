@@ -22,4 +22,8 @@
         <tab>rfPrototypeLwc</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <pageAccesses>
+        <apexPage>rfPrototypeAdapter</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
 </PermissionSet>

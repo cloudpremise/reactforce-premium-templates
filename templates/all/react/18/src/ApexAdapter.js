@@ -1,6 +1,11 @@
 /*global inlineApexAdaptor */
 import LCC from "lightning-container";
 
+const getAction = (action) => {
+    let controller = window.inlineApexAdaptor.controller;
+    return (controller+'.'+action);
+};
+
 let ApexAdapter = (method, route, data, params, headers, callback) => {
     let config = { 
         buffer: true, 
@@ -9,7 +14,7 @@ let ApexAdapter = (method, route, data, params, headers, callback) => {
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.callInternalApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('callInternalApi'),
                                                                     method,
                                                                     route,
                                                                     JSON.stringify(data),
@@ -32,7 +37,7 @@ let SampleApexAdapter = (method, route, data, params, headers, callback) => {
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.callSampleInternalApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('callSampleInternalApi'),
                                                                     method,
                                                                     route,
                                                                     JSON.stringify(data),
@@ -149,7 +154,7 @@ const loginAdapter = (requestData, callback) => {
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.loginApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('login'),
                                                                     JSON.stringify(requestData),
                                                                     (result, event) =>{
                                                                         callback(result, event);
@@ -170,7 +175,7 @@ const registerAdapter = (firstName, lastName, email, password, confirmPassword, 
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.registerApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('registerUser'),
                                                                     firstName,
                                                                     lastName,
                                                                     email,
@@ -204,13 +209,13 @@ const saveAttachment = (parentId, fileName, base64Data, contentType, fileId, cal
                 contentType: contentType,
                 fileId: fileId,
             }
-            remotingManager.invokeCustomAction(inlineApexAdaptor.saveAttachment, params,
+            remotingManager.invokeCustomAction(getAction('saveAttachment'), params,
                 (result, event) =>{
                     callback(result, event);
                 },
                 config);
         }else{
-            remotingManager.invokeAction(inlineApexAdaptor.saveAttachment, parentId, fileName, base64Data, contentType, fileId,
+            remotingManager.invokeAction(getAction('saveAttachment'), parentId, fileName, base64Data, contentType, fileId,
                 (result, event) =>{
                     callback(result, event);
                 },
@@ -237,13 +242,13 @@ const saveContentVersion = (fileName, base64Data, fileId, callback) => {
                 base64Data: base64Data,
                 fileId: fileId
             }
-            remotingManager.invokeCustomAction(inlineApexAdaptor.saveContentVersion, params,
+            remotingManager.invokeCustomAction(getAction('saveContentVersion'), params,
                 (result, event) =>{
                     callback(result, event);
                 },
                 config);
         }else{
-            inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.saveContentVersion, fileName, base64Data, fileId,
+            inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('saveContentVersion'), fileName, base64Data, fileId,
                 (result, event) =>{
                     callback(result, event);
                 },
@@ -269,13 +274,13 @@ const getContentVersion = (fileId, callback) => {
             const params = {
                 fileId: fileId,
             }
-            remotingManager.invokeCustomAction(inlineApexAdaptor.getContentVersion, params,
+            remotingManager.invokeCustomAction(getAction('getContentVersion'), params,
                 (result, event) =>{
                     callback(result, event);
                 },
                 config);
         }else{
-            inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.getContentVersion, fileId,
+            inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('getContentVersion'), fileId,
                 (result, event) =>{
                     callback(result, event);
                 },
@@ -301,13 +306,13 @@ const getAttachment = (fileId, callback) => {
             const params = {
                 fileId: fileId,
             }
-            remotingManager.invokeCustomAction(inlineApexAdaptor.getAttachment, params,
+            remotingManager.invokeCustomAction(getAction('getAttachment'), params,
                 (result, event) =>{
                     callback(result, event);
                 },
                 config);
         }else{
-            inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.getAttachment, fileId,
+            inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('getAttachment'), fileId,
                 (result, event) =>{
                     callback(result, event);
                 },
@@ -328,7 +333,7 @@ const loginWithCodeAdapter = (email, callback) => {
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.emailLoginApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('emailLogin'),
                                                                     email,
                                                                     (result, event) =>{
                                                                         callback(result, event);
@@ -349,7 +354,7 @@ const signupWithCodeAdapter = (email, callback) => {
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.registerEmailApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('registerUserEmail'),
                                                                     email,
                                                                     (result, event) =>{
                                                                         callback(result, event);
@@ -370,7 +375,7 @@ const leadAdapter = (firstName, lastName, email, company, callback) => {
     }
     try{
 
-        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(inlineApexAdaptor.createLeadApi,
+        inlineApexAdaptor.Visualforce.remoting.Manager.invokeAction(getAction('createLead'),
                                                                     firstName,
                                                                     lastName,
                                                                     email,

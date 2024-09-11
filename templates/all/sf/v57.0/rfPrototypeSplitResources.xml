@@ -34,6 +34,7 @@
         <members>rfPrototypeVf</members>
         <members>rfPrototypeSessionId</members>
         <members>rfPrototypeRobots</members>
+        <members>rfPrototypeAdapter</members>
         <name>ApexPage</name>
     </types>
     <types>

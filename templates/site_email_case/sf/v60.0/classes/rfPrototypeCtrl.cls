@@ -27,6 +27,7 @@ global without sharing class rfPrototypeCtrl {
     public String sessionId {get;set;}
     public Boolean userInterfacePreview {get;set;}
     public Boolean advancedConfiguration {get;set;}
+    public String sitePath {get;set;}
 
     public static String getSessionId() {
         return UserInfo.getSessionId();
@@ -37,12 +38,14 @@ global without sharing class rfPrototypeCtrl {
         this.sObjId = stdController.getId();
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
         this.checkBundleId();
+        sitePath = Site.getPathPrefix();
     }
 
     public rfPrototypeCtrl() {
         bundleDomain = String.isNotBlank(ApexPages.currentPage().getParameters().get('bundleDomain')) ? ApexPages.currentPage().getParameters().get('bundleDomain') : bundleDomain;
         sessionId = rfPrototypeCtrl.getSessionId();
         this.checkBundleId();
+        sitePath = Site.getPathPrefix();
     }
 
     private void checkBundleId() {

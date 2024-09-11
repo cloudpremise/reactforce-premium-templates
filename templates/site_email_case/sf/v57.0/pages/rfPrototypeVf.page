@@ -10,25 +10,6 @@
     </head>
     <body class="slds-scope">
         <apex:slds />
-        <script type="text/javascript">
-            Visualforce.remoting.timeout = 120000;
-            //This object will be available from within the reactforce apps via the global.inlineApexAdaptor object
-            var inlineApexAdaptor = {
-                'Visualforce': Visualforce,
-                'callInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callInternalApi}',
-                'callSampleInternalApi': '{!$RemoteAction.rfPrototypeCtrl.callSampleInternalApi}',
-                'sessionId': '{!sessionId}',
-                'resources': '{!$Resource.ReactforceAssets}',
-                'landingResources': '{!$Resource.rfPrototype}',
-                'chunkResources': '{!$Resource.rfPrototypeChunk}',
-                'cssResources': '{!$Resource.rfPrototypeCss}',
-                'bundleDomain': '{!bundleDomain}',
-                'page': 'home',
-                'rte': '{!$CurrentPage.parameters.rte}',
-                'baseUrl': window.location.pathname,
-                'bundleId': '{!bundleId}',
-            };
-        </script>
         <div style="min-height: 100vh;" id="root"></div>
 
         <div class="slds-spinner_container" id="main-application-loader">
@@ -40,13 +21,28 @@
 
         <!-- Load the app from the bundle domain -->
         <apex:outputPanel rendered="{!NOT(ISBLANK(bundleDomain))}">
-            <script type="text/javascript" src="{!bundleDomain + '/assets/js/app.main.v1.js'}"></script>
+            <script type="text/javascript">
+                function onAdapterLoaded(){
+                    var mainElement = document.createElement("script");
+                    mainElement.setAttribute("type", "text/javascript");
+                    mainElement.setAttribute("src", "{!bundleDomain + '/assets/js/app.main.v1.js'}");
+                    document.body.appendChild(mainElement);
+                }
+            </script>
         </apex:outputPanel>
 
         <!-- Load the app from the static resource -->
         <apex:outputPanel rendered="{!(ISBLANK(bundleDomain))}">
-            <script type="text/javascript" src="{!URLFOR($Resource.rfPrototype, 'assets/js/app.main.v1.js')}"></script>
+            <script type="text/javascript">
+                function onAdapterLoaded(){
+                    var mainElement = document.createElement("script");
+                    mainElement.setAttribute("type", "text/javascript");
+                    mainElement.setAttribute("src", "{!URLFOR($Resource.rfPrototype, 'assets/js/app.main.v1.js')}");
+                    document.body.appendChild(mainElement);
+                }
+            </script>
         </apex:outputPanel>
+        <script type="text/javascript" src="{!sitePath}/apex/rfPrototypeAdapter?bundleDomain={!bundleDomain}&bundleId={!bundleId}" onload="onAdapterLoaded();"></script>
 
     </body>
 </apex:page>

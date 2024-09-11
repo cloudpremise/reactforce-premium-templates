@@ -55,6 +55,8 @@ global with sharing class rfPrototypeUrlRewriter implements Site.UrlRewriter {
         } else if(url.startsWith('/apexremote')){
 
 
+        } else if(url.contains('/rfPrototypeAdapter')){
+
         } else {
             
             //pageref = new Pagereference('/SchoolAdminPortalHome?rte='+myFriendlyURL);    
