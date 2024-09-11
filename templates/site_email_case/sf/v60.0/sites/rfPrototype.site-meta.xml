@@ -19,6 +19,7 @@
     <genericErrorPage>Exception</genericErrorPage>
     <inMaintenancePage>InMaintenance</inMaintenancePage>
     <indexPage>rfPrototypeVf</indexPage>
+    <inactiveIndexPage>rfPrototypeAdapter</inactiveIndexPage>
     <masterLabel>rfPrototypeSite</masterLabel>
     <redirectToCustomDomain>true</redirectToCustomDomain>
     <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
